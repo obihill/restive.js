@@ -1,0 +1,50 @@
+{
+	"name": "device",
+	"version": "1.0.0",
+	"title": "Device.JS Plugin",
+	"author": {
+		"name": "Obinwanne Hill",
+		"email": "ohill@devicejs.com",
+		"url": "http://about.me/obinwanne.hill"
+	},
+	"licenses": [
+	{
+		"type": "Custom",
+		"url": "http://plugin.devicejs.com/legal/license-basic.html"
+	}
+	],
+	"dependencies": {
+		"jquery": ">=1.7.1"
+	},
+	"description": "jQuery plugin for helping Web Designers add Responsive + Adaptive Features to their Web Sites. * User-friendly - Set up advanced responsive and adaptive features easily and intuitive. * Versatile - Easily detect and target multiple form factors and platforms. *Powerful - Numerous advanced features and combinations available. ",
+	"keywords": [
+		"device.js",
+		"devicedotjs",
+		"devicejs",
+		"device",
+		"restive",
+		"responsive",
+		"adaptive",
+		"design",
+		"mobile",
+		"tablet",
+		"phone",
+		"tv",
+		"software",
+		"javascript",
+		"jquery",
+		"plugin"
+	],
+	"homepage": "https://github.com/obihill/device.js",
+	"docs": "http://plugin.devicejs.com/docs/index.html",
+	"demo": "http://plugin.devicejs.com/demo.html",
+	"download": "http://plugin.devicejs.com",
+	"bugs": "https://github.com/obihill/device.js/issues",
+	"maintainers": [
+	{
+		"name": "Obinwanne Hill",
+		"email": "ohill@devicejs.com",
+		"url": "http://about.me/obinwanne.hill"
+	}
+	]	
+}
