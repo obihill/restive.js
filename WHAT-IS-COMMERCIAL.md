@@ -19,10 +19,10 @@ A Web site, Application, or Project (hereafter referred to as "Web site") is con
 - The Web site directly or indirectly has revenue and/or profit-making as a motive
 
 
-If your Web site falls into one or more of these categories, then it is considered **Commercial** and you will need to purchase a Basic Commercial License to use the Basic Version of Device.JS Plugin.
+If your Web site falls into one or more of these categories, then it is considered **Commercial** and you will need to purchase a Basic Commercial License to use the Plugin.
 
 You can purchase this license below:
 
-[![Buy Basic Commercial License](/img_button_buynow_djsp_pouf_github.png)](https://devicejs.dpdcart.com/cart/buy?product_id=58953&product_price_id=60074&quantity=1&gateway=creditcard)
+[![Buy Basic Commercial License](/img_button_plugin_buynow_pouf.png)](https://restive.dpdcart.com/cart/buy?product_id=72269&product_price_id=74835&quantity=1&gateway=creditcard)
 
-This License is for One Developer to use on an Unlimited Number of Web Sites, and it does not expire. Please see the Device.JS Plugin [Basic License Agreement](/LICENSE.md) for more information
+This License is for One Developer to use on an Unlimited Number of Web Sites, and it does not expire (Pay Once, Use Forever). Please see the Restive Plugin [Basic License Agreement](/LICENSE.md) for more information

@@ -12,7 +12,7 @@ If you find that you fit one or more of the criteria below, then you might want 
 
 - You design Web Sites that need to be Responsive or Adaptive
 - You are not completely satisfied with the tools and/or approaches you currently use to achieve this "Responsiveness" or "Adaptiveness"
-- You need ONE solution and do not want (nor have the time) to cobble together multiple polyfills to enable these desired features
+- You need ONE solution and do not want (nor have the time) to cobble together multiple polyfills and shims to enable your desired features
 - You need more functionality than CSS Media Queries can possibly provide at the moment
 - You need a solution that you can truly 'Set-and-Forget'
 - You need a solution that is very easy to understand, use, and maintain
@@ -34,7 +34,7 @@ There are two versions of the Restive Plugin:
 1. Basic Version: this is the version available here on Github
 2. Pro Version: this is available exclusively via the [Restive Plugin Web Site](http://plugin.restive.io)
 
-**NOTE**: The Pro Version 
+The Pro Version has some additional features like `Modularity` and `Breakpoint Analytics`. See the **[Restive Plugin Docs](http://docs.restive.io/plugin)** for more information.
 
 
 
@@ -46,7 +46,7 @@ Please note that Restive Plugin Basic is **FREE** (and always will be) for Non-C
 
 [![Buy Basic Commercial License](/img_button_plugin_buynow_pouf.png)](https://restive.dpdcart.com/cart/buy?product_id=72269&product_price_id=74835&quantity=1&gateway=creditcard)
 
-Use Coupon Code **GITHUB-** to get 20% off Original License Price. Valid for first 1,000 users.
+Use Coupon Code **GITHUB-SAVE** to get 10% off Original License Price. Valid for first 500 users.
 
 [Click here for more information on what is considered **Commercial**](/WHAT-IS-COMMERCIAL.md)
 
@@ -62,7 +62,7 @@ Use Coupon Code **GITHUB-** to get 20% off Original License Price. Valid for fir
 
 Include script *after* the jQuery library:
 
-```
+```html
 <script src="/path/to/jquery.min.js"></script>
 <script src="/path/to/restive.min.js"></script>
 ```    
@@ -73,7 +73,7 @@ Include script *after* the jQuery library:
 
 The basic format for using Restive Plugin is as follows:
 
-```
+```html
 <script>
     $(document).ready(function () {
         $('selector').restive(options);
@@ -83,7 +83,7 @@ The basic format for using Restive Plugin is as follows:
 
 Let's try a basic example. Say we have designed a HTML5 Web site and we want to make it Responsive to a specific set of breakpoints: 240, 320, 480, 640, 960, 1024, and 1280. Our Restive Plugin Setup will look something like this:
 
-```
+```html
 <script>
     $(document).ready(function () {
         $('body').restive({
@@ -125,7 +125,7 @@ These libraries are already embedded within Restive Plugin.
 
 ## Credits
 
-Restive will like to thank the following third-parties for script usage:
+Restive will like to thank the following third-parties for script usage (and some inspiration):
 
 - AppendTo - [AmplifyJS Store](http://amplifyjs.com/api/store/)
 - Douglas Crockford - [JSON2.js](https://github.com/douglascrockford/JSON-js)
@@ -221,11 +221,6 @@ This defines the specific device platform that you want to target. The following
 - `blackberry`: target only devices based on the `Blackberry` platform e.g. Blackberry Q10
 - `windows`: target only devices based on the `Windows` platform e.g. Nokia Lumia, Microsoft Surface, etc.
 
-```javascript
-    //example
-    platform: 'android'
-```
-
 
 #### formfactor
 
@@ -263,15 +258,13 @@ Where `{condition}` is the specific circumstance that will trigger the `{class}`
 So let's further clarify with an illustration:
 
 ```javascript
-<script>
-    $(document).ready(function () {
-        $('body').restive({
-            breakpoints: ['320', '480', '640', '720', '960', '1280'],
-            classes: ['320-c', '480-c', '640-c', '720-c', '960-c', '1280-c'],
-            turbo_classes: 'is_mobile=mobi,is_portrait=view-p'
-        });
-    });
-</script>
+$(document).ready(function () {
+	$('body').restive({
+		breakpoints: ['320', '480', '640', '720', '960', '1280'],
+		classes: ['320-c', '480-c', '640-c', '720-c', '960-c', '1280-c'],
+		turbo_classes: 'is_mobile=mobi,is_portrait=view-p'
+	});
+});
 ```
 
 **Explanation**: The class in the `classes` option will be added to the `<body>` tag depending on which breakpoint range matches the device viewport. However, since the `turbo_classes` option is defined with two conditions, the following will also happen:
@@ -297,9 +290,9 @@ The following Callbacks are available for use in **Restive Plugin**
 This callback is triggered on Plugin initialization i.e when the web page is loaded.
 
 ```javascript
-	$('body').restive({
-		onReady: function(){alert("I'M READY WHEN YOU ARE!");}
-	});
+$('body').restive({
+	onReady: function(){alert("I'M READY WHEN YOU ARE!");}
+});
 ```
 
 
@@ -308,9 +301,9 @@ This callback is triggered on Plugin initialization i.e when the web page is loa
 This callback is triggered after there is a change in the size of the Viewport.
 
 ```javascript
-	$('body').restive({
-		onResize: function(){alert("I JUST GOT RESIZED!");}
-	});
+$('body').restive({
+	onResize: function(){alert("I JUST GOT RESIZED!");}
+});
 ```
 
 **NOTE**: This callback does not work on mobile devices i.e. `phone` and `tablet`
@@ -321,9 +314,9 @@ This callback is triggered after there is a change in the size of the Viewport.
 This callback is triggered just after the Device Orientation changes i.e. from Portrait to Landscape and vice versa.
 
 ```javascript
-	$('body').restive({
-		onRotate: function(){alert("I JUST GOT ROTATED!");}
-	});
+$('body').restive({
+	onRotate: function(){alert("I JUST GOT ROTATED!");}
+});
 ```
 
 
@@ -332,9 +325,9 @@ This callback is triggered just after the Device Orientation changes i.e. from P
 This callback is triggered just after the Device Orientation changes from Landscape to Portrait.
 
 ```javascript
-	$('body').restive({
-		onRotateToP: function(){alert("I JUST GOT ROTATED TO PORTRAIT!");}
-	});
+$('body').restive({
+	onRotateToP: function(){alert("I JUST GOT ROTATED TO PORTRAIT!");}
+});
 ```
 
 
@@ -343,9 +336,9 @@ This callback is triggered just after the Device Orientation changes from Landsc
 This callback is triggered just after the Device Orientation changes from Portrait to Landscape.
 
 ```javascript
-	$('body').restive({
-		onRotateToL: function(){alert("I JUST GOT ROTATED TO LANDSCAPE!");}
-	});
+$('body').restive({
+	onRotateToL: function(){alert("I JUST GOT ROTATED TO LANDSCAPE!");}
+});
 ```
 
 #### onRetina
@@ -353,9 +346,9 @@ This callback is triggered just after the Device Orientation changes from Portra
 This callback is triggered if the Device has a pixel ratio of 2 or higher.
 
 ```javascript
-	$('body').restive({
-		onRetina: function(){alert("I CANNOT BE MORE CLEAR-EYED!");}
-	});
+$('body').restive({
+	onRetina: function(){alert("I CANNOT BE MORE CLEAR-EYED!");}
+});
 ```
 
 
@@ -364,9 +357,9 @@ This callback is triggered if the Device has a pixel ratio of 2 or higher.
 This callback is triggered if the Device is in Portrait Orientation on initialization i.e. when the web page is loaded.
 
 ```javascript
-	$('body').restive({
-		onPortrait: function(){alert("I AM TALLER THAN I AM WIDE!");}
-	});
+$('body').restive({
+	onPortrait: function(){alert("I AM TALLER THAN I AM WIDE!");}
+});
 ```
 
 
@@ -375,9 +368,9 @@ This callback is triggered if the Device is in Portrait Orientation on initializ
 This callback is triggered if the Device is in Landscape Orientation on initialization i.e. when the web page is loaded.
 
 ```javascript
-	$('body').restive({
-		onLandscape: function(){alert("I AM WIDER THAN I AM TALL!");}
-	});
+$('body').restive({
+	onLandscape: function(){alert("I AM WIDER THAN I AM TALL!");}
+});
 ```
 
 
@@ -386,9 +379,9 @@ This callback is triggered if the Device is in Landscape Orientation on initiali
 This callback is triggered if the Device is a Phone.
 
 ```javascript
-	$('body').restive({
-		onPhone: function(){alert("I AM A PHONE!");}
-	});
+$('body').restive({
+	onPhone: function(){alert("I AM A PHONE!");}
+});
 ```
 
 
@@ -397,9 +390,9 @@ This callback is triggered if the Device is a Phone.
 This callback is triggered if the Device is a Tablet.
 
 ```javascript
-	$('body').restive({
-		onTablet: function(){alert("I AM A TABLET!");}
-	});
+$('body').restive({
+	onTablet: function(){alert("I AM A TABLET!");}
+});
 ```
 
 
@@ -408,9 +401,9 @@ This callback is triggered if the Device is a Tablet.
 This callback is triggered if the Device is a TV or TV-enabled e.g. game console.
 
 ```javascript
-	$('body').restive({
-		onTV: function(){alert("I AM A TELEVISION!");}
-	});
+$('body').restive({
+	onTV: function(){alert("I AM A TELEVISION!");}
+});
 ```
 
 
@@ -419,9 +412,9 @@ This callback is triggered if the Device is a TV or TV-enabled e.g. game console
 This callback is triggered if the Device is a Personal Computer i.e. not a Phone, Tablet, or TV.
 
 ```javascript
-	$('body').restive({
-		onPC: function(){alert("I AM NOT A PHONE, TABLET, OR TV!");}
-	});
+$('body').restive({
+	onPC: function(){alert("I AM NOT A PHONE, TABLET, OR TV!");}
+});
 ```
 
 
@@ -430,9 +423,9 @@ This callback is triggered if the Device is a Personal Computer i.e. not a Phone
 This callback is triggered if the Device is a Mobile Device i.e. Phone or Tablet.
 
 ```javascript
-	$('body').restive({
-		onMobile: function(){alert("I AM MOBILE!");}
-	});
+$('body').restive({
+	onMobile: function(){alert("I AM MOBILE!");}
+});
 ```
 
 
@@ -441,9 +434,9 @@ This callback is triggered if the Device is a Mobile Device i.e. Phone or Tablet
 This callback is triggered if the Device is a Non-Mobile Device i.e. TV or PC.
 
 ```javascript
-	$('body').restive({
-		onNonMobile: function(){alert("I AM NOT MOBILE!");}
-	});
+$('body').restive({
+	onNonMobile: function(){alert("I AM NOT MOBILE!");}
+});
 ```
 
 
@@ -452,9 +445,9 @@ This callback is triggered if the Device is a Non-Mobile Device i.e. TV or PC.
 This callback is triggered when the Restive Plugin adds a class to the DOM element identified in `selector` e.g. when a breakpoint range is matched. The name of the class added is passed as the only argument of this function.
 
 ```javascript
-	$('body').restive({
-		onAddClass: function(name){alert("PLUGIN JUST ADDED A CLASS CALLED '"+name+"'!");}
-	});
+$('body').restive({
+	onAddClass: function(name){alert("PLUGIN JUST ADDED A CLASS CALLED '"+name+"'!");}
+});
 ```
 
 
@@ -463,9 +456,9 @@ This callback is triggered when the Restive Plugin adds a class to the DOM eleme
 This callback is triggered when the Restive Plugin removes a class from the DOM element identified in `selector` e.g. when there is no breakpoint match. The name of the class removed is passed as the only argument of this function.
 
 ```javascript
-	$('body').restive({
-		onRemoveClass: function(name){alert("PLUGIN JUST REMOVED A CLASS CALLED '"+name+"'!");}
-	});
+$('body').restive({
+	onRemoveClass: function(name){alert("PLUGIN JUST REMOVED A CLASS CALLED '"+name+"'!");}
+});
 ```
 
 
@@ -480,8 +473,8 @@ These are the methods available within **Restive Plugin**. A usage example is al
 This determines the operating platform of the device. The following are the possible results when using this method: `ios`, `android`, `symbian`, `blackberry`, `windows`. If the device is not recognized as one of these platforms, `other` will be returned.
 
 ```javascript
-    //example
-    var platform = $.restive.getPlatform();
+//example
+var platform = $.restive.getPlatform();
 ```
 
 
@@ -490,8 +483,8 @@ This determines the operating platform of the device. The following are the poss
 This determines the form-factor of the device. There are only four possible results: `phone`, `tablet`, `tv`, `pc`. If none of the first three are detected, it will be assumed that the device has a `pc` form-factor.
 
 ```javascript
-    //example
-    var formfactor = $.restive.getFormFactor();
+//example
+var formfactor = $.restive.getFormFactor();
 ```
 
 
@@ -500,8 +493,8 @@ This determines the form-factor of the device. There are only four possible resu
 This determines the standard graphic display resolution of the device e.g. `VGA`, `SVGA`, `qHD`, etc.
 
 ```javascript
-    //example
-    var res = $.restive.getResolution();
+//example
+var res = $.restive.getResolution();
 ```
 
 
@@ -510,8 +503,8 @@ This determines the standard graphic display resolution of the device e.g. `VGA`
 This determines the currently active device orientation. The only two possible results are `portrait`, and `landscape`.
 
 ```javascript
-    //example
-    var ort = $.restive.getOrientation();
+//example
+var ort = $.restive.getOrientation();
 ```
 
 
@@ -520,8 +513,8 @@ This determines the currently active device orientation. The only two possible r
 This determines the pixel ratio of the device.
 
 ```javascript
-    //example
-    var pxr = $.restive.getPixelRatio();
+//example
+var pxr = $.restive.getPixelRatio();
 ```
 
 
@@ -530,8 +523,8 @@ This determines the pixel ratio of the device.
 This determines the device viewport width [in device pixels].
 
 ```javascript
-    //example
-    var viewport_w = $.restive.getViewportW();
+//example
+var viewport_w = $.restive.getViewportW();
 ```
 
 
@@ -540,8 +533,8 @@ This determines the device viewport width [in device pixels].
 This determines the device viewport height [in device pixels].
 
 ```javascript
-    //example
-    var viewport_h = $.restive.getViewportH();
+//example
+var viewport_h = $.restive.getViewportH();
 ```
 
 
@@ -550,8 +543,8 @@ This determines the device viewport height [in device pixels].
 This determines the device screen width.
 
 ```javascript
-    //example
-    var screen_w = $.restive.getScreenW();
+//example
+var screen_w = $.restive.getScreenW();
 ```
 
 
@@ -560,8 +553,8 @@ This determines the device screen width.
 This determines the device screen height.
 
 ```javascript
-    //example
-    var screen_h = $.restive.getScreenH();
+//example
+var screen_h = $.restive.getScreenH();
 ```
 
 
@@ -570,8 +563,8 @@ This determines the device screen height.
 This determines the device viewport width [in device-independent pixels].
 
 ```javascript
-    //example
-    var css_pixel_w = $.restive.getPixelW();
+//example
+var css_pixel_w = $.restive.getPixelW();
 ```
 
 
@@ -580,8 +573,8 @@ This determines the device viewport width [in device-independent pixels].
 This determines the device viewport height [in device-independent pixels].
 
 ```javascript
-    //example
-    var css_pixel_h = $.restive.getPixelH();
+//example
+var css_pixel_h = $.restive.getPixelH();
 ```
 
 
@@ -590,8 +583,8 @@ This determines the device viewport height [in device-independent pixels].
 This determines whether a device is a mobile device. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_mobile = $.restive.isMobile();
+//example
+var is_device_mobile = $.restive.isMobile();
 ```
 
 
@@ -600,8 +593,8 @@ This determines whether a device is a mobile device. Returns `true` if so, `fals
 This determines whether a device is not a mobile device. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_non_mobile = $.restive.isNonMobile();
+//example
+var is_device_non_mobile = $.restive.isNonMobile();
 ```
 
 
@@ -610,8 +603,8 @@ This determines whether a device is not a mobile device. Returns `true` if so, `
 This determines whether a device is a Phone. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_a_phone = $.restive.isPhone();
+//example
+var is_device_a_phone = $.restive.isPhone();
 ```
 
 
@@ -620,8 +613,8 @@ This determines whether a device is a Phone. Returns `true` if so, `false` if ot
 This determines whether a device is a Tablet. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_a_tablet = $.restive.isTablet();
+//example
+var is_device_a_tablet = $.restive.isTablet();
 ```
 
 
@@ -630,8 +623,8 @@ This determines whether a device is a Tablet. Returns `true` if so, `false` if o
 This determines whether a device is a TV or TV-enabled device. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_a_tv = $.restive.isTV();
+//example
+var is_device_a_tv = $.restive.isTV();
 ```
 
 
@@ -640,8 +633,8 @@ This determines whether a device is a TV or TV-enabled device. Returns `true` if
 This determines whether a device is a Personal Computer. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_a_pc = $.restive.isPC();
+//example
+var is_device_a_pc = $.restive.isPC();
 ```
 
 **NOTE**: A `pc` [in the context of Restive Plugin] is basically any device that is not a `phone`, `tablet`, or `tv`.
@@ -652,8 +645,8 @@ This determines whether a device is a Personal Computer. Returns `true` if so, `
 This determines whether a device is based on the iOS Platform. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_ios = $.restive.isIOS();
+//example
+var is_device_ios = $.restive.isIOS();
 ```
 
 
@@ -662,8 +655,8 @@ This determines whether a device is based on the iOS Platform. Returns `true` if
 This determines whether a device is based on the Android Platform. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_android = $.restive.isAndroid();
+//example
+var is_device_android = $.restive.isAndroid();
 ```
 
 
@@ -672,8 +665,8 @@ This determines whether a device is based on the Android Platform. Returns `true
 This determines whether a device is based on the Symbian Platform. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_symbian = $.restive.isSymbian();
+//example
+var is_device_symbian = $.restive.isSymbian();
 ```
 
 
@@ -682,8 +675,8 @@ This determines whether a device is based on the Symbian Platform. Returns `true
 This determines whether a device is based on the Blackberry Platform. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_blackberry = $.restive.isBlackberry();
+//example
+var is_device_blackberry = $.restive.isBlackberry();
 ```
 
 
@@ -692,8 +685,8 @@ This determines whether a device is based on the Blackberry Platform. Returns `t
 This determines whether a device is based on the Windows Platform. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_windows = $.restive.isWindows();
+//example
+var is_device_windows = $.restive.isWindows();
 ```
 
 **NOTE**: This method will detect both Windows Phones and Tablets.
@@ -704,8 +697,8 @@ This determines whether a device is based on the Windows Platform. Returns `true
 This determines whether a device is based on the 'Windows Phone' Platform. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_windows_phone = $.restive.isWindowsPhone();
+//example
+var is_device_windows_phone = $.restive.isWindowsPhone();
 ```
 
 **NOTE**: This method will detect only Windows Phones.
@@ -716,8 +709,8 @@ This determines whether a device is based on the 'Windows Phone' Platform. Retur
 This determines whether a device has a 'Retina' display i.e. a display with a pixel ratio equal to or greater than 2. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_retina = $.restive.isRetina();
+//example
+var is_device_retina = $.restive.isRetina();
 ```
 
 
@@ -726,8 +719,8 @@ This determines whether a device has a 'Retina' display i.e. a display with a pi
 This determines whether a device is in Portrait Orientation mode. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_portrait = $.restive.isPortrait();
+//example
+var is_device_portrait = $.restive.isPortrait();
 ```
 
 
@@ -736,8 +729,8 @@ This determines whether a device is in Portrait Orientation mode. Returns `true`
 This determines whether a device is in Landscape Orientation mode. Returns `true` if so, `false` if otherwise.
 
 ```javascript
-    //example
-    var is_device_landscape = $.restive.isLandscape();
+//example
+var is_device_landscape = $.restive.isLandscape();
 ```
 
 
