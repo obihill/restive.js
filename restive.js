@@ -1704,7 +1704,7 @@ var Restive = (function(window, document, $) {
         docElem = document.documentElement,
         $win = $(win),
         screen = win.screen,
-        vSpan, vPitch, dSpan, dPitch,
+        vSpan, vPitch, cSpan, cPitch, dSpan, dPitch,
         media  = win.matchMedia || win.msMatchMedia || Object
         ;
 
@@ -2721,6 +2721,8 @@ var Restive = (function(window, document, $) {
     vPitch = rangeCompare(viewportH);
     dSpan = rangeCompare(screenW);
     dPitch = rangeCompare(screenH);
+    cSpan = rangeCompare(pixelW);
+    cPitch = rangeCompare(pixelH);
 
     /**
      * Gets the user agent of the Device
@@ -3072,18 +3074,18 @@ var Restive = (function(window, document, $) {
          *
          * 1. Amazon Kindle: android.+kindle|kindle +fire|android.+silk|silk.*accelerated
          * 2. Google Nexus Tablet: android.+nexus +(7|10)
-         * 3. Samsung Tablet: samsung.*tablet|galaxy.*tab|sc-01c|gt-p1000|gt-p1003|gt-p1010|gt-p3105|gt-p6210|gt-p6800|gt-p6810|gt-p7100|gt-p7300|gt-p7310|gt-p7500|gt-p7510|sch-i800|sch-i815|sch-i905|sgh-i957|sgh-i987|sgh-t849|sgh-t859|sgh-t869|sph-p100|gt-p3100|gt-p3108|gt-p3110|gt-p5100|gt-p5110|gt-p6200|gt-p7320|gt-p7511|gt-n8000|gt-p8510|sgh-i497|sph-p500|sgh-t779|sch-i705|sch-i915|gt-n8013|gt-p3113|gt-p5113|gt-p8110|gt-n8010|gt-n8005|gt-n8020|gt-p1013|gt-p6201|gt-p7501|gt-n5100|gt-n5110|shv-e140k|shv-e140l|shv-e140s|shv-e150s|shv-e230k|shv-e230l|shv-e230s|shw-m180k|shw-m180l|shw-m180s|shw-m180w|shw-m300w|shw-m305w|shw-m380k|shw-m380s|shw-m380w|shw-m430w|shw-m480k|shw-m480s|shw-m480w|shw-m485w|shw-m486w|shw-m500w|gt-i9228|sch-p739|sch-i925|gt-i9200|gt-i9205|gt-p5200|gt-p5210|sm-t311|sm-t310|sm-t210|sm-t211|sm-p900
+         * 3. Samsung Tablet: samsung.*tablet|galaxy.*tab|sc-01c|gt-p1000|gt-p1003|gt-p1010|gt-p3105|gt-p6210|gt-p6800|gt-p6810|gt-p7100|gt-p7300|gt-p7310|gt-p7500|gt-p7510|sch-i800|sch-i815|sch-i905|sgh-i957|sgh-i987|sgh-t849|sgh-t859|sgh-t869|sph-p100|gt-p3100|gt-p3108|gt-p3110|gt-p5100|gt-p5110|gt-p6200|gt-p7320|gt-p7511|gt-n8000|gt-p8510|sgh-i497|sph-p500|sgh-t779|sch-i705|sch-i915|gt-n8013|gt-p3113|gt-p5113|gt-p8110|gt-n8010|gt-n8005|gt-n8020|gt-p1013|gt-p6201|gt-p7501|gt-n5100|gt-n5110|shv-e140k|shv-e140l|shv-e140s|shv-e150s|shv-e230k|shv-e230l|shv-e230s|shw-m180k|shw-m180l|shw-m180s|shw-m180w|shw-m300w|shw-m305w|shw-m380k|shw-m380s|shw-m380w|shw-m430w|shw-m480k|shw-m480s|shw-m480w|shw-m485w|shw-m486w|shw-m500w|gt-i9228|sch-p739|sch-i925|gt-i9200|gt-i9205|gt-p5200|gt-p5210|sm-t311|sm-t310|sm-t210|sm-t210r|sm-t211|sm-p600|sm-p601|sm-p605|sm-p900|sm-t217|sm-t217a|sm-t217s|sm-p6000|sm-t3100|sgh-i467|xe500
          * 4. HTC Tablet: htc flyer|htc jetstream|htc-p715a|htc evo view 4g|pg41200
          * 5. Motorola Tablet: xoom|sholest|mz615|mz605|mz505|mz601|mz602|mz603|mz604|mz606|mz607|mz608|mz609|mz615|mz616|mz617
-         * 6. Asus Tablet: transformer|^.*padfone((?!mobile).)*$|tf101|tf201|tf300|tf700|me370t|me301t|slider *sl101
-         * 7. Nook Tablet: android.+nook|nookcolor|nook browser|bntv250a|logicpd zoom2
-         * 8. Acer Tablet: android.*\b(a100|a101|a110|a200|a210|a211|a500|a501|a510|a511|a700|a701|w500|w500p|w501|w501p|w510|w511|w700|g100|g100w|b1-a71)\b
-         * 9. Toshiba Tablet: android.*(at100|at105|at200|at205|at270|at275|at300|at305|at1s5|at500|at570|at700|at830)
+         * 6. Asus Tablet: transformer|^.*padfone((?!mobile).)*$|tf101|tf201|tf300|tf700|tf701|tf810|me171|me301t|me302c|me371mg|me370t|me372mg|me172v|me173x|me400c|slider *sl101
+         * 7. Nook Tablet: android.+nook|nookcolor|nook browser|bnrv200|bnrv200a|bntv250|bntv250a|bntv400|bntv600|logicpd zoom2
+         * 8. Acer Tablet: android.*\b(a100|a101|a110|a200|a210|a211|a500|a501|a510|a511|a700|a701|w500|w500p|w501|w501p|w510|w511|w700|g100|g100w|b1-a71|b1-710|b1-711|a1-810)\b|w3-810
+         * 9. Toshiba Tablet: android.*(at100|at105|at200|at205|at270|at275|at300|at305|at1s5|at500|at570|at700|at830)|toshiba.*folio
          * 10. LG Tablet: \bl-06c|lg-v900|lg-v905|lg-v909
          * 11. Yarvik Tablet: android.+(xenta.+tab|tab210|tab211|tab224|tab250|tab260|tab264|tab310|tab360|tab364|tab410|tab411|tab420|tab424|tab450|tab460|tab461|tab464|tab465|tab467|tab468|tab469)
          * 12. Medion Tablet: android.+\boyo\b|life.*(p9212|p9514|p9516|s9512)|lifetab
          * 13. Arnova Tablet: an10g2|an7bg3|an7fg3|an8g3|an8cg3|an7g3|an9g3|an7dg3|an7dg3st|an7dg3childpad|an10bg3|an10bg3dt
-         * 14. Archos Tablet: android.+archos|101g9|80g9
+         * 14. Archos Tablet: android.+archos|\b(101g9|80g9|a101it)\b|qilive 97r|
          * 15. Ainol Tablet: novo7|novo7aurora|novo7basic|novo7paladin|novo8|novo9|novo10
          * 16. Sony Tablet: sony tablet|sony tablet s|sgpt12|sgpt121|sgpt122|sgpt123|sgpt111|sgpt112|sgpt113|sgpt211|sgpt213|ebrd1101|ebrd1102|ebrd1201|sgpt311|sgpt312|sonyso-03e
          * 17. Cube Tablet: android.*(k8gt|u9gt|u10gt|u16gt|u17gt|u18gt|u19gt|u20gt|u23gt|u30gt)|cube u8gt
@@ -3097,7 +3099,7 @@ var Restive = (function(window, document, $) {
          * 25. NecTablet: \bn-06d|\bn-08d
          * 26. Pantech: pantech.*p4100
          * 27. BronchoTablet: broncho.*(n701|n708|n802|a710)
-         * 28. VersusTablet: touchpad.*[78910]
+         * 28. VersusTablet: touchpad.*[78910]|\btouchtab\b
          * 29. Zynctablet: z1000|z99 2g|z99|z930|z999|z990|z909|z919|z900
          * 30. Positivo: tb07sta|tb10sta|tb07fta|tb10fta
          * 31. NabiTablet: android.*\bnabi
@@ -3113,7 +3115,7 @@ var Restive = (function(window, document, $) {
          * 42. Iberry: android.+iberry.+auxus
          * 43. Aigo: android.+aigopad
          * 44. Airpad: android.*(airpad|liquid metal)
-         * 45. HCL: android.+hcl.+tablet
+         * 45. HCL: android.+hcl.+tablet|connect-3g-2.0|connect-2g-2.0|me tablet u1|me tablet u2|me tablet g1|me tablet x1|me tablet y2|me tablet sync
          * 46. Karbonn: android.*(a39|a37|a34|st8|st10|st7|smarttab|smart +tab)
          * 47. Micromax: android.*(micromax.+funbook|funbook|p250|p275|p300|p350|p362|p500|p600)|micromax.*(p250|p275|p350|p362|p500|p600)|funbook
          * 48. Penta: android.+penta
@@ -3130,7 +3132,7 @@ var Restive = (function(window, document, $) {
          * 59. Medion: android.*lifetab_(s9512|p9514|p9516)
          * 60. IRU Tablet: m702pro
          * 61. IRULU: irulu-al101
-         * 62. Prestigio: pmp3170b|pmp3270b|pmp3470b|pmp7170b|pmp3370b|pmp3570c|pmp5870c|pmp3670b|pmp5570c|pmp5770d|pmp3970b|pmp3870c|pmp5580c|pmp5880d|pmp5780d|pmp5588c|pmp7280c|pmp7280|pmp7880d|pmp5597d|pmp5597|pmp7100d|per3464|per3274|per3574|per3884|per5274|per5474|pmp5097cpro|pmp5097|pmp7380d
+         * 62. Prestigio: pmp3170b|pmp3270b|pmp3470b|pmp7170b|pmp3370b|pmp3570c|pmp5870c|pmp3670b|pmp5570c|pmp5770d|pmp3970b|pmp3870c|pmp5580c|pmp5880d|pmp5780d|pmp5588c|pmp7280c|pmp7280|pmp7880d|pmp5597d|pmp5597|pmp7100d|per3464|per3274|per3574|per3884|per5274|per5474|pmp5097cpro|pmp5097|pmp7380d|pmp5297c|pmp5297c_quad
          * 63. AllView: allview.*(viva|alldro|city|speed|all tv|frenzy|quasar|shine|tx1|ax1|ax2)
          * 64: Megafon: megafon v9
          * 65: Lava: android.+(z7c|z7h|z7s)
@@ -3144,23 +3146,38 @@ var Restive = (function(window, document, $) {
          * 73. MIDTablet: m9701|m9000|m9100|m806|m1052|m806|t703|mid701|mid713|mid710|mid727|mid760|mid830|mid728|mid933|mid125|mid810|mid732|mid120|mid930|mid800|mid731|mid900|mid100|mid820|mid735|mid980|mid130|mid833|mid737|mid960|mid135|mid860|mid736|mid140|mid930|mid835|mid733
          * 74. Fujitsu: android.*\b(f-01d|f-05e|f-10d|m532|q572)\b
          * 75. GPad: android.+casiatab8
-         * 200. Generic Tablet: android.*\b97d\b|tablet(?!.*pc)|viewpad7|lg-v909|mid7015|bntv250a|logicpd zoom2|\ba7eb\b|catnova8|a1_07|ct704|ct1002|\bm721\b|hp-tablet
+         * 76. Tesco Hudl: android.+hudl
+         * 77. Polaroid: android.*(polaroid.*tablet|pmid1000|pmid10c|pmid800|pmid700|pmid4311|pmid701c|pmid701i|pmid705|pmid706|pmid70dc|pmid70c|pmid720|pmid80c|pmid901|ptab7200|ptab4300|ptab750|midc010|midc407|midc409|midc410|midc497|midc700|midc800|midc801|midc802|midc901)
+         * 78. Eboda: e-boda.+(supreme|impresspeed|izzycomm|essential)
+         * 79. HP Tablet: hp slate 7|hp elitepad 900|hp-tablet|elitebook.*touch
+         * 80. AllFineTablet: fine7 genius|fine7 shine|fine7 air|fine8 style|fine9 more|fine10 joy|fine11 wide
+         * 81. Sanei: android.*\b(n10|n10-4core|n78|n79|n83|n90 ii)\b
+         * 82: ProScan Tablet: \b(pem63|plt1023g|plt1041|plt1044|plt1044g|plt1091|plt4311|plt4311pl|plt4315|plt7030|plt7033|plt7033d|plt7035|plt7035d|plt7044k|plt7045k|plt7045kb|plt7071kg|plt7072|plt7223g|plt7225g|plt7777g|plt7810k|plt7849g|plt7851g|plt7852g|plt8015|plt8031|plt8034|plt8036|plt8080k|plt8082|plt8088|plt8223g|plt8234g|plt8235g|plt8816k|plt9011|plt9045k|plt9233g|plt9735|plt9760g|plt9770g)\b
+         * 83: YonesTablet : bq1078|bc1003|bc1077|rk9702|bc9730|bc9001|it9001|bc7008|bc7010|bc708|bc728|bc7012|bc7030|bc7027|bc7026
+         * 84: ChangJiaTablet: tpc7102|tpc7103|tpc7105|tpc7106|tpc7107|tpc7201|tpc7203|tpc7205|tpc7210|tpc7708|tpc7709|tpc7712|tpc7110|tpc8101|tpc8103|tpc8105|tpc8106|tpc8203|tpc8205|tpc8503|tpc9106|tpc9701|tpc97101|tpc97103|tpc97105|tpc97106|tpc97111|tpc97113|tpc97203|tpc97603|tpc97809|tpc97205|tpc10101|tpc10103|tpc10106|tpc10111|tpc10203|tpc10205|tpc10503
+         * 85: RoverPad: android.*(roverpad|rp3wg70)
+         * 86. PointofView Tablet: tab-p506|tab-navi-7-3g-m|tab-p517|tab-p-527|tab-p701|tab-p703|tab-p721|tab-p731n|tab-p741|tab-p825|tab-p905|tab-p925|tab-pr945|tab-pl1015|tab-p1025|tab-pi1045|tab-p1325|tab-protab[0-9]+|tab-protab25|tab-protab26|tab-protab27|tab-protab26xl|tab-protab2-ips9|tab-protab30-ips9|tab-protab25xxl|tab-protab26-ips10|tab-protab30-ips10
+         * 87: Overmax: android.*ov-(steelcore|newbase|basecore|baseone|exellen|quattor|edutab|solution|action|basictab|teddytab|magictab|stream|tb-08|tb-09)
+         * 88: DPS Tablet: dps dream 9|dps dual 7
+         * 89: Visture Tablet: v97 hd|i75 3g|visture v4( hd)?|visture v5( hd)?|visture v10
+         * 90: Cresta Tablet: ctp(-)?810|ctp(-)?818|ctp(-)?828|ctp(-)?838|ctp(-)?888|ctp(-)?978|ctp(-)?980|ctp(-)?987|ctp(-)?988|ctp(-)?989
+         * 200. Generic Tablet: android.*\b97d\b|tablet(?!.*pc)|viewpad7|lg-v909|mid7015|bntv250a|logicpd zoom2|\ba7eb\b|catnova8|a1_07|ct704|ct1002|\bm721\b|rk30sdk|\bevotab\b|smarttabii10|smarttab10
          */
         regex_raw_str = ""+
             "android.+kindle|kindle +fire|android.+silk|silk.*accelerated|"+
             "android.+nexus +(7|10)|"+
-            "samsung.*tablet|galaxy.*tab|sc-01c|gt-p1000|gt-p1003|gt-p1010|gt-p3105|gt-p6210|gt-p6800|gt-p6810|gt-p7100|gt-p7300|gt-p7310|gt-p7500|gt-p7510|sch-i800|sch-i815|sch-i905|sgh-i957|sgh-i987|sgh-t849|sgh-t859|sgh-t869|sph-p100|gt-p3100|gt-p3108|gt-p3110|gt-p5100|gt-p5110|gt-p6200|gt-p7320|gt-p7511|gt-n8000|gt-p8510|sgh-i497|sph-p500|sgh-t779|sch-i705|sch-i915|gt-n8013|gt-p3113|gt-p5113|gt-p8110|gt-n8010|gt-n8005|gt-n8020|gt-p1013|gt-p6201|gt-p7501|gt-n5100|gt-n5110|shv-e140k|shv-e140l|shv-e140s|shv-e150s|shv-e230k|shv-e230l|shv-e230s|shw-m180k|shw-m180l|shw-m180s|shw-m180w|shw-m300w|shw-m305w|shw-m380k|shw-m380s|shw-m380w|shw-m430w|shw-m480k|shw-m480s|shw-m480w|shw-m485w|shw-m486w|shw-m500w|gt-i9228|sch-p739|sch-i925|gt-i9200|gt-i9205|gt-p5200|gt-p5210|sm-t311|sm-t310|sm-t210|sm-t211|sm-p900|"+
+            "samsung.*tablet|galaxy.*tab|sc-01c|gt-p1000|gt-p1003|gt-p1010|gt-p3105|gt-p6210|gt-p6800|gt-p6810|gt-p7100|gt-p7300|gt-p7310|gt-p7500|gt-p7510|sch-i800|sch-i815|sch-i905|sgh-i957|sgh-i987|sgh-t849|sgh-t859|sgh-t869|sph-p100|gt-p3100|gt-p3108|gt-p3110|gt-p5100|gt-p5110|gt-p6200|gt-p7320|gt-p7511|gt-n8000|gt-p8510|sgh-i497|sph-p500|sgh-t779|sch-i705|sch-i915|gt-n8013|gt-p3113|gt-p5113|gt-p8110|gt-n8010|gt-n8005|gt-n8020|gt-p1013|gt-p6201|gt-p7501|gt-n5100|gt-n5110|shv-e140k|shv-e140l|shv-e140s|shv-e150s|shv-e230k|shv-e230l|shv-e230s|shw-m180k|shw-m180l|shw-m180s|shw-m180w|shw-m300w|shw-m305w|shw-m380k|shw-m380s|shw-m380w|shw-m430w|shw-m480k|shw-m480s|shw-m480w|shw-m485w|shw-m486w|shw-m500w|gt-i9228|sch-p739|sch-i925|gt-i9200|gt-i9205|gt-p5200|gt-p5210|sm-t311|sm-t310|sm-t210|sm-t210r|sm-t211|sm-p600|sm-p601|sm-p605|sm-p900|sm-t217|sm-t217a|sm-t217s|sm-p6000|sm-t3100|sgh-i467|xe500|"+
             "htc flyer|htc jetstream|htc-p715a|htc evo view 4g|pg41200|"+
             "xoom|sholest|mz615|mz605|mz505|mz601|mz602|mz603|mz604|mz606|mz607|mz608|mz609|mz615|mz616|mz617|"+
-            "transformer|^.*padfone((?!mobile).)*$|tf101|tf201|tf300|tf700|me370t|me301t|slider *sl101|"+
-            "android.+nook|nookcolor|nook browser|bntv250a|logicpd zoom2|"+
-            "android.*\\b(a100|a101|a110|a200|a210|a211|a500|a501|a510|a511|a700|a701|w500|w500p|w501|w501p|w510|w511|w700|g100|g100w|b1-a71)\\b|"+
-            "android.*(at100|at105|at200|at205|at270|at275|at300|at305|at1s5|at500|at570|at700|at830)|"+
+            "transformer|^.*padfone((?!mobile).)*$|tf101|tf201|tf300|tf700|tf701|tf810|me171|me301t|me302c|me371mg|me370t|me372mg|me172v|me173x|me400c|slider *sl101|"+
+            "android.+nook|nookcolor|nook browser|bnrv200|bnrv200a|bntv250|bntv250a|bntv400|bntv600|logicpd zoom2|"+
+            "android.*\\b(a100|a101|a110|a200|a210|a211|a500|a501|a510|a511|a700|a701|w500|w500p|w501|w501p|w510|w511|w700|g100|g100w|b1-a71|b1-710|b1-711|a1-810)\\b|w3-810|"+
+            "android.*(at100|at105|at200|at205|at270|at275|at300|at305|at1s5|at500|at570|at700|at830)|toshiba.*folio|"+
             "\\bl-06c|lg-v900|lg-v905|lg-v909|"+
             "android.+(xenta.+tab|tab210|tab211|tab224|tab250|tab260|tab264|tab310|tab360|tab364|tab410|tab411|tab420|tab424|tab450|tab460|tab461|tab464|tab465|tab467|tab468|tab469)|"+
             "android.+\\boyo\\b|life.*(p9212|p9514|p9516|s9512)|lifetab|"+
             "an10g2|an7bg3|an7fg3|an8g3|an8cg3|an7g3|an9g3|an7dg3|an7dg3st|an7dg3childpad|an10bg3|an10bg3dt|"+
-            "android.+archos|101g9|80g9|"+
+            "android.+archos|\\b(101g9|80g9|a101it)\\b|qilive 97r|"+
             "novo7|novo7aurora|novo7basic|novo7paladin|novo8|novo9|novo10|"+
             "sony tablet|sony tablet s|sgpt12|sgpt121|sgpt122|sgpt123|sgpt111|sgpt112|sgpt113|sgpt211|sgpt213|ebrd1101|ebrd1102|ebrd1201|sgpt311|sgpt312|sonyso-03e|"+
             "android.*(k8gt|u9gt|u10gt|u16gt|u17gt|u18gt|u19gt|u20gt|u23gt|u30gt)|cube u8gt|"+
@@ -3174,7 +3191,7 @@ var Restive = (function(window, document, $) {
             "\\bn-06d|\\bn-08d|"+
             "pantech.*p4100|"+
             "broncho.*(n701|n708|n802|a710)|"+
-            "touchpad.*[78910]|"+
+            "touchpad.*[78910]|\\btouchtab\\b|"+
             "z1000|z99 2g|z99|z930|z999|z990|z909|z919|z900|"+
             "tb07sta|tb10sta|tb07fta|tb10fta|"+
             "android.*\\bnabi|"+
@@ -3190,7 +3207,7 @@ var Restive = (function(window, document, $) {
             "android.+iberry.+auxus|"+
             "android.+aigopad|"+
             "android.*(airpad|liquid metal)|"+
-            "android.+hcl.+tablet|"+
+            "android.+hcl.+tablet|connect-3g-2.0|connect-2g-2.0|me tablet u1|me tablet u2|me tablet g1|me tablet x1|me tablet y2|me tablet sync|"+
             "android.*(a39|a37|a34|st8|st10|st7|smarttab|smart +tab)|"+
             "android.*(micromax.+funbook|funbook|p250|p275|p300|p350|p362|p500|p600)|micromax.*(p250|p275|p350|p362|p500|p600)|funbook|"+
             "android.+penta|"+
@@ -3207,7 +3224,7 @@ var Restive = (function(window, document, $) {
             "android.*lifetab_(s9512|p9514|p9516)|"+
             "m702pro|"+
             "irulu-al101|"+
-            "pmp3170b|pmp3270b|pmp3470b|pmp7170b|pmp3370b|pmp3570c|pmp5870c|pmp3670b|pmp5570c|pmp5770d|pmp3970b|pmp3870c|pmp5580c|pmp5880d|pmp5780d|pmp5588c|pmp7280c|pmp7280|pmp7880d|pmp5597d|pmp5597|pmp7100d|per3464|per3274|per3574|per3884|per5274|per5474|pmp5097cpro|pmp5097|pmp7380d|"+
+            "pmp3170b|pmp3270b|pmp3470b|pmp7170b|pmp3370b|pmp3570c|pmp5870c|pmp3670b|pmp5570c|pmp5770d|pmp3970b|pmp3870c|pmp5580c|pmp5880d|pmp5780d|pmp5588c|pmp7280c|pmp7280|pmp7880d|pmp5597d|pmp5597|pmp7100d|per3464|per3274|per3574|per3884|per5274|per5474|pmp5097cpro|pmp5097|pmp7380d|pmp5297c|pmp5297c_quad|"+
             "allview.*(viva|alldro|city|speed|all tv|frenzy|quasar|shine|tx1|ax1|ax2)|"+
             "megafon +v9|"+
             "android.+(z7c|z7h|z7s)|"+
@@ -3220,7 +3237,22 @@ var Restive = (function(window, document, $) {
             "m9701|m9000|m9100|m806|m1052|m806|t703|mid701|mid713|mid710|mid727|mid760|mid830|mid728|mid933|mid125|mid810|mid732|mid120|mid930|mid800|mid731|mid900|mid100|mid820|mid735|mid980|mid130|mid833|mid737|mid960|mid135|mid860|mid736|mid140|mid930|mid835|mid733|"+
             "android.*\\b(f-01d|f-05e|f-10d|m532|q572)\\b|"+
             "android.+casiatab8|"+
-            "android.*\\b97d\\b|tablet(?!.*pc)|viewpad7|lg-v909|mid7015|bntv250a|logicpd zoom2|\\ba7eb\\b|catnova8|a1_07|ct704|ct1002|\\bm721\\b|hp-tablet"+
+            "android.+hudl|"+
+            "android.*(polaroid.*tablet|pmid1000|pmid10c|pmid800|pmid700|pmid4311|pmid701c|pmid701i|pmid705|pmid706|pmid70dc|pmid70c|pmid720|pmid80c|pmid901|ptab7200|ptab4300|ptab750|midc010|midc407|midc409|midc410|midc497|midc700|midc800|midc801|midc802|midc901)|"+
+            "e-boda.+(supreme|impresspeed|izzycomm|essential)|"+
+            "hp slate 7|hp elitepad 900|hp-tablet|elitebook.*touch|"+
+            "fine7 genius|fine7 shine|fine7 air|fine8 style|fine9 more|fine10 joy|fine11 wide|"+
+            "android.*\\b(n10|n10-4core|n78|n79|n83|n90 ii)\\b|"+
+            "\\b(pem63|plt1023g|plt1041|plt1044|plt1044g|plt1091|plt4311|plt4311pl|plt4315|plt7030|plt7033|plt7033d|plt7035|plt7035d|plt7044k|plt7045k|plt7045kb|plt7071kg|plt7072|plt7223g|plt7225g|plt7777g|plt7810k|plt7849g|plt7851g|plt7852g|plt8015|plt8031|plt8034|plt8036|plt8080k|plt8082|plt8088|plt8223g|plt8234g|plt8235g|plt8816k|plt9011|plt9045k|plt9233g|plt9735|plt9760g|plt9770g)\\b|"+
+            "bq1078|bc1003|bc1077|rk9702|bc9730|bc9001|it9001|bc7008|bc7010|bc708|bc728|bc7012|bc7030|bc7027|bc7026|"+
+            "tpc7102|tpc7103|tpc7105|tpc7106|tpc7107|tpc7201|tpc7203|tpc7205|tpc7210|tpc7708|tpc7709|tpc7712|tpc7110|tpc8101|tpc8103|tpc8105|tpc8106|tpc8203|tpc8205|tpc8503|tpc9106|tpc9701|tpc97101|tpc97103|tpc97105|tpc97106|tpc97111|tpc97113|tpc97203|tpc97603|tpc97809|tpc97205|tpc10101|tpc10103|tpc10106|tpc10111|tpc10203|tpc10205|tpc10503|"+
+            "android.*(roverpad|rp3wg70)|"+
+            "tab-p506|tab-navi-7-3g-m|tab-p517|tab-p-527|tab-p701|tab-p703|tab-p721|tab-p731n|tab-p741|tab-p825|tab-p905|tab-p925|tab-pr945|tab-pl1015|tab-p1025|tab-pi1045|tab-p1325|tab-protab[0-9]+|tab-protab25|tab-protab26|tab-protab27|tab-protab26xl|tab-protab2-ips9|tab-protab30-ips9|tab-protab25xxl|tab-protab26-ips10|tab-protab30-ips10|"+
+            "android.*ov-(steelcore|newbase|basecore|baseone|exellen|quattor|edutab|solution|action|basictab|teddytab|magictab|stream|tb-08|tb-09)|"+
+            "dps dream 9|dps dual 7|"+
+            "v97 hd|i75 3g|visture v4( hd)?|visture v5( hd)?|visture v10|"+
+            "ctp(-)?810|ctp(-)?818|ctp(-)?828|ctp(-)?838|ctp(-)?888|ctp(-)?978|ctp(-)?980|ctp(-)?987|ctp(-)?988|ctp(-)?989|"+
+            "android.*\\b97d\\b|tablet(?!.*pc)|viewpad7|lg-v909|mid7015|bntv250a|logicpd zoom2|\\ba7eb\\b|catnova8|a1_07|ct704|ct1002|\\bm721\\b|rk30sdk|\\bevotab\\b|smarttabii10|smarttab10"+
             "";
 
         //Check Main Tablet
@@ -3270,7 +3302,7 @@ var Restive = (function(window, document, $) {
         /**
          * Check for known TVs
          */
-        var is_tv_bool = /googletv|smart\-tv|smarttv|internet +tv|netcast|nettv|appletv|boxee|kylo|roku|vizio|dlnadoc|ce\-html|xbox|playstation *(3|4)|wii/i.test(nav);
+        var is_tv_bool = /googletv|smart\-tv|smarttv|internet +tv|netcast|nettv|appletv|boxee|kylo|roku|vizio|dlnadoc|ce\-html|ouya|xbox|playstation *(3|4)|wii/i.test(nav);
 
         switch(true)
         {
@@ -3984,6 +4016,8 @@ var Restive = (function(window, document, $) {
         vPitch: vPitch,
         dSpan: dSpan,
         dPitch: dPitch,
+        cSpan: cSpan,
+        cPitch: cPitch,
         isRetina: isRetina,
         getPixelRatio: getPixelRatio,
         getPlatform: getPlatform,
@@ -4013,11 +4047,11 @@ var Restive = (function(window, document, $) {
 })(window, document, jQuery);
 
 /*
- * Restive.JS Basic - v1.0.0
- * https://github.com/obihill/restive.js
+ * Restive Plugin Basic - v1.0.0
+ * https://github.com/obihill/restive-plugin
  *
  * Copyright 2013 Obinwanne Hill <https://about.me/obinwanne.hill>
- * Released under License <http://plugin.restive.io/legal/license_basic.html>
+ * Released under License <http://plugin.restive.io/legal/license-basic.html>
  */
 (function (window, document, $, undefined) {
     //Gets the content of a function
@@ -4074,7 +4108,7 @@ var Restive = (function(window, document, $) {
                 switch(true)
                 {
                     case (is_multi_abort_2_bool):
-                        methods._error('rstv_error_003', 'If you are calling the Restive.JS Constructor more than once, you must call $.restive.endMulti() at the end!');
+                        methods._error('rstv_error_003', 'If you are calling the Restive Plugin Constructor more than once, you must call $.restive.endMulti() at the end!');
                         return false;
                         break;
                 }
@@ -4090,7 +4124,7 @@ var Restive = (function(window, document, $) {
                 $breakpoints_arr = methods.getBreakpoints($breakpoints_init_arr, $classes_init_arr);
 
                 /**
-                 * Create Device Core Information
+                 * Generate Restive Core Information
                  */
                 var $rstv_core_info_arr = [];
 
@@ -4100,13 +4134,13 @@ var Restive = (function(window, document, $) {
                 //A2. Get the Device Form Factor
                 $rstv_core_info_arr["formfactor"] = methods.getFormFactor();
 
-                //A3. Check if device is a mobile device
+                //A3. Check if Device is a mobile device
                 $rstv_core_info_arr["is_mobile"] = methods.isMobile();
 
                 //A4. Get the Device Pixel Ratio
                 $rstv_core_info_arr["pixelratio"] = methods.getPixelRatio();
 
-                //A5. Get the Orientation and set Orientation Marker
+                //A5. Get the Orientation and Set Orientation Marker
                 $rstv_core_info_arr["orientation"] = methods.getOrientation();
 
                 //Set Event Handlers and Callbacks
@@ -4385,17 +4419,17 @@ var Restive = (function(window, document, $) {
                     break;
             }
 
-            //Abort Restive.JS if multiple constructor anomalies occur
+            //Abort Restive Plugin if multiple constructor anomalies occur
             switch(true)
             {
                 case (is_multi_abort_1_bool):
-                    methods._error('rstv_error_004', 'If you are calling the Restive.JS Constructor more than once, you must call $.restive.startMulti() before calling these constructors!');
+                    methods._error('rstv_error_004', 'If you are calling the Restive Plugin Constructor more than once, you must call $.restive.startMulti() before calling these constructors!');
                     return false;
                     break;
             }
 
             /**
-             * When multiple Restive.JS Plugin Constructors are used, and a match is found, that match is saved
+             * When multiple Restive Plugin Constructors are used, and a match is found, that match is saved
              * On successive attempts, the breakpoint conditions that previously failed are prevented from being executed further to improve overall performace
              * The following code manages this process
              */
@@ -4420,6 +4454,7 @@ var Restive = (function(window, document, $) {
             //get Device and Orientation Options and Information
             var options_platform_str = rstv_options.platform,
                 options_formfactor_str = rstv_options.formfactor,
+                options_force_dip_str = rstv_options.force_dip,
                 restive_platform_str = rstv_core_info["platform"],
                 restive_formfactor_str = rstv_core_info["formfactor"],
                 restive_pixelratio_str = rstv_core_info["pixelratio"],
@@ -4431,6 +4466,7 @@ var Restive = (function(window, document, $) {
 
             var dim_arr = [],
                 viewport_w_int,
+                viewport_w_active_int,
                 bp_class_arr = [],
                 is_class_def_bool = false,
                 bp_width_tok_str = bp_arr["bp_w"],
@@ -4444,6 +4480,14 @@ var Restive = (function(window, document, $) {
                 bp_type_arr = [];
 
             viewport_w_int = Restive.viewportW();
+            viewport_w_active_int = viewport_w_int;
+
+            switch(true)
+            {
+                case (options_force_dip_str == true):
+                    viewport_w_active_int = Restive.pixelW();
+                    break;
+            }
 
             //Extract Data to Array
             bp_width_arr = arrayToInteger(explode("|", bp_width_tok_str));
@@ -4615,15 +4659,16 @@ var Restive = (function(window, document, $) {
                         bp_width_min_int = bp_width_start_int;
                         bp_width_max_int = bp_width_int;
 
-                        span_range_bool = Restive.vSpan(bp_width_min_int, bp_width_max_int);
                         break;
 
                     default:
                         bp_width_min_int = (bp_width_start_int == 0) ? bp_width_start_int : bp_width_start_int + 1;
                         bp_width_max_int = bp_width_int;
-
-                        span_range_bool = Restive.vSpan(bp_width_min_int, bp_width_max_int);
                 }
+
+                //Check for Matching Breakpoints
+                span_range_bool = Restive.vSpan(bp_width_min_int, bp_width_max_int);
+
 
                 /**
                  * Set Breakpoints
@@ -4636,9 +4681,9 @@ var Restive = (function(window, document, $) {
                 switch(true)
                 {
                     case (span_range_bool && ort_range_bool):
-                        bp_width_diff_r_int = bp_width_max_int - viewport_w_int;
+                        bp_width_diff_r_int = bp_width_max_int - viewport_w_active_int;
                         bp_width_diff_r_abs_int = Math.abs(bp_width_diff_r_int);
-                        bp_width_diff_l_int = viewport_w_int - bp_width_min_int;
+                        bp_width_diff_l_int = viewport_w_active_int - bp_width_min_int;
 
                         bp_width_diff_r_comp_int = bp_width_max_int*0.1;
                         bp_width_diff_r_comp_int = Math.round(bp_width_diff_r_comp_int);
@@ -4776,6 +4821,7 @@ var Restive = (function(window, document, $) {
                                         case (bpm_h_counter_int > 1):
                                             //check if the current viewport offers a better match
                                             var ss_bp_width_diff_r_abs_int = parseInt(Restive.store("rstv_cache_bpm_viewport_diff"));
+
                                             switch(true)
                                             {
                                                 case (bp_width_diff_r_abs_int < ss_bp_width_diff_r_abs_int):
@@ -5042,7 +5088,7 @@ var Restive = (function(window, document, $) {
             ;
 
             /**
-             * Check if Restive.JS Constructor has been called multiple times
+             * Check if Restive Plugin Constructor has been called multiple times
              */
             switch(true)
             {
@@ -5058,7 +5104,7 @@ var Restive = (function(window, document, $) {
             }
 
             /**
-             * Check if Restive.JS Constructor has been called multiple times and has not been finalized properly with endMulti() method
+             * Check if Restive Plugin Constructor has been called multiple times and has not been finalized properly with endMulti() method
              */
             switch(true)
             {
@@ -5184,7 +5230,7 @@ var Restive = (function(window, document, $) {
 		}
 		else 
 		{
-		   	$.error( 'Method ' +  args + ' does not exist on Restive.JS' );
+		   	$.error( 'Method ' +  args + ' does not exist on Restive Plugin' );
 		}
 	};	
 	
@@ -5197,6 +5243,7 @@ var Restive = (function(window, document, $) {
         platform: 'all',						            //all, ios, android, symbian, blackberry, windows
         formfactor: 'all',                                  //all, pc, tv, tablet, phone
         turbo_classes: '',                                  //special class-based functionality
+        force_dip: false,                                   //force breakpoints to use device-independent pixels
         onReady: 		    function(){},
 		onResize: 		    function(){},
 		onRotate:		    function(){},
