@@ -1,28 +1,25 @@
 {
-	"name": "device",
+	"name": "restive",
 	"version": "1.0.0",
-	"title": "Device.JS Plugin",
+	"title": "Restive Plugin",
 	"author": {
 		"name": "Obinwanne Hill",
-		"email": "ohill@devicejs.com",
+		"email": "ohill@restive.io",
 		"url": "http://about.me/obinwanne.hill"
 	},
 	"licenses": [
 	{
 		"type": "Custom",
-		"url": "http://plugin.devicejs.com/legal/license-basic.html"
+		"url": "http://plugin.restive.io/legal/license-basic.html"
 	}
 	],
 	"dependencies": {
 		"jquery": ">=1.7.1"
 	},
-	"description": "jQuery plugin for helping Web Designers add Responsive + Adaptive Features to their Web Sites. * User-friendly - Set up advanced responsive and adaptive features easily and intuitive. * Versatile - Easily detect and target multiple form factors and platforms. *Powerful - Numerous advanced features and combinations available. ",
+	"description": "jQuery plugin for helping Web Designers add Responsive + Adaptive Features to their Web Sites. * User-friendly - Set up advanced responsive and adaptive features easily and intuitively. * Versatile - Easily detect and target multiple form factors and platforms. *Powerful - Numerous advanced features and combinations available. ",
 	"keywords": [
-		"device.js",
-		"devicedotjs",
-		"devicejs",
-		"device",
 		"restive",
+		"restive.js",
 		"responsive",
 		"adaptive",
 		"design",
@@ -35,15 +32,15 @@
 		"jquery",
 		"plugin"
 	],
-	"homepage": "https://github.com/obihill/device.js",
-	"docs": "http://plugin.devicejs.com/docs/index.html",
-	"demo": "http://plugin.devicejs.com/demo.html",
-	"download": "http://plugin.devicejs.com",
-	"bugs": "https://github.com/obihill/device.js/issues",
+	"homepage": "https://github.com/obihill/restive-plugin",
+	"docs": "http://docs.restive.io/plugin",
+	"demo": "http://plugin.restive.io/demo.html",
+	"download": "http://plugin.restive.io",
+	"bugs": "https://github.com/obihill/restive-plugin/issues",
 	"maintainers": [
 	{
 		"name": "Obinwanne Hill",
-		"email": "ohill@devicejs.com",
+		"email": "ohill@restive.io",
 		"url": "http://about.me/obinwanne.hill"
 	}
 	]	
