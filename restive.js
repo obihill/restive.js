@@ -1693,7 +1693,7 @@ var Restive = (function(window, document, $) {
     {
         case (typeof $ != 'function'):
             //exit gracefully if missing
-            throw 'Restive.JS requires JQuery to run!';
+            throw 'Restive Plugin requires JQuery to run!';
         break;
     }
 
@@ -1766,7 +1766,7 @@ var Restive = (function(window, document, $) {
     /**
      * Reinitializes the Restive Class on Demand
      * It resets Dimension, Orientation, and Timestamp Info
-     * The Restive Class is initialized as soon as Restive.JS Plugin is called via <script\> tag. In certain circumstances
+     * The Restive Class is initialized as soon as Restive Plugin is called via <script\> tag. In certain circumstances
      * this might bring out a slight change in Dimension and Orientation Data especially for PCs.
      * Re-initialization will usually correct any discrepancies
      * NOTE: It is advised that you use this function only once, within document.ready, and before any other Restive-related methods
@@ -1799,7 +1799,7 @@ var Restive = (function(window, document, $) {
     }
 
     /**
-     * Keeps track of how many times Restive.JS is loaded in rapid succession in a single browser session
+     * Keeps track of how many times Restive Plugin is loaded in rapid succession in a single browser session
      * @private
      */
     function _loadCounter()
@@ -1816,7 +1816,7 @@ var Restive = (function(window, document, $) {
     }
 
     /**
-     * This is a special function to deal with certain issues experienced when using Restive.JS Plugin in Chrome Ripple
+     * This is a special function to deal with certain issues experienced when using Restive Plugin in Chrome Ripple
      * and other Browser Based Mobile Device emulators that load scripts more than once in rapid succession
      * when they are being initialized
      * @private
@@ -1961,7 +1961,7 @@ var Restive = (function(window, document, $) {
     function storeVarTracker(key_str, value_str)
     {
         /**
-         * This function saves the current Restive.JS settings tracking code to history
+         * This function saves the current Restive Plugin settings tracking code to history
          */
         var myArgs = Array.prototype.slice.call(arguments),
             store_type_str = (isString(myArgs[2]) && myArgs[2] != "") ? myArgs[2] : 'ck',
