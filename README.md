@@ -153,8 +153,8 @@ An itemized list of dimensions that define a specific range within which an adap
 Breakpoints are defined as an array:
 
 ```javascript
-    //example
-    breakpoints: ['240', '320', '480', '640']
+//example
+breakpoints: ['240', '320', '480', '640']
 ```
 
 The above setting means that the plugin will monitor the viewport for the following width ranges: 0 to 240px, 241 to 320 pixels, 321 to 480 pixels, and 481 to 640 pixels. It will then apply classes (see next option) to the DOM based on which declared range the viewport width matches.
@@ -173,8 +173,8 @@ An itemized and corresponding list of CSS classes that will be set to the matche
 Classes are defined as an array:
 
 ```javascript
-    //example
-    classes: ['240-c', '320-c', '480-c', '640-c']
+//example
+classes: ['240-c', '320-c', '480-c', '640-c']
 ```
 
 The above setting will add the class `320-c` to the selected DOM element when the viewport is between 241 and 320 pixels (considering the `breakpoints` options defined earlier).
