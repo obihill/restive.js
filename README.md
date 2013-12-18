@@ -42,19 +42,19 @@ The Pro Version has some additional features like `Modularity` and `Breakpoint A
 
 [Click here to view the License Agreement](/LICENSE.md) for the Basic Version of Restive Plugin.
 
-Please note that Restive Plugin Basic is **FREE** (and always will be) for Non-Commercial and Personal Projects. If you plan to use Restive Plugin Basic in a Commercial Project, you will need to purchase a Basic Commercial License. Pay Once, Use Forever `#POUF`.
-
-[![Buy Basic Commercial License](/img_button_plugin_buynow_pouf.png)](https://restive.dpdcart.com/cart/add?product_id=72269&method_id=74835)
-
-Use Coupon Code **GITHUB-SAVE** to get 10% off Original License Price. Valid for first 500 users.
-
-[Click here for more information on what is considered **Commercial**](/WHAT-IS-COMMERCIAL.md)
-
 
 
 ## Changelog
 
 [Click here to view the Changelog](/CHANGELOG.md)
+
+
+
+## Donate
+
+Please make a donation of $10 This version of Restive Plugin e jQuery Project is financed entirely by donations and contributions from the jQuery community. Thank you for your support!
+
+[![Make a $10 Donation](/img_button_donate.png)](https://restive.dpdcart.com/cart/add?product_id=72269&method_id=74835)
 
 
 
