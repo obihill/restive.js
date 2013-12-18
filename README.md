@@ -50,14 +50,6 @@ The Pro Version has some additional features like `Modularity` and `Breakpoint A
 
 
 
-## Donate
-
-Please make a donation of $10 This version of Restive Plugin e jQuery Project is financed entirely by donations and contributions from the jQuery community. Thank you for your support!
-
-[![Make a $10 Donation](/img_button_donate.png)](https://restive.dpdcart.com/cart/add?product_id=72269&method_id=74835)
-
-
-
 ## Installation
 
 Include script *after* the jQuery library:
