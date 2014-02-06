@@ -1,14 +1,14 @@
-# Restive Plugin
+# Restive.JS
 
-The Web today is [Restive](http://blog.restive.io/posts/8359732/restive-web-design)! Restive Plugin is a JQuery Plugin that helps you quickly and easily add features to your Web Site that enable it respond and adapt to virtually every Web-enabled Device. Using a combination of Device Detection, Advanced Breakpoints Management, and Orientation Management, the Plugin will give your Web site an uncanny ability to stay robust in the face of a constantly changing device landscape.
+Restive.JS is a JQuery Plugin that helps you quickly and easily add features to your Web Site that enable it respond and adapt to virtually every Web-enabled Device. Using a combination of Device Detection, Advanced Breakpoints Management, and Orientation Management, the Plugin will give your Web site an uncanny ability to stay robust in the face of a constantly changing device landscape.
 
 
 
-## Why Restive Plugin?!
+## Why Restive.JS?!
 
 As a Web Designer, designing Web sites for Personal Computers and for Mobile Devices is enough work already. You can design all your layouts using HTML and CSS, but enabling your Web sites to be Responsive/Adaptive usually requires a lot more work than is reasonable. 
 
-If you find that you fit one or more of the criteria below, then you might want to consider using Restive Plugin:
+If you find that you fit one or more of the criteria below, then you might want to consider using Restive.JS:
 
 - You design Web Sites that need to be Responsive or Adaptive
 - You are not completely satisfied with the tools and/or approaches you currently use to achieve this "Responsiveness" or "Adaptiveness"
@@ -17,7 +17,7 @@ If you find that you fit one or more of the criteria below, then you might want 
 - You need a solution that you can truly 'Set-and-Forget'
 - You need a solution that is very easy to understand, use, and maintain
 
-**Restive Plugin enables you to Become an Expert in Responsive + Adaptive Web Design in Minutes!**
+**Restive.JS enables you to Become an Expert in Responsive + Adaptive Web Design in Minutes!**
 
 
 
@@ -29,18 +29,18 @@ If you find that you fit one or more of the criteria below, then you might want 
 
 ## Versions
 
-There are two versions of the Restive Plugin:
+There are two versions of the Restive.JS:
 
 1. Basic Version: this is the version available here on Github
-2. Pro Version: this is available exclusively via the [Restive Plugin Web Site](http://plugin.restive.io)
+2. Pro Version: this is available exclusively via the [Restive.JS Web Site](http://plugin.restive.io)
 
-The Pro Version has some additional features like `Modularity` and `Breakpoint Analytics`. See the **[Restive Plugin Docs](http://docs.restive.io/plugin)** for more information.
+The Pro Version has some additional features like `Modularity` and `Breakpoint Analytics`. See the **[Restive.JS Docs](http://docs.restive.io/restivejs)** for more information.
 
 
 
 ## License
 
-[Click here to view the License Agreement](/LICENSE.md) for the Basic Version of Restive Plugin.
+[Click here to view the License Agreement](/LICENSE.md) for the Basic Version of Restive.JS.
 
 
 
@@ -63,7 +63,7 @@ Include script *after* the jQuery library:
 
 ## Usage
 
-The basic format for using Restive Plugin is as follows:
+The basic format for using Restive.JS is as follows:
 
 ```html
 <script>
@@ -73,7 +73,7 @@ The basic format for using Restive Plugin is as follows:
 </script>
 ```
 
-Let's try a basic example. Say we have designed a HTML5 Web site and we want to make it Responsive to a specific set of breakpoints: 240, 320, 480, 640, 960, 1024, and 1280. Our Restive Plugin Setup will look something like this:
+Let's try a basic example. Say we have designed a HTML5 Web site and we want to make it Responsive to a specific set of breakpoints: 240, 320, 480, 640, 960, 1024, and 1280. Our Restive.JS Setup will look something like this:
 
 ```html
 <script>
@@ -86,13 +86,17 @@ Let's try a basic example. Say we have designed a HTML5 Web site and we want to 
 </script>
 ```
 
-**So what does the above setup mean?!** Restive Plugin will actively monitor the viewport of any devices that visit your web site for the following declared breakpoint ranges: 0 to 240 pixels, 241 to 320 pixels, 321 to 480 pixels, 481 to 640 pixels, 641 to 960 pixels, 961 to 1024 pixels, and 1025 to 1280 pixels (Please note that these are `device pixels` by default and **NOT** `device-independent pixels`). If the viewport of the device is between 0 and 240 pixels wide, Restive Plugin will add the class `css-240` to the `<body>` tag; if the viewport is between 241 and 320 pixels wide, it will add the class `css-320`, and so on.
+**So what does the above setup mean?!** Restive.JS will actively monitor the viewport of any devices that visit your web site for the following declared breakpoint ranges: 0 to 240 pixels, 241 to 320 pixels, 321 to 480 pixels, 481 to 640 pixels, 641 to 960 pixels, 961 to 1024 pixels, and 1025 to 1280 pixels (Please note that these are `device pixels` by default and **NOT** `device-independent pixels`). If the viewport of the device is between 0 and 240 pixels wide, Restive.JS will add the class `css-240` to the `<body>` tag; if the viewport is between 241 and 320 pixels wide, it will add the class `css-320`, and so on.
 
-So if I have a `Google Nexus 4` (768 pixels wide by 1280 pixels high when in portrait orientation) and I visited a Web site with the above Restive Plugin configuration, the plugin would add the class `css-960` to the body tag, because the viewport of the device falls within 640 pixels and 960 pixels wide. You could then tweak your CSS file and add any required style rules required to customize your layout.
-
-Please See the Blog Post Titled **'[Getting Started with Restive Plugin](http://blog.restive.io/posts/5852603/getting-started-with-restive-plugin)'** for a broader explanation of how the Restive Plugin can work for you in a real-life Web Design scenario.
+So if I have a `Google Nexus 4` (768 pixels wide by 1280 pixels high when in portrait orientation) and I visited a Web site with the above Restive.JS configuration, the plugin would add the class `css-960` to the body tag, because the viewport of the device falls within 640 pixels and 960 pixels wide. You could then tweak your CSS file and add any required style rules required to customize your layout.
 
 **NOTE**: We strongly advise that you use either `html` or `body` as your preferred selector always.
+
+
+
+## Quickstart Guide
+
+Please See the Blog Post titled **'[Getting Started with Restive.JS Plugin](http://blog.restive.io/posts/5852603/getting-started-with-restive-plugin)'** as a Quickstart Guide. It will help you get your head around Restive.JS and how it can work for you in a real-life Web Design scenario.
 
 
 
@@ -104,14 +108,14 @@ Please See the Blog Post Titled **'[Getting Started with Restive Plugin](http://
 
 ## Script Reference Warnings
 
-Please be mindful to disable the following Javascript libraries from your Web pages before using Restive Plugin (i.e. if you have them enabled):
+Please be mindful to disable the following Javascript libraries from your Web pages before using Restive.JS (i.e. if you have them enabled):
 
 - [AmplifyJS Store](http://amplifyjs.com/api/store/)
 - [JSON2.js](https://github.com/douglascrockford/JSON-js)
 - [jquery-cookie](https://github.com/carhartl/jquery-cookie)
 - [iOS-Orientation-Fix](https://github.com/PeterWooster/iOS-Orientationchange-Fix)
 
-These libraries are already embedded within Restive Plugin.
+These libraries are already embedded within Restive.JS.
 
 
 
@@ -132,12 +136,12 @@ Restive will like to thank the following third-parties for script usage (and som
 
 ### Options
 
-These are the options available within **Restive Plugin**. The default values are also listed.
+These are the options available within **Restive.JS**. The default values are also listed.
 
 
 #### breakpoints
 
-An itemized list of dimensions that define a specific range within which an adaptive action should take place. Restive Plugin allows for 2 distinct types of breakpoints:
+An itemized list of dimensions that define a specific range within which an adaptive action should take place. Restive.JS allows for 2 distinct types of breakpoints:
 
 1. Pixel e.g. 320
 2. Resolution e.g. nHD, SVGA, XGA, etc.
@@ -160,7 +164,7 @@ The above setting means that the plugin will monitor the viewport for the follow
 
 #### classes
 
-An itemized and corresponding list of CSS classes that will be set to the matched element defined in the Restive Plugin selector, in lock-step with the corresponding breakpoints.
+An itemized and corresponding list of CSS classes that will be set to the matched element defined in the Restive.JS selector, in lock-step with the corresponding breakpoints.
 
 Classes are defined as an array:
 
@@ -173,14 +177,14 @@ The above setting will add the class `320-c` to the selected DOM element when th
 
 **NOTE**: The number of `classes` defined here must be identical to the number of breakpoint items defined in the `breakpoints` option.
 
-**NOTE**: You can also add multiple classes to the matched element defined in the Restive Plugin selector. Simply space-separate your classes e.g. 'myclass1 myclass2' is valid
+**NOTE**: You can also add multiple classes to the matched element defined in the Restive.JS selector. Simply space-separate your classes e.g. 'myclass1 myclass2' is valid
 
 
 #### force_dip
 
 This option provides an override capability that forces the `breakpoints` option to consider device-independent pixels instead of device pixels (which is the default behavior). Setting this option to true enables the override.
 
-For example, say you have an `iPad 2` and an `iPad Air` (which has a `retina` display), and your Restive Plugin settings are as set up below:
+For example, say you have an `iPad 2` and an `iPad Air` (which has a `retina` display), and your Restive.JS settings are as set up below:
 
 ```javascript
 $('body').restive({
@@ -191,7 +195,7 @@ $('body').restive({
 
 If a user uses the `iPad 2` to visit your web site (in portrait orientation), the class `768-c` will be added to the class attribute of the `<body>` tag. However, if the `iPad Air` is used, nothing gets added to the `<body>` tag because the iPad Air viewport width is 1536 pixels (i.e. considering device pixels). This is the default behavior for `breakpoints`.
 
-However, using the `force_dip` option [and setting it to true], you can force breakpoints to consider device-independent pixels instead of device pixels. This way, Restive Plugin will see the ranges 0 to 768 pixels [for a non-retina device] and 0 to 1536 pixels [for a retina device] as the same. See revised settings below:
+However, using the `force_dip` option [and setting it to true], you can force breakpoints to consider device-independent pixels instead of device pixels. This way, Restive.JS will see the ranges 0 to 768 pixels [for a non-retina device] and 0 to 1536 pixels [for a retina device] as the same. See revised settings below:
 
 ```javascript
 $('body').restive({
@@ -274,7 +278,7 @@ So if an `iPhone 4` visits our website and happens to be in portrait orientation
 
 These are technically also Options. However, just for better categorization, we have separated them from **Options** above.
 
-The following Callbacks are available for use in **Restive Plugin**
+The following Callbacks are available for use in **Restive.JS**
 
 
 #### onReady
@@ -434,7 +438,7 @@ $('body').restive({
 
 #### onAddClass
 
-This callback is triggered when the Restive Plugin adds a class to the DOM element identified in `selector` e.g. when a breakpoint range is matched. The name of the class added is passed as the only argument of this function.
+This callback is triggered when the Restive.JS adds a class to the DOM element identified in `selector` e.g. when a breakpoint range is matched. The name of the class added is passed as the only argument of this function.
 
 ```javascript
 $('body').restive({
@@ -445,7 +449,7 @@ $('body').restive({
 
 #### onRemoveClass
 
-This callback is triggered when the Restive Plugin removes a class from the DOM element identified in `selector` e.g. when there is no breakpoint match. The name of the class removed is passed as the only argument of this function.
+This callback is triggered when the Restive.JS removes a class from the DOM element identified in `selector` e.g. when there is no breakpoint match. The name of the class removed is passed as the only argument of this function.
 
 ```javascript
 $('body').restive({
@@ -457,7 +461,7 @@ $('body').restive({
 
 ### Methods
 
-These are the methods available within **Restive Plugin**. A usage example is also listed.
+These are the methods available within **Restive.JS**. A usage example is also listed.
 
 
 #### getPlatform
@@ -629,7 +633,7 @@ This determines whether a device is a Personal Computer. Returns `true` if so, `
 var is_device_a_pc = $.restive.isPC();
 ```
 
-**NOTE**: A `pc` [in the context of Restive Plugin] is basically any device that is not a `phone`, `tablet`, or `tv`.
+**NOTE**: A `pc` [in the context of Restive.JS] is basically any device that is not a `phone`, `tablet`, or `tv`.
 
 
 #### isIOS
@@ -732,7 +736,7 @@ var is_device_landscape = $.restive.isLandscape();
 
 ### Orientation Markers
 
-Orientation markers are a special feature of Restive Plugin that allows you to define breakpoints that target viewport width ranges in specific orientation modes. For example, if you define the following breakpoints: 240, 360-l, 480-p; the Plugin will target the following viewports: 0 to 240 pixels, 241 to 360 pixels only if the device is in landscape orientation, and 361 to 480 pixels only if the device is in portrait orientation. You can append an orientation marker to any breakpoint that you have defined. 
+Orientation markers are a special feature of Restive.JS that allows you to define breakpoints that target viewport width ranges in specific orientation modes. For example, if you define the following breakpoints: 240, 360-l, 480-p; the Plugin will target the following viewports: 0 to 240 pixels, 241 to 360 pixels only if the device is in landscape orientation, and 361 to 480 pixels only if the device is in portrait orientation. You can append an orientation marker to any breakpoint that you have defined. 
 
 Supported Orientation Markers are:
 
@@ -741,14 +745,14 @@ Supported Orientation Markers are:
 
 **NOTE**: Orientation markers always take precedence if duplicate breakpoints are defined. For example, let's say you have defined breakpoints that include `640` and `640-p`, with corresponding classes `640-c` and `640-pc` respectively. If the device viewport width falls within 0 and 640 pixels, the class `640-pc` will be applied even though the two breakpoints are both technically an exact match.
 
-**NOTE**: Orientation markers work a little differently when using Resolution Breakpoints. When using resolution breakpoints with orientation markers, Restive Plugin uses the width component of the resolution when in portrait, and the height component of the resolution when in landscape. For example, let's say you define the following: `hvga, hvga-l`; this resolution is 320px by 480px. The Plugin will target 0 to 320 pixels, and 321 to 480 pixels only if the device is in landscape orientation.
+**NOTE**: Orientation markers work a little differently when using Resolution Breakpoints. When using resolution breakpoints with orientation markers, Restive.JS uses the width component of the resolution when in portrait, and the height component of the resolution when in landscape. For example, let's say you define the following: `hvga, hvga-l`; this resolution is 320px by 480px. The Plugin will target 0 to 320 pixels, and 321 to 480 pixels only if the device is in landscape orientation.
 
 **NOTE**: If you define two identical breakpoints with two identical orientation markers, the one that appears first in your definition will take precedence.
 
 
 ### Multiple Constructor Usage
 
-Restive Plugin lets you call its constructor multiple times. The primary reason for doing this is when you want to segment your breakpoints e.g. when you want to target multiple platforms or form-factors.
+Restive.JS lets you call its constructor multiple times. The primary reason for doing this is when you want to segment your breakpoints e.g. when you want to target multiple platforms or form-factors.
 
 The syntax for using multiple constructors is as below:
 
@@ -789,15 +793,15 @@ $(document).ready(function () {
 
 **NOTE**: Ensure that you use the same selector for each constructor i.e. if you're using 'body' as your selector for the `<body>` tag, make sure you use that selector for all your constructor calls. This is best practice advice.
 
-**NOTE**: You should only use this feature when you want to segment breakpoints along platform or form-factors i.e. you want to define different breakpoints for different platforms or form-factors. You shouldn't use it as a way of adding more breakpoints (if you want to add more breakpoints, just add them to your existing breakpoints). We've built Restive Plugin to work even if you use multiple constructors without specifying segmentation options like `platform` and `formfactor`, but you really shouldn't use it that way.
+**NOTE**: You should only use this feature when you want to segment breakpoints along platform or form-factors i.e. you want to define different breakpoints for different platforms or form-factors. You shouldn't use it as a way of adding more breakpoints (if you want to add more breakpoints, just add them to your existing breakpoints). We've built Restive.JS to work even if you use multiple constructors without specifying segmentation options like `platform` and `formfactor`, but you really shouldn't use it that way.
 
 
 
 ## CSS Tips
 
-Restive Plugin provides a quick and easy way to implement Responsive and Adaptive features into your Web sites. This enables you to focus more on using `HTML` and `CSS` to design all your mobile-optimized layouts, and less on `Javascript`.
+Restive.JS provides a quick and easy way to implement Responsive and Adaptive features into your Web sites. This enables you to focus more on using `HTML` and `CSS` to design all your mobile-optimized layouts, and less on `Javascript`.
 
-Please read the **[Getting Started with Restive Plugin](http://blog.restive.io/posts/5852603/getting-started-with-restive-plugin)** post on the Restive Blog as it provides insights into how to use `CSS` when using the Restive Plugin.
+Please read the **[Getting Started with Restive.JS Plugin](http://blog.restive.io/posts/5852603/getting-started-with-restive-plugin)** post on the Restive Blog as it provides insights into how to use `CSS` when using the Restive.JS.
 
 
 

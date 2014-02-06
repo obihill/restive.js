@@ -1685,7 +1685,7 @@ function getUrl()
     }
 }
 
-/*! Restive Plugin | @copyright 2013 Obinwanne Hill */
+/*! Restive.JS | @copyright 2013 Obinwanne Hill */
 var Restive = (function(window, document, $) {
 
     //Check for Dependency
@@ -1693,7 +1693,7 @@ var Restive = (function(window, document, $) {
     {
         case (typeof $ != 'function'):
             //exit gracefully if missing
-            throw 'Restive Plugin requires JQuery to run!';
+            throw 'Restive.JS requires JQuery to run!';
         break;
     }
 
@@ -1766,7 +1766,7 @@ var Restive = (function(window, document, $) {
     /**
      * Reinitializes the Restive Class on Demand
      * It resets Dimension, Orientation, and Timestamp Info
-     * The Restive Class is initialized as soon as Restive Plugin is called via <script\> tag. In certain circumstances
+     * The Restive Class is initialized as soon as Restive.JS is called via <script\> tag. In certain circumstances
      * this might bring out a slight change in Dimension and Orientation Data especially for PCs.
      * Re-initialization will usually correct any discrepancies
      * NOTE: It is advised that you use this function only once, within document.ready, and before any other Restive-related methods
@@ -1799,7 +1799,7 @@ var Restive = (function(window, document, $) {
     }
 
     /**
-     * Keeps track of how many times Restive Plugin is loaded in rapid succession in a single browser session
+     * Keeps track of how many times Restive.JS is loaded in rapid succession in a single browser session
      * @private
      */
     function _loadCounter()
@@ -1816,7 +1816,7 @@ var Restive = (function(window, document, $) {
     }
 
     /**
-     * This is a special function to deal with certain issues experienced when using Restive Plugin in Chrome Ripple
+     * This is a special function to deal with certain issues experienced when using Restive.JS in Chrome Ripple
      * and other Browser Based Mobile Device emulators that load scripts more than once in rapid succession
      * when they are being initialized
      * @private
@@ -1961,7 +1961,7 @@ var Restive = (function(window, document, $) {
     function storeVarTracker(key_str, value_str)
     {
         /**
-         * This function saves the current Restive Plugin settings tracking code to history
+         * This function saves the current Restive.JS settings tracking code to history
          */
         var myArgs = Array.prototype.slice.call(arguments),
             store_type_str = (isString(myArgs[2]) && myArgs[2] != "") ? myArgs[2] : 'ck',
@@ -4047,8 +4047,8 @@ var Restive = (function(window, document, $) {
 })(window, document, jQuery);
 
 /*
- * Restive Plugin Basic - v1.0.0
- * https://github.com/obihill/restive-plugin
+ * Restive.JS Basic - v1.0.0
+ * https://github.com/obihill/restive.js
  *
  * Copyright 2013 Obinwanne Hill <https://about.me/obinwanne.hill>
  * Released under License <http://plugin.restive.io/legal/license-basic.html>
@@ -4108,7 +4108,7 @@ var Restive = (function(window, document, $) {
                 switch(true)
                 {
                     case (is_multi_abort_2_bool):
-                        methods._error('rstv_error_003', 'If you are calling the Restive Plugin Constructor more than once, you must call $.restive.endMulti() at the end!');
+                        methods._error('rstv_error_003', 'If you are calling the Restive.JS Constructor more than once, you must call $.restive.endMulti() at the end!');
                         return false;
                         break;
                 }
@@ -4419,17 +4419,17 @@ var Restive = (function(window, document, $) {
                     break;
             }
 
-            //Abort Restive Plugin if multiple constructor anomalies occur
+            //Abort Restive.JS if multiple constructor anomalies occur
             switch(true)
             {
                 case (is_multi_abort_1_bool):
-                    methods._error('rstv_error_004', 'If you are calling the Restive Plugin Constructor more than once, you must call $.restive.startMulti() before calling these constructors!');
+                    methods._error('rstv_error_004', 'If you are calling the Restive.JS Constructor more than once, you must call $.restive.startMulti() before calling these constructors!');
                     return false;
                     break;
             }
 
             /**
-             * When multiple Restive Plugin Constructors are used, and a match is found, that match is saved
+             * When multiple Restive.JS Constructors are used, and a match is found, that match is saved
              * On successive attempts, the breakpoint conditions that previously failed are prevented from being executed further to improve overall performace
              * The following code manages this process
              */
@@ -5088,7 +5088,7 @@ var Restive = (function(window, document, $) {
             ;
 
             /**
-             * Check if Restive Plugin Constructor has been called multiple times
+             * Check if Restive.JS Constructor has been called multiple times
              */
             switch(true)
             {
@@ -5104,7 +5104,7 @@ var Restive = (function(window, document, $) {
             }
 
             /**
-             * Check if Restive Plugin Constructor has been called multiple times and has not been finalized properly with endMulti() method
+             * Check if Restive.JS Constructor has been called multiple times and has not been finalized properly with endMulti() method
              */
             switch(true)
             {
@@ -5230,7 +5230,7 @@ var Restive = (function(window, document, $) {
 		}
 		else 
 		{
-		   	$.error( 'Method ' +  args + ' does not exist on Restive Plugin' );
+		   	$.error( 'Method ' +  args + ' does not exist on Restive.JS' );
 		}
 	};	
 	

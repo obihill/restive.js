@@ -1,8 +1,8 @@
-#RESTIVE PLUGIN - BASIC LICENSE AGREEMENT
+#RESTIVE.JS - BASIC LICENSE AGREEMENT
 
 Copyright © 2013 RESTIVE LLC (RESTIVE)
 
-By installing, copying, or using  Restive Plugin Basic (the Software), you agree to be bound by the terms of this Agreement.
+By installing, copying, or using  Restive.JS Basic (the Software), you agree to be bound by the terms of this Agreement.
 
 ##Usage
 
