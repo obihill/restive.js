@@ -11,9 +11,9 @@ As a Web Designer, designing Web sites for Personal Computers and for Mobile Dev
 If you find that you fit one or more of the criteria below, then you might want to consider using Restive.JS:
 
 - You design Web Sites that need to be Responsive or Adaptive
-- You are not completely satisfied with the tools and/or approaches you currently use to achieve this "Responsiveness" or "Adaptiveness"
+- You are not completely satisfied with the tools and/or approaches you currently use to enable Responsive or Adaptive Enhancements on your Website
 - You need ONE solution and do not want (nor have the time) to cobble together multiple polyfills and shims to enable your desired features
-- You need more functionality than CSS Media Queries can possibly provide at the moment
+- You need more functionality than CSS Media Queries can provide at the moment
 - You need a solution that you can truly 'Set-and-Forget'
 - You need a solution that is very easy to understand, use, and maintain
 
@@ -24,17 +24,6 @@ If you find that you fit one or more of the criteria below, then you might want 
 ## Requirements
 
 - [jQuery](http://jquery.com/) (>= 1.7.1 is recommended)
-
-
-
-## Versions
-
-There are two versions of the Restive.JS:
-
-1. Basic Version: this is the version available here on Github
-2. Pro Version: this is available exclusively via the [Restive.JS Web Site](http://plugin.restive.io)
-
-The Pro Version has some additional features like `Modularity` and `Breakpoint Analytics`. See the **[Restive.JS Docs](http://docs.restive.io/restivejs)** for more information.
 
 
 
