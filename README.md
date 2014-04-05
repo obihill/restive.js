@@ -1,21 +1,23 @@
 # Restive.JS
 
-Restive.JS is a JQuery Plugin that helps you quickly and easily add features to your Web Site that enable it respond and adapt to virtually every Web-enabled Device. Using a combination of Device Detection, Advanced Breakpoints Management, and Orientation Management, the Plugin will give your Web site an uncanny ability to stay robust in the face of a constantly changing device landscape.
+Restive.JS is a JQuery Plugin that helps you quickly and easily add features to your Web Site that enable it respond and adapt to virtually every Web-enabled Device. Using a combination of Device Detection, Advanced Breakpoints Management, and Orientation Management, the Plugin will give your Website an uncanny ability to stay robust in the face of a constantly changing device landscape.
 
 
 
 ## Why Restive.JS?!
 
-As a Web Designer, designing Web sites for Personal Computers and for Mobile Devices is enough work already. You can design all your layouts using HTML and CSS, but enabling your Web sites to be Responsive/Adaptive usually requires a lot more work than is reasonable. 
+As a Web Designer, designing Websites for Personal Computers and for Mobile Devices is enough hard work as it is. You can design all your layouts using HTML and CSS, but enabling your Websites to be Responsive/Adaptive usually requires a lot more work than is reasonable. 
 
 If you find that you fit one or more of the criteria below, then you might want to consider using Restive.JS:
 
-- You design Web Sites that need to be Responsive or Adaptive
+- You design Websites that need to be Responsive or Adaptive
 - You are not completely satisfied with the tools and/or approaches you currently use to enable Responsive or Adaptive Enhancements on your Website
 - You need ONE solution and do not want (nor have the time) to cobble together multiple polyfills and shims to enable your desired features
+- You spend too much time tweaking CSS Media Queries
 - You need more functionality than CSS Media Queries can provide at the moment
 - You need a solution that you can truly 'Set-and-Forget'
 - You need a solution that is very easy to understand, use, and maintain
+- You need a solution that will not alter your existing Web Design Workflow
 
 **Restive.JS enables you to Become an Expert in Responsive + Adaptive Web Design in Minutes!**
 
@@ -62,7 +64,9 @@ The basic format for using Restive.JS is as follows:
 </script>
 ```
 
-Let's try a basic example. Say we have designed a HTML5 Web site and we want to make it Responsive to a specific set of breakpoints: 240, 320, 480, 640, 960, 1024, and 1280. Our Restive.JS Setup will look something like this:
+### Example 1 - Build with Breakpoints
+
+Let's try a basic example. Say we have designed a HTML5 Website and we want to make it Responsive to a specific set of breakpoints: 240, 320, 480, 640, 960, 1024, and 1280. Our Restive.JS Setup will look something like this:
 
 ```html
 <script>
@@ -75,9 +79,31 @@ Let's try a basic example. Say we have designed a HTML5 Web site and we want to 
 </script>
 ```
 
-**So what does the above setup mean?!** Restive.JS will actively monitor the viewport of any devices that visit your web site for the following declared breakpoint ranges: 0 to 240 pixels, 241 to 320 pixels, 321 to 480 pixels, 481 to 640 pixels, 641 to 960 pixels, 961 to 1024 pixels, and 1025 to 1280 pixels (Please note that these are `device pixels` by default and **NOT** `device-independent pixels`). If the viewport of the device is between 0 and 240 pixels wide, Restive.JS will add the class `css-240` to the `<body>` tag; if the viewport is between 241 and 320 pixels wide, it will add the class `css-320`, and so on.
+**So what does the above setup mean?!** Restive.JS will actively monitor the viewport of any devices that visit your website for the following declared breakpoint ranges: 0 to 240 pixels, 241 to 320 pixels, 321 to 480 pixels, 481 to 640 pixels, 641 to 960 pixels, 961 to 1024 pixels, and 1025 to 1280 pixels (Please note that these are `device pixels` by default and **NOT** `device-independent pixels`). If the viewport of the device is between 0 and 240 pixels wide, Restive.JS will add the class `css-240` to the `<body>` tag; if the viewport is between 241 and 320 pixels wide, it will add the class `css-320`, and so on.
 
-So if I have a `Google Nexus 4` (768 pixels wide by 1280 pixels high when in portrait orientation) and I visited a Web site with the above Restive.JS configuration, the plugin would add the class `css-960` to the body tag, because the viewport of the device falls within 640 pixels and 960 pixels wide. You could then tweak your CSS file and add any required style rules required to customize your layout.
+So if I have a `Google Nexus 4` (768 pixels wide by 1280 pixels high when in portrait orientation) and I visited a Website with the above Restive.JS configuration, the plugin would add the class `css-960` to the `<body>` tag, because the viewport of the device falls within 640 pixels and 960 pixels wide. You could then tweak your CSS file and add any required style rules required to customize your layout.
+
+
+### Example 2 - Build without Breakpoints
+
+Let's try another example, this time without using conventional breakpoints, and designing for form-factors instead. Our Restive.JS Setup could look something like this:
+
+```html
+<script>
+    $( document ).ready(function() {
+        $('body').restive({
+            breakpoints: ['10000'],
+            classes: ['nb'],
+            turbo_classes: 'is_mobile=mobi,is_phone=phone,is_tablet=tablet,is_portrait=portrait,is_landscape=landscape'
+        });
+    });
+</script>
+```
+
+**So what does the above setup mean?!** Restive.JS - via `breakpoints` option - will create a viewport range between 0 and 10,000 pixels [which means that it will match virtually all devices] and add the class `nb` to the `<body>` tag. The operation however is inconsequential and we will be relying on another plugin option. `turbo_classes` is a special feature of Restive.JS that adds classes [in addition to those defined in the classes option] to our `<body>` tag when certain pre-defined conditions are met e.g. when the device is a `mobile` device, when the device is a `tablet`, etc. There are about 9 specific conditions in all. So for example, `is_landscape=landscape` will tell the plugin to add the class `landscape` to the `<body>` tag if the device is in `landscape` orientation, and being that Restive.JS is stateful, this class will also be removed if the device switches to `portrait` orientation.
+
+So if I have an `Apple iPad 4` and I visited a Website [while in Portrait Orientation mode] with the above Restive.JS configuration, the plugin would add the class `nb mobi tablet portrait` to the `<body>` tag, because it is a `mobile` device, a `tablet`, and is in `portrait` orientation. If I switched orientation to `landscape`, it would update the class of the `<body>` tag to `nb mobi tablet landscape`. As expected, you can then update your CSS style rules inline to customize your layout.
+
 
 **NOTE**: We strongly advise that you use either `html` or `body` as your preferred selector always.
 
@@ -85,7 +111,7 @@ So if I have a `Google Nexus 4` (768 pixels wide by 1280 pixels high when in por
 
 ## Quickstart Guide
 
-Please See the Blog Post titled **'[Getting Started with Restive.JS Plugin](http://blog.restive.io/posts/5852603/getting-started-with-restive-plugin)'** as a Quickstart Guide. It will help you get your head around Restive.JS and how it can work for you in a real-life Web Design scenario.
+Please See the Blog Post titled **'[Getting Started with Restive.JS Plugin](http://blog.restive.io/posts/5852603/getting-started-with-restive-plugin)'** as a Quickstart Guide. It will help you get your head around Restive.JS and how it can work for you in a real-life Web Design scenario. You should also [Responsive Web Design with Less Code]()
 
 
 
@@ -115,7 +141,6 @@ Restive will like to thank the following third-parties for script usage (and som
 - AppendTo - [AmplifyJS Store](http://amplifyjs.com/api/store/)
 - Douglas Crockford - [JSON2.js](https://github.com/douglascrockford/JSON-js)
 - Kevin van Zonneveld - [PHPJS](https://github.com/kvz/phpjs)
-- Klaus Hartl - [JQuery Cookie](https://github.com/carhartl/jquery-cookie) 
 - Scott Jehl, Peter Wooster - [iOS-OrientationChange-Fix](https://github.com/PeterWooster/iOS-Orientationchange-Fix)
 - Ryan Van Etten - [Response.js](https://github.com/ryanve/response.js)
 
@@ -182,7 +207,7 @@ $('body').restive({
 });
 ```
 
-If a user uses the `iPad 2` to visit your web site (in portrait orientation), the class `768-c` will be added to the class attribute of the `<body>` tag. However, if the `iPad Air` is used, nothing gets added to the `<body>` tag because the iPad Air viewport width is 1536 pixels (i.e. considering device pixels). This is the default behavior for `breakpoints`.
+If a user uses the `iPad 2` to visit your website (in portrait orientation), the class `768-c` will be added to the class attribute of the `<body>` tag. However, if the `iPad Air` is used, nothing gets added to the `<body>` tag because the iPad Air viewport width is 1536 pixels (i.e. considering device pixels). This is the default behavior for `breakpoints`.
 
 However, using the `force_dip` option [and setting it to true], you can force breakpoints to consider device-independent pixels instead of device pixels. This way, Restive.JS will see the ranges 0 to 768 pixels [for a non-retina device] and 0 to 1536 pixels [for a retina device] as the same. See revised settings below:
 
@@ -193,6 +218,38 @@ $('body').restive({
     force_dip: true
 });
 ```
+
+
+#### anchor
+
+This options enables **Modularity** in Restive.JS. It defines the basis by which **Responsiveness** is applied i.e. how classes will be applied according to changes to either the viewport or DOM element. 
+
+There are two possible options:
+
+- **window**: This will anchor responsiveness to the viewport i.e. classes will be applied as the viewport changes in width, and as those widths match the breakpoints provided
+- **element**: This will anchor the responsiveness to the element's container i.e. classes will be applied as the element's container changes in width, and as those widths match the breakpoints provided
+
+Anchor selection is automatic and functions according to the following conditions:
+
+- If you use the `<html>` or `<body>` tag in your Restive.JS constructor e.g. `$('body').restive()`, the anchor option defaults to `window`. You cannot force `element` when either one of these two specific selectors are used.
+- If you use any tag that is determined to be within the `<body>` tag e.g. `$('div#someid').restive()`, the anchor option defaults to `element`, otherwise it defaults to `window`. You may force `window` instead of `element` if you so desire.
+
+**NOTE**: When using `anchor` option with `element` value, you must use a valid JQuery ID selector in your Restive.JS constructor e.g. `$('#myid').restive()`.
+
+**NOTE**: Do not define callbacks in any Restive.JS Constructors that have `anchor` option set to `e` or `element`.
+
+
+#### anchor_e_df
+
+This is a special option that determines what method should be used to retrieve the width of the element container when `anchor` option is used, and its values is `element` i.e. when **Modularity** is in effect.
+
+There are three possible values that you may use:
+
+- 'w' to use $().width(). This is the default value
+- 'i' to use $().innerWidth()
+- 'o' to use $().outerWidth()
+
+**NOTE**: This option is only used when `anchor` option is `e` or ``.
 
 
 #### platform
@@ -786,11 +843,71 @@ $(document).ready(function () {
 
 
 
+## Concepts
+
+### Responsiveness
+
+Responsiveness is your Website's capability to manage different device screen sizes, and modify its layout in response to those differences.
+
+
+### Adaptiveness
+
+Adaptiveness is your Website's capability to manage different device screen sizes and device features e.g. platform (iOS, Android, etc.), form-factor (phone, tablet, etc.), et al. and modify its layout in response to those differences.
+
+
+### Modular Web Design
+
+Modular Web Design is an approach to web design in which a website is first broken into components, and then these components are designed, developed, tested, and finally assembled to create a finished Website. A key advantage of this approach is encapsulation. For example, if you design a website widget, and you need to improve it, you can simply update the widget without tampering with any of the other component modules that make up the whole website.
+
+
+### Modular Responsiveness
+
+This is the ability of your website to modify the layout of a web page component [which is housed within a container] as the size of its container changes. There are specific situations where certain UI elements are built in a modular fashion. Traditional Responsive + Adaptive Web Design techniques are usually only concerned with the viewport. Enabling modular responsiveness will allow these components to adapt to changes in their immediate layouts [not just the overall viewport] e.g. a calendar widget that automatically displays its 'mini' version when it is put in a smaller sidebar container as opposed to its usual wider main page container.
+
+
+### Modular Adaptiveness
+
+This is the ability of your website to modify the layout of a web page component as the size of its container changes, and according to specific device features e.g. platform (iOS, Android, etc.), form-factor (phone, tablet, etc.), et al.
+
+
+### Viewport
+
+The viewport is the portion of the web page that the user can currently see. So if on a web page, there is a picture but you have to scroll down to see it, this image is said to be outside the viewport. Viewport width and viewport height refer to the width and height, respectively, of the viewable portion of the web page.
+
+
+### Container
+
+The container is a HTML element (nested under the `<body>` tag) that encapsulates another HTML element. For example, if you have the following code: `<div id="container-1"><div id="component-1"></div></div>`, the element with **id** `container-1` is a container to the element with **id** `component-1`.
+
+
+### Orientation
+
+Orientation is the way a rectangular viewing area e.g. a monitor, a mobile device, etc. is oriented for viewing. The two most common types of orientation are portrait and landscape. When the viewing area is taller than it is wider, this is referred to as portrait orientation mode. When the viewing area is wider than it taller, this is referred to as landscape orientation mode.
+
+
+### Breakpoints
+
+Breakpoints in Responsive Web Design are browser widths that have a declaration – media query or otherwise – to change the layout once the browser is within the declared range.
+
+Restive.JS uses Breakpoints to find and match viewports of mobile devices. So if you define the following breakpoints: 240, 360, 480; the plugin will target the following viewports 0 to 240 pixels, 241 to 360 pixels, and 361 to 480 pixels.
+
+There are two types of breakpoints in Restive.JS
+
+- **Pixel Breakpoints**: This is when the breakpoints are defined by widths in pixels
+- **Resolution Breakpoints**: This is when the breakpoints are defined by standard graphic display resolutions e.g. nHD, SVGA, XGA, 1080p, etc. Click here to view all Resolution Shortcodes that are allowed for use when defining such breakpoints.
+
+Every device has its own specific viewport width and height e.g. XGA is 768 by 1024 pixels. When you use resolution breakpoints, Restive searches for the specific graphic display resolution and obtains its viewport width. It then sorts everything in order and creates a viewport range that will match all the resolutions you have listed.
+
+For example, let's say nHD, qHD, and UXGA are listed as your resolution breakpoints. These resolution definitions have a viewport width of 360px, 540px, and 1200px respectively. Restive.JS will then sort the widths in order and create the proper viewport range. So in this case, our breakpoint range will be 0 to 360px, 361 to 540px, and 541 to 1200px. Restive.JS does this automatically.
+
+**NOTE**: Breakpoint ranges are calculated automatically by Restive.JS, you only need to define the actual widths you want to target, and the plugin will do the rest.
+
+
 ## CSS Tips
 
-Restive.JS provides a quick and easy way to implement Responsive and Adaptive features into your Web sites. This enables you to focus more on using `HTML` and `CSS` to design all your mobile-optimized layouts, and less on `Javascript`.
+Restive.JS provides a quick and easy way to implement Responsive and Adaptive features into your Websites. This enables you to focus more on using `HTML` and `CSS` to design all your mobile-optimized layouts, and less on `Javascript`.
 
-Please read the **[Getting Started with Restive.JS Plugin](http://blog.restive.io/posts/5852603/getting-started-with-restive-plugin)** post on the Restive Blog as it provides insights into how to use `CSS` when using the Restive.JS.
+Please read the **[Getting Started with Restive.JS Plugin](http://blog.restive.io/posts/5852603/getting-started-with-restive-plugin)** post on the Restive Blog as it provides insights into how to use `CSS` when using the Restive.JS. You could also read **[Responsive Web Design with Less Code](http://speckyboy.com/2014/03/17/responsive-web-design-less-code/)** for a more in-depth review of Restive.JS. 
 
 
 

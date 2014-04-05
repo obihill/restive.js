@@ -931,96 +931,6 @@ if (typeof JSON !== 'object') {
     }
 }());
 
-
-/*! jQuery Cookie Plugin - v1.3.1 | @link https://github.com/carhartl/jquery-cookie | @copyright 2013 Klaus Hartl | @license MIT */
-(function (factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as anonymous module.
-        define(['jquery'], factory);
-    } else {
-        // Browser globals.
-        factory(jQuery);
-    }
-}(function ($) {
-
-    var pluses = /\+/g;
-
-    function raw(s) {
-        return s;
-    }
-
-    function decoded(s) {
-        return decodeURIComponent(s.replace(pluses, ' '));
-    }
-
-    function converted(s) {
-        if (s.indexOf('"') === 0) {
-            // This is a quoted cookie as according to RFC2068, unescape
-            s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
-        }
-        try {
-            return config.json ? JSON.parse(s) : s;
-        } catch(er) {}
-    }
-
-    var config = $.cookie = function (key, value, options) {
-
-        // write
-        if (value !== undefined) {
-            options = $.extend({}, config.defaults, options);
-
-            if (typeof options.expires === 'number') {
-                var days = options.expires, t = options.expires = new Date();
-                t.setDate(t.getDate() + days);
-            }
-
-            value = config.json ? JSON.stringify(value) : String(value);
-
-            return (document.cookie = [
-                config.raw ? key : encodeURIComponent(key),
-                '=',
-                config.raw ? value : encodeURIComponent(value),
-                options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-                options.path    ? '; path=' + options.path : '',
-                options.domain  ? '; domain=' + options.domain : '',
-                options.secure  ? '; secure' : ''
-            ].join(''));
-        }
-
-        // read
-        var decode = config.raw ? raw : decoded;
-        var cookies = document.cookie.split('; ');
-        var result = key ? undefined : {};
-        for (var i = 0, l = cookies.length; i < l; i++) {
-            var parts = cookies[i].split('=');
-            var name = decode(parts.shift());
-            var cookie = decode(parts.join('='));
-
-            if (key && key === name) {
-                result = converted(cookie);
-                break;
-            }
-
-            if (!key) {
-                result[name] = converted(cookie);
-            }
-        }
-
-        return result;
-    };
-
-    config.defaults = {};
-
-    $.removeCookie = function (key, options) {
-        if ($.cookie(key) !== undefined) {
-            $.cookie(key, '', $.extend(options, { expires: -1 }));
-            return true;
-        }
-        return false;
-    };
-
-}));
-
 /*! AmplifyJS-Store - v1.1.0 | @link http://amplifyjs.com/api/store/ | @copyright 2012 AppendTo <http://appendto.com/contact> | @license MIT and GPL V2 */
 (function( amplify, undefined ) {
 
@@ -1369,6 +1279,245 @@ if (typeof JSON !== 'object') {
 })( this );
 
 
+/*! jQuery resize event - v1.1 | @link http://benalman.com/projects/jquery-resize-plugin/ | Copyright (c) 2010 "Cowboy" Ben Alman | @license MIT/GPL */
+// Script: jQuery resize event
+//
+// *Version: 1.1, Last updated: 3/14/2010*
+//
+// Project Home - http://benalman.com/projects/jquery-resize-plugin/
+// GitHub       - http://github.com/cowboy/jquery-resize/
+// Source       - http://github.com/cowboy/jquery-resize/raw/master/jquery.ba-resize.js
+// (Minified)   - http://github.com/cowboy/jquery-resize/raw/master/jquery.ba-resize.min.js (1.0kb)
+//
+// About: License
+//
+// Copyright (c) 2010 "Cowboy" Ben Alman,
+// Dual licensed under the MIT and GPL licenses.
+// http://benalman.com/about/license/
+//
+// About: Examples
+//
+// This working example, complete with fully commented code, illustrates a few
+// ways in which this plugin can be used.
+//
+// resize event - http://benalman.com/code/projects/jquery-resize/examples/resize/
+//
+// About: Support and Testing
+//
+// Information about what version or versions of jQuery this plugin has been
+// tested with, what browsers it has been tested in, and where the unit tests
+// reside (so you can test it yourself).
+//
+// jQuery Versions - 1.3.2, 1.4.1, 1.4.2
+// Browsers Tested - Internet Explorer 6-8, Firefox 2-3.6, Safari 3-4, Chrome, Opera 9.6-10.1.
+// Unit Tests      - http://benalman.com/code/projects/jquery-resize/unit/
+//
+// About: Release History
+//
+// 1.1 - (3/14/2010) Fixed a minor bug that was causing the event to trigger
+//       immediately after bind in some circumstances. Also changed $.fn.data
+//       to $.data to improve performance.
+// 1.0 - (2/10/2010) Initial release
+
+(function($,window,undefined){
+    '$:nomunge'; // Used by YUI compressor.
+
+    // A jQuery object containing all non-window elements to which the resize
+    // event is bound.
+    var elems = $([]),
+
+    // Extend $.resize if it already exists, otherwise create it.
+        jq_resize = $.resizecontainer = $.extend( $.resize, {} ),
+
+        timeout_id,
+
+    // Reused strings.
+        str_setTimeout = 'setTimeout',
+        str_resize = 'resizecontainer',
+        str_data = str_resize + '-special-event',
+        str_delay = 'delay',
+        str_throttle = 'throttleWindow';
+
+    // Property: jQuery.resize.delay
+    //
+    // The numeric interval (in milliseconds) at which the resize event polling
+    // loop executes. Defaults to 250.
+
+    jq_resize[ str_delay ] = 250;
+
+    // Property: jQuery.resize.throttleWindow
+    //
+    // Throttle the native window object resize event to fire no more than once
+    // every <jQuery.resize.delay> milliseconds. Defaults to true.
+    //
+    // Because the window object has its own resize event, it doesn't need to be
+    // provided by this plugin, and its execution can be left entirely up to the
+    // browser. However, since certain browsers fire the resize event continuously
+    // while others do not, enabling this will throttle the window resize event,
+    // making event behavior consistent across all elements in all browsers.
+    //
+    // While setting this property to false will disable window object resize
+    // event throttling, please note that this property must be changed before any
+    // window object resize event callbacks are bound.
+
+    jq_resize[ str_throttle ] = true;
+
+    // Event: resize event
+    //
+    // Fired when an element's width or height changes. Because browsers only
+    // provide this event for the window element, for other elements a polling
+    // loop is initialized, running every <jQuery.resize.delay> milliseconds
+    // to see if elements' dimensions have changed. You may bind with either
+    // .resize( fn ) or .bind( "resize", fn ), and unbind with .unbind( "resize" ).
+    //
+    // Usage:
+    //
+    // > jQuery('selector').bind( 'resize', function(e) {
+    // >   // element's width or height has changed!
+    // >   ...
+    // > });
+    //
+    // Additional Notes:
+    //
+    // * The polling loop is not created until at least one callback is actually
+    //   bound to the 'resize' event, and this single polling loop is shared
+    //   across all elements.
+    //
+    // Double firing issue in jQuery 1.3.2:
+    //
+    // While this plugin works in jQuery 1.3.2, if an element's event callbacks
+    // are manually triggered via .trigger( 'resize' ) or .resize() those
+    // callbacks may double-fire, due to limitations in the jQuery 1.3.2 special
+    // events system. This is not an issue when using jQuery 1.4+.
+    //
+    // > // While this works in jQuery 1.4+
+    // > $(elem).css({ width: new_w, height: new_h }).resize();
+    // >
+    // > // In jQuery 1.3.2, you need to do this:
+    // > var elem = $(elem);
+    // > elem.css({ width: new_w, height: new_h });
+    // > elem.data( 'resize-special-event', { width: elem.width(), height: elem.height() } );
+    // > elem.resize();
+
+    $.event.special[ str_resize ] = {
+
+        // Called only when the first 'resize' event callback is bound per element.
+        setup: function() {
+            // Since window has its own native 'resize' event, return false so that
+            // jQuery will bind the event using DOM methods. Since only 'window'
+            // objects have a .setTimeout method, this should be a sufficient test.
+            // Unless, of course, we're throttling the 'resize' event for window.
+            if ( !jq_resize[ str_throttle ] && this[ str_setTimeout ] ) { return false; }
+
+            var elem = $(this);
+
+            // Add this element to the list of internal elements to monitor.
+            elems = elems.add( elem );
+
+            // Initialize data store on the element.
+            $.data( this, str_data, { w: elem.width(), h: elem.height() } );
+
+            // If this is the first element added, start the polling loop.
+            if ( elems.length === 1 ) {
+                loopy();
+            }
+        },
+
+        // Called only when the last 'resize' event callback is unbound per element.
+        teardown: function() {
+            // Since window has its own native 'resize' event, return false so that
+            // jQuery will unbind the event using DOM methods. Since only 'window'
+            // objects have a .setTimeout method, this should be a sufficient test.
+            // Unless, of course, we're throttling the 'resize' event for window.
+            if ( !jq_resize[ str_throttle ] && this[ str_setTimeout ] ) { return false; }
+
+            var elem = $(this);
+
+            // Remove this element from the list of internal elements to monitor.
+            elems = elems.not( elem );
+
+            // Remove any data stored on the element.
+            elem.removeData( str_data );
+
+            // If this is the last element removed, stop the polling loop.
+            if ( !elems.length ) {
+                clearTimeout( timeout_id );
+            }
+        },
+
+        // Called every time a 'resize' event callback is bound per element (new in
+        // jQuery 1.4).
+        add: function( handleObj ) {
+            // Since window has its own native 'resize' event, return false so that
+            // jQuery doesn't modify the event object. Unless, of course, we're
+            // throttling the 'resize' event for window.
+            if ( !jq_resize[ str_throttle ] && this[ str_setTimeout ] ) { return false; }
+
+            var old_handler;
+
+            // The new_handler function is executed every time the event is triggered.
+            // This is used to update the internal element data store with the width
+            // and height when the event is triggered manually, to avoid double-firing
+            // of the event callback. See the "Double firing issue in jQuery 1.3.2"
+            // comments above for more information.
+
+            function new_handler( e, w, h ) {
+                var elem = $(this),
+                    data = $.data( this, str_data );
+
+                // If called from the polling loop, w and h will be passed in as
+                // arguments. If called manually, via .trigger( 'resize' ) or .resize(),
+                // those values will need to be computed.
+                data.w = w !== undefined ? w : elem.width();
+                data.h = h !== undefined ? h : elem.height();
+
+                old_handler.apply( this, arguments );
+            }
+
+            // This may seem a little complicated, but it normalizes the special event
+            // .add method between jQuery 1.4/1.4.1 and 1.4.2+
+            if ( $.isFunction( handleObj ) ) {
+                // 1.4, 1.4.1
+                old_handler = handleObj;
+                return new_handler;
+            } else {
+                // 1.4.2+
+                old_handler = handleObj.handler;
+                handleObj.handler = new_handler;
+            }
+        }
+
+    };
+
+    function loopy() {
+
+        // Start the polling loop, asynchronously.
+        timeout_id = window[ str_setTimeout ](function(){
+
+            // Iterate over all elements to which the 'resize' event is bound.
+            elems.each(function(){
+                var elem = $(this),
+                    width = elem.width(),
+                    height = elem.height(),
+                    data = $.data( this, str_data );
+
+                // If element size has changed since the last time, update the element
+                // data store and trigger the 'resize' event.
+                if ( width !== data.w || height !== data.h ) {
+                    elem.trigger( str_resize, [ data.w = width, data.h = height ] );
+                }
+
+            });
+
+            // Loop.
+            loopy();
+
+        }, jq_resize[ str_delay ] );
+
+    }
+
+})(jQuery, window);
+
 /**
  * Count the number of substring occurrences
  * @param haystack {String} the string to search in
@@ -1646,9 +1795,9 @@ function isEvenDecimal(number_int)
  * Retrieves the current and full URL of the document
  * @param option_flag_str {String} If present, specifies a specific part of the URL to return
  * The two options flags available are:
- * 1. bp [basepath] - Will return 'http://devicejs.com/index.html' if current URL is 'http://devicejs.com/index.html?id=1234'
- * 2. bd [basedir] - Will return 'http://devicejs.com/test' if current URL is 'http://device.js.com/test/index.html?id=4'
- * 3. q [query] - Will return 'id=1234' if current URL is 'http://devicejs.com/index.html?id=1234'
+ * 1. bp [basepath] - Will return 'http://restive.io/index.html' if current URL is 'http://restive.io/index.html?id=1234'
+ * 2. bd [basedir] - Will return 'http://restive.io/test' if current URL is 'http://restive.io/test/index.html?id=4'
+ * 3. q [query] - Will return 'id=1234' if current URL is 'http://restive.io/index.html?id=1234'
  * @param url_str {String} By default, this function uses document.URL to capture the URL. You may provide your own url using this parameter
  * @return {String}
  */
@@ -1685,6 +1834,74 @@ function getUrl()
     }
 }
 
+/**
+ * Determines if a given element is a child or descendant of another
+ * @param {String} $elem_sel_parent_str The selector of the parent object
+ * @param {String} $elem_sel_child_str The selector of the suspected child object
+ * @return {Boolean}
+ */
+function elementIsChildOf($elem_sel_parent_str, $elem_sel_child_str)
+{
+    var result_bool = false,
+        elem_parent = $(''+$elem_sel_parent_str+''),
+        elem_child = $(''+$elem_sel_child_str+'');
+
+    switch(true)
+    {
+        case ($(elem_child).parents().index(elem_parent) != -1):
+            result_bool = true;
+            break;
+    }
+
+    return result_bool;
+}
+
+/**
+ * Retrieves the text value of a JQuery Selector
+ * @param {Object} el the JQuery Object/Element
+ * @return {String}
+ */
+function getSelector(el)
+{
+    var $el = $(el);
+
+    var id = $el.attr("id");
+    if (id) { //"should" only be one of these if theres an ID
+        return "#"+ id;
+    }
+
+    var node = $el[0].nodeName.toLowerCase();
+    if(node == 'html' || node == 'body'){
+        return node;
+    }
+
+    var selector = $el.parents()
+        .map(function() { return this.tagName; })
+        .get().reverse().join(" ");
+
+    if (selector) {
+        selector += " "+ $el[0].nodeName;
+    }
+
+    var classNames = $el.attr("class");
+    if (classNames) {
+        selector += "." + $.trim(classNames).replace(/\s/gi, ".");
+    }
+
+    var name = $el.attr('name');
+    if (name) {
+        selector += "[name='" + name + "']";
+    }
+    if (!name){
+        var index = $el.index();
+        if (index) {
+            index = index + 1;
+            selector += ":nth-child(" + index + ")";
+        }
+    }
+    return selector;
+}
+
 /*! Restive.JS | @copyright 2013 Obinwanne Hill */
 var Restive = (function(window, document, $) {
 
@@ -1694,7 +1911,7 @@ var Restive = (function(window, document, $) {
         case (typeof $ != 'function'):
             //exit gracefully if missing
             throw 'Restive.JS requires JQuery to run!';
-        break;
+            break;
     }
 
     //Define local vars
@@ -1704,9 +1921,39 @@ var Restive = (function(window, document, $) {
         docElem = document.documentElement,
         $win = $(win),
         screen = win.screen,
-        vSpan, vPitch, cSpan, cPitch, dSpan, dPitch,
+        vSpan, vPitch, cSpan, cPitch, dSpan, dPitch, eSpan, ePitch,
         media  = win.matchMedia || win.msMatchMedia || Object
         ;
+
+    //Create window storage
+    window.rstv_store = {'main': {}};
+    window.parent.rstv_store = {'main': {}};
+
+    //Create window storage function
+    window.rstv_store.storage = function(){
+        var myArgs = Array.prototype.slice.call(arguments),
+            key_str = myArgs[0],
+            value_res = myArgs[1],
+            is_value_valid_bool = !!((typeof value_res !== "undefined" && value_res !== null) && ((isString(value_res) && value_res != "") || isNumber(value_res) || (isArray(value_res) && count(value_res) > 0) || isBool(value_res) || isObject(value_res))),
+            is_value_null_bool = !!((value_res === null))
+            ;
+
+        switch(true)
+        {
+            case (is_value_valid_bool):
+                window.rstv_store.main[""+key_str+""] = value_res;
+                return;
+                break;
+
+            case (is_value_null_bool):
+                window.rstv_store.main[""+key_str+""] = null;
+                return;
+                break;
+
+            default:
+                return window.rstv_store.main[""+key_str+""];
+        }
+    };
 
     /**
      * Initialize and store some important default values.
@@ -1714,6 +1961,9 @@ var Restive = (function(window, document, $) {
      * @return {Boolean}
      */
     var init = function () {
+        //detect private browsing
+        window.rstv_store.main["rstv_is_priv_browsing"] = !!((_detectPrivateBrowsing()));
+
         var is_init_bool = store("rstv_is_init"),
             retr;
 
@@ -1744,7 +1994,6 @@ var Restive = (function(window, document, $) {
                 store("rstv_loaded_count", 0, '', {expires: 1500});
 
                 store("rstv_is_init", true);
-                store("rstv_is_safe", true);
 
                 store("rstv_url", getUrl('bp'));
                 store("rstv_url_hash", md5(getUrl('bp')));
@@ -1856,7 +2105,23 @@ var Restive = (function(window, document, $) {
         }
     }
 
-    function richardParker(){var rstvpk='pipatelfindshisgodaftershipwreck'; return rstvpk;}
+    /**
+     * Detects whether private browsing is active or not
+     * @return {Boolean}
+     */
+    function _detectPrivateBrowsing()
+    {
+        try {
+            localStorage.setItem("__test", "data");
+        }
+        catch (e)
+        {
+            if (/QUOTA_?EXCEEDED/i.test(e.name)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Stores a value in LocalStorage [or other storage type], or retrieves previously stored value
@@ -1870,7 +2135,8 @@ var Restive = (function(window, document, $) {
     function store()
     {
         var myArgs = Array.prototype.slice.call(arguments);
-        var key_str = myArgs[0],
+        var is_priv_browsing_bool = window.rstv_store.main["rstv_is_priv_browsing"],
+            key_str = myArgs[0],
             value_res = myArgs[1],
             type_str = ((typeof myArgs[2] !== "undefined" && myArgs[2] !== null) && (isString(myArgs[2]) && myArgs[2] != "")) ? myArgs[2] : 'ss',
             options_res = myArgs[3],
@@ -1885,29 +2151,40 @@ var Restive = (function(window, document, $) {
         {
             switch(true)
             {
-                case (type_str == 'ls'):
-                    store_func_name = 'localStorage';
+                case (is_priv_browsing_bool):
+                    //Private Browsing Detected, Use Windows Store
+                    store_func_name = 'storage';
+                    store_func = window.rstv_store[store_func_name];
                     break;
 
                 default:
-                    store_func_name = 'sessionStorage';
-            }
-            store_func = amplify.store[store_func_name];
+                    //Use AmplifyJS Store
+                    switch(true)
+                    {
+                        case (type_str == 'ls'):
+                            store_func_name = 'localStorage';
+                            break;
 
-            //if sessionStorage is not supported, default to amplifyJS
-            switch(true)
-            {
-                case (!window.sessionStorage || !window.localStorage):
-                    store_func = amplify.store;
-                    break;
-            }
+                        default:
+                            store_func_name = 'sessionStorage';
+                    }
+                    store_func = amplify.store[store_func_name];
 
-            //return all values if no key is provided
-            switch(true)
-            {
-                case (is_getall_bool):
-                    return store_func();
-                    break;
+                    //if sessionStorage is not supported, default to amplifyJS
+                    switch(true)
+                    {
+                        case (!window.sessionStorage || !window.localStorage):
+                            store_func = amplify.store;
+                            break;
+                    }
+
+                    //return all values if no key is provided
+                    switch(true)
+                    {
+                        case (is_getall_bool):
+                            return store_func();
+                            break;
+                    }
             }
 
             //return stored value if empty value argument and value is not null
@@ -2006,7 +2283,7 @@ var Restive = (function(window, document, $) {
                                 history_upd_arr = history_arr.slice(0, data_count_int);
 
                                 history_upd_tok_str = implode(delim_str, history_upd_arr);
-                            break;
+                                break;
 
                             default:
                                 history_arr.push(value_str);
@@ -2076,7 +2353,7 @@ var Restive = (function(window, document, $) {
             value_retr_res = store(''+key_str+''),
             is_value_valid_bool = !!((typeof value_store_res !== "undefined" && value_store_res !== null)),
             is_store_value_set_bool = false
-        ;
+            ;
 
         //Determine if store value exists and is valid
         switch(true)
@@ -2179,7 +2456,7 @@ var Restive = (function(window, document, $) {
             doc_client_h_int = store("rstv_var_doc_client_h"),
             win_screen_w_int = store("rstv_var_win_screen_w"),
             win_screen_h_int = store("rstv_var_win_screen_h")
-        ;
+            ;
 
         /**
          * Return dimensions quickly if device is PC
@@ -2507,6 +2784,109 @@ var Restive = (function(window, document, $) {
     }
 
     /**
+     * Get the dimension of a DOM Element.
+     * It uses the JQuery dimension functions e.g. width(), innerHeight(), etc.
+     * @param el_obj {String} The JQuery element object
+     * @param type_str {String} The type of operation. w = width, h = height
+     * @param format_str {String} The dimension retrieval method to use. There are three as follows
+     * 1: d = default = el_obj.width() or el_obj.height()
+     * 2: i = inner = el_obj.innerWidth() or el_obj.innerHeight()
+     * 3: o = outer = el_obj.outerWidth() or el_obj.outerHeight()
+     * @param force_dip_bool {Boolean} Determines whether to consider the element dimensions in device-independent pixel format or not. true = do not use DIP, false [default] = use DIP
+     * @return {Number|Boolean}
+     * @private
+     */
+    function _getElementDimension(el_obj, type_str)
+    {
+        var myArgs = Array.prototype.slice.call(arguments),
+            format_str = (isString(myArgs[2]) && myArgs[2] != "") ? myArgs[2]: 'd',
+            force_dip_bool = (isBool(myArgs[3])) ? myArgs[3]: false,
+            dim_final_int
+            ;
+        type_str = type_str.toLowerCase();
+
+        switch(true)
+        {
+            case (type_str == 'w'):
+                switch(true)
+                {
+                    case (format_str == 'i'):
+                        dim_final_int = el_obj.innerWidth();
+                        break;
+
+                    case (format_str == 'o'):
+                        dim_final_int = el_obj.outerWidth();
+                        break;
+
+                    default:
+                        dim_final_int = el_obj.width();
+                }
+                break;
+
+            case (type_str == 'h'):
+                switch(true)
+                {
+                    case (format_str == 'i'):
+                        dim_final_int = el_obj.innerHeight();
+                        break;
+
+                    case (format_str == 'o'):
+                        dim_final_int = el_obj.outerHeight();
+                        break;
+
+                    default:
+                        dim_final_int = el_obj.height();
+                }
+                break;
+
+            default:
+                dim_final_int = false;
+        }
+
+        switch(true)
+        {
+            case (force_dip_bool === false):
+                //Convert to Device Pixels
+                dim_final_int = dim_final_int * getPixelRatio();
+                break;
+        }
+
+        return dim_final_int;
+    }
+
+    /**
+     * Get the width of a DOM element
+     * @param el_obj {Object} The JQuery Element Object
+     * @param dim_format_str {String} The dimension retrieval method to use.
+     * @param force_dip_bool {Boolean} Flag for forced Device-Independent Pixel consideration
+     * @return {Number|Boolean}
+     * @private
+     */
+    function _elementW(el_obj){
+        var myArgs = Array.prototype.slice.call(arguments),
+            dim_format_str = myArgs[1],
+            force_dip_bool = myArgs[2]
+            ;
+        return _getElementDimension(el_obj, 'w', dim_format_str, force_dip_bool);
+    }
+
+    /**
+     * Get the height of a DOM element
+     * @param el_obj {Object} The JQuery Element Object
+     * @param dim_format_str {String} The dimension retrieval method to use.
+     * @param force_dip_bool {Boolean} Flag for forced Device-Independent Pixel consideration
+     * @return {Number|Boolean}
+     * @private
+     */
+    function _elementH(el_obj){
+        var myArgs = Array.prototype.slice.call(arguments),
+            dim_format_str = myArgs[1],
+            force_dip_bool = myArgs[2]
+            ;
+        return _getElementDimension(el_obj, 'h', dim_format_str, force_dip_bool);
+    }
+
+    /**
      * Get the width of the viewport
      * @return {*|Number}
      */
@@ -2710,7 +3090,15 @@ var Restive = (function(window, document, $) {
      */
     function rangeCompare(fn) {
         return function(min, max) {
-            var bool, curr = fn();
+            var myArgs = Array.prototype.slice.call(arguments),
+                bool,
+                el = myArgs[2],
+                el_valid_bool = !!((isObject(el) && (typeof el !== "undefined" && el !== null))),
+                wf = myArgs[3],
+                f_dip = myArgs[4],
+                curr = (el_valid_bool) ? fn(el, wf, f_dip) : fn()
+                ;
+
             bool = curr >= (min || 0);
             return !max ? bool : bool && curr <= max;
         };
@@ -2723,6 +3111,10 @@ var Restive = (function(window, document, $) {
     dPitch = rangeCompare(screenH);
     cSpan = rangeCompare(pixelW);
     cPitch = rangeCompare(pixelH);
+
+    //Range Comparison Booleans for DOM Element Containers
+    eSpan = rangeCompare(_elementW);
+    ePitch = rangeCompare(_elementH);
 
     /**
      * Gets the user agent of the Device
@@ -3008,7 +3400,7 @@ var Restive = (function(window, document, $) {
         //Check if Device is a Tablet
         switch(true)
         {
-            case (isTablet() || isTV()):
+            case (isTablet(true) || isTV()):
                 //is not phone
                 store("rstv_is_phone", false);
                 return false;
@@ -3030,10 +3422,15 @@ var Restive = (function(window, document, $) {
 
     /**
      * Check if the Device is a Tablet
+     * @param bypass_storage_bool {Boolean} Prevent this method from caching its result in local storage
      * @return {Boolean}
      */
     function isTablet()
     {
+        var myArgs = Array.prototype.slice.call(arguments),
+            bypass_storage_bool = isBool(myArgs[0]) ? myArgs[0] : false
+            ;
+
         //check if tablet check has already been done. If so, return stored value
         switch(true)
         {
@@ -3053,7 +3450,7 @@ var Restive = (function(window, document, $) {
         switch(true)
         {
             case (is_tablet_bool):
-                store("rstv_is_tablet", true);
+                if(!bypass_storage_bool){ store("rstv_is_tablet", true); }
                 return true;
                 break;
         }
@@ -3064,7 +3461,7 @@ var Restive = (function(window, document, $) {
         switch(true)
         {
             case (is_tablet_bool):
-                store("rstv_is_tablet", true);
+                if(!bypass_storage_bool){ store("rstv_is_tablet", true); }
                 return true;
                 break;
         }
@@ -3261,24 +3658,49 @@ var Restive = (function(window, document, $) {
         switch(true)
         {
             case (is_tablet_bool):
-                store("rstv_is_tablet", true);
+                if(!bypass_storage_bool){ store("rstv_is_tablet", true); }
                 return true;
-            break;
+                break;
         }
 
         //Check Android Tablet
         var regex_1_bool = /android/i.test(nav),
-            regex_2_bool = !/mobile/i.test(nav);
+            regex_2_bool = !/mobile/i.test(nav),
+            pixel_w_int = parseInt(store("rstv_viewportW_dip")),
+            pixel_h_int = parseInt(store("rstv_viewportH_dip")),
+            pixel_dim_int = (store("rstv_is_portrait")) ? pixel_w_int : pixel_h_int
+            ;
+
         switch(true)
         {
-            case (regex_1_bool && regex_2_bool):
-                store("rstv_is_tablet", true);
-                return true;
-            break;
+            case (regex_1_bool):
+                /**
+                 * if tablet has either:
+                 * 1. Device independent viewport width between 520px and 800px when in portrait
+                 * 2. Device independent viewport height between 520px and 800px when in landscape
+                 */
+                switch(true)
+                {
+                    case (isNumber(pixel_dim_int) && (pixel_dim_int >= 520 && pixel_dim_int <= 800)):
+                        if(!bypass_storage_bool){ store("rstv_is_tablet", true); }
+                        return true;
+                        break;
+                }
+
+                //if user agent is Android but 'mobile' keyword is absent
+                switch(true)
+                {
+                    case (regex_2_bool):
+                        if(!bypass_storage_bool){ store("rstv_is_tablet", true); }
+                        return true;
+                        break;
+                }
+
+                break;
         }
 
         //Return false if otherwise
-        store("rstv_is_tablet", false);
+        if(!bypass_storage_bool){ store("rstv_is_tablet", false); }
         return false;
     }
 
@@ -3351,7 +3773,7 @@ var Restive = (function(window, document, $) {
         //check if device is phone or tablet
         switch(true)
         {
-            case (isPhone() || isTablet()):
+            case (isPhone() || isTablet(true)):
                 return true;
                 break;
 
@@ -3643,11 +4065,11 @@ var Restive = (function(window, document, $) {
             {
                 case (!isArray(bp_arr)):
                     throw new Error ("The first argument must be an array!");
-                break;
+                    break;
 
                 case (isArray(bp_arr) && bp_arr_count_int == 0):
                     throw new Error ("The first argument must not be empty!");
-                break;
+                    break;
             }
 
             //Check that only either classes or attributes are defined
@@ -3655,7 +4077,7 @@ var Restive = (function(window, document, $) {
             {
                 case ((bp_class_arr_count_int > 0) && (bp_attrib_arr_count_int > 0)):
                     throw new Error("You can only define either 'Classes' or 'Attributes' settings!");
-                break;
+                    break;
             }
 
             //If classes are defined, ensure they correspond with the number of breakpoints defined
@@ -3668,9 +4090,9 @@ var Restive = (function(window, document, $) {
                     {
                         case (bp_class_arr_count_int !== bp_arr_count_int):
                             throw new Error ("The number items for 'Breakpoints' and 'Classes' settings must match");
-                        break;
+                            break;
                     }
-                break;
+                    break;
             }
 
             //If attributes are defined, ensure they correspond with the number of breakpoints defined
@@ -3683,9 +4105,9 @@ var Restive = (function(window, document, $) {
                     {
                         case (bp_attrib_arr_count_int !== bp_arr_count_int):
                             throw new Error ("The number items for 'Breakpoints' and 'Attributes' settings must match");
-                        break;
+                            break;
                     }
-                break;
+                    break;
             }
 
             //Get Breakpoint Reference Data
@@ -3705,7 +4127,7 @@ var Restive = (function(window, document, $) {
                     case (/-+/i.test(bp_item_temp_str) && !/^[^-]*-[^-]*$/i.test(bp_item_temp_str)):
                         //error in the way orientation markers are defined
                         error_marker_str += '2';
-                    break;
+                        break;
                 }
 
                 //find out if there are any resolution markers e.g. -l or -p
@@ -3718,14 +4140,14 @@ var Restive = (function(window, document, $) {
                         ort_marker_key_str = '-p';
 
                         bp_ort_marker_temp_arr.push('p');
-                    break;
+                        break;
 
                     case (substr_count(bp_item_temp_str, '-l') > 0):
                         ort_marker_str = 'l';
                         ort_marker_key_str = '-l';
 
                         bp_ort_marker_temp_arr.push('l');
-                    break;
+                        break;
 
                     default:
                         bp_ort_marker_temp_arr.push('x');
@@ -3754,7 +4176,7 @@ var Restive = (function(window, document, $) {
                             case (ort_marker_str == 'l'):
                                 bp_item_w_temp_final_int = bp_item_h_temp_int;
                                 bp_item_h_temp_final_int = bp_item_w_temp_int;
-                            break;
+                                break;
                         }
 
                         bp_temp_w_arr[counter_alpha_str] = bp_item_w_temp_final_int;
@@ -3763,7 +4185,7 @@ var Restive = (function(window, document, $) {
                         //set breakpoint type as resolution
                         bp_temp_type_arr.push('r');
 
-                    break;
+                        break;
 
                     case (/[0-9]+/i.test(bp_item_final_str)):
                         //is viewport breakpoint
@@ -3772,7 +4194,7 @@ var Restive = (function(window, document, $) {
 
                         //set breakpoint type as viewport
                         bp_temp_type_arr.push('v');
-                    break;
+                        break;
 
                     default:
                         //mark error
@@ -3789,11 +4211,11 @@ var Restive = (function(window, document, $) {
             {
                 case (/[1]+/i.test(error_marker_str)):
                     throw new Error("There are errors in your 'Breakpoints' settings!");
-                break;
+                    break;
 
                 case (/[2]+/i.test(error_marker_str)):
                     throw new Error("There are errors in your 'Breakpoints' settings with regard to the way you have defined orientation markers e.g. -p or -l!");
-                break;
+                    break;
             }
 
             //compose breakpoints
@@ -3857,7 +4279,7 @@ var Restive = (function(window, document, $) {
                 case (is_class_def_bool):
                     var c_str = implode('|', bp_temp_class_arr);
                     bp_final_arr["bp_c"] = c_str;                   //classes
-                break;
+                    break;
             }
 
             //add data for attributes if defined
@@ -3866,7 +4288,7 @@ var Restive = (function(window, document, $) {
                 case (is_attrib_def_bool):
                     var a_str = implode('|', bp_temp_attrib_arr);
                     bp_final_arr["bp_a"] = a_str;                   //attributes
-                break;
+                    break;
             }
 
             return bp_final_arr;
@@ -3984,6 +4406,21 @@ var Restive = (function(window, document, $) {
     }
 
     /**
+     * Monitors a DOM element/container for size changes
+     */
+    function containerMonitor(elem)
+    {
+        var myArgs = Array.prototype.slice.call(arguments),
+            trigger_suffix_str = (isNumber(myArgs[1])) ? "_"+myArgs[1]: ""
+            ;
+
+        var container_monit_fn = function(){
+            $(window).trigger("resize_container"+trigger_suffix_str);
+        };
+        resizeContainer(elem, container_monit_fn);
+    }
+
+    /**
      * Attach an event handler for the resize event
      * @param {Function} fn The function to execute
      * @return object
@@ -3994,9 +4431,19 @@ var Restive = (function(window, document, $) {
         return Restive;
     }
 
+    /**
+     * Attach an event handler for the resizecontainer event
+     * @param {Function} fn The function to execute
+     * @return object
+     */
+    function resizeContainer(el, fn)
+    {
+        el.on('resizecontainer', fn);
+        return Restive;
+    }
+
     //Define Restive Object
     Restive = {
-        vrfy: richardParker,
         init: init(),
         reInit: reInit,
         getUserAgent: getUserAgent,
@@ -4018,6 +4465,8 @@ var Restive = (function(window, document, $) {
         dPitch: dPitch,
         cSpan: cSpan,
         cPitch: cPitch,
+        eSpan: eSpan,
+        ePitch: ePitch,
         isRetina: isRetina,
         getPixelRatio: getPixelRatio,
         getPlatform: getPlatform,
@@ -4027,6 +4476,7 @@ var Restive = (function(window, document, $) {
         isPortrait: isPortrait,
         isLandscape: isLandscape,
         viewportMonitor: viewportMonitor,
+        containerMonitor: containerMonitor,
         isMobile: isMobile,
         isNonMobile: isNonMobile,
         isPhone: isPhone,
@@ -4040,18 +4490,19 @@ var Restive = (function(window, document, $) {
         isBlackberry: isBlackberry,
         isWindows: isWindows,
         isWindowsPhone: isWindowsPhone,
-        resize: resize
+        resize: resize,
+        resizeContainer: resizeContainer
     };
     return Restive;
 
 })(window, document, jQuery);
 
 /*
- * Restive.JS Basic - v1.0.0
- * https://github.com/obihill/restive.js
+ * Restive.JS Plugin v1.1.0
+ * http://restivejs.com
  *
  * Copyright 2013 Obinwanne Hill <https://about.me/obinwanne.hill>
- * Released under License <http://plugin.restive.io/legal/license-basic.html>
+ * Released under MIT License
  */
 (function (window, document, $, undefined) {
     //Gets the content of a function
@@ -4062,10 +4513,6 @@ var Restive = (function(window, document, $) {
         // Strip comments
         return m.replace(/^\s*\/\/.*$/mg,'');
     };
-
-    //Create window storage
-    window.rstv_store = {'main': {}};
-    window.parent.rstv_store = {'main': {}};
 
     var methods = {
 		init : function(options){
@@ -4082,6 +4529,8 @@ var Restive = (function(window, document, $) {
                     $valid_formfactor_arr = ['all', 'pc', 'tv', 'tablet', 'phone'],
                     $platform_init_str = options.platform,
                     $formfactor_init_str = options.formfactor,
+                    responsive_basis_str,
+                    is_resp_basis_container_bool,
                     is_multi_start_bool = Restive.store("rstv_multi_start"),
                     rstv_store_multi_counter_int = Restive.store("rstv_multi_count"),
                     is_multi_abort_2_bool = Restive.store("rstv_multi_abort_2");
@@ -4143,22 +4592,43 @@ var Restive = (function(window, document, $) {
                 //A5. Get the Orientation and Set Orientation Marker
                 $rstv_core_info_arr["orientation"] = methods.getOrientation();
 
-                //Set Event Handlers and Callbacks
+                //A6. Get the Selector of the Element
+                $rstv_core_info_arr["selector"] = getSelector(this);
+
+                //A7. Get the Tag Name of the Element
+                $rstv_core_info_arr["tagname"] = this.prop("tagName").toLowerCase();
+
+                //Get the Basis for Responsiveness
+                responsive_basis_str = methods._responsiveBasis($options, $rstv_core_info_arr);
+                is_resp_basis_container_bool = !!((responsive_basis_str == 'c'));
+
+                //Add Responsive Basis Indicator to Device Core Info
+                $rstv_core_info_arr["is_resp_basis_container"] = is_resp_basis_container_bool;
+
+                //Set Event Handlers and Callbacks according to Responsive Basis
                 switch(true)
                 {
-                    case (!is_multi_start_bool):
-                        methods._viewportMonitor($breakpoints_arr, this, $options, $rstv_core_info_arr);
-                        methods._callbackManager($options, ['ready', 'init']);
+                    case (is_resp_basis_container_bool):
+                        methods._containerMonitor($breakpoints_arr, this, $options, $rstv_core_info_arr);
                         break;
 
                     default:
-                        //Store some variables required for later use
-                        window.parent.rstv_store.main["rstv_breakpoints_"+rstv_store_multi_counter_int] = $breakpoints_arr;
-                        window.parent.rstv_store.main["rstv_this_"+rstv_store_multi_counter_int] = this;
-                        window.parent.rstv_store.main["rstv_options_"+rstv_store_multi_counter_int] = $options;
-                        window.parent.rstv_store.main["rstv_core_info_"+rstv_store_multi_counter_int] = $rstv_core_info_arr;
+                        switch(true)
+                        {
+                            case (!is_multi_start_bool):
+                                methods._viewportMonitor($breakpoints_arr, this, $options, $rstv_core_info_arr);
+                                methods._callbackManager($options, ['ready', 'init']);
+                                break;
 
-                        window.rstv_store.main = window.parent.rstv_store.main;
+                            default:
+                                //Store some variables required for later use
+                                window.parent.rstv_store.main["rstv_breakpoints_"+rstv_store_multi_counter_int] = $breakpoints_arr;
+                                window.parent.rstv_store.main["rstv_this_"+rstv_store_multi_counter_int] = this;
+                                window.parent.rstv_store.main["rstv_options_"+rstv_store_multi_counter_int] = $options;
+                                window.parent.rstv_store.main["rstv_core_info_"+rstv_store_multi_counter_int] = $rstv_core_info_arr;
+
+                                window.rstv_store.main = window.parent.rstv_store.main;
+                        }
                 }
 
                 /**
@@ -4206,7 +4676,7 @@ var Restive = (function(window, document, $) {
                             $on_ready();
                             break;
                     }
-                    break;
+                break;
             }
 
             //Resize Callbacks
@@ -4349,6 +4819,49 @@ var Restive = (function(window, document, $) {
                     break;
             }
         },
+        _responsiveBasis: function($options, $rstv_core_info){
+            /**
+             * This determines the basis for responsive i.e. viewport or container
+             * 1. If anchor option is 'element' and Restive.JS selector is under the body tag, basis is 'container' or 'c'
+             * 2. If not 1, basis is 'viewport' or 'v'
+             */
+            var resp_basis_str,
+                selector_name_str = $rstv_core_info["selector"],
+                elem_is_id_selector_bool = /^#[^\s]+$/i.test(selector_name_str),
+                elem_is_child_of_body_bool = elementIsChildOf('body', selector_name_str),
+                anchor_str = $options.anchor
+                ;
+
+            try
+            {
+                switch(true)
+                {
+                    case (elem_is_child_of_body_bool && (anchor_str == 'element' || anchor_str == 'e')):
+                        switch(true)
+                        {
+                            case (!elem_is_id_selector_bool):
+                                throw new Error("You must use only the JQuery ID selector when the 'anchor' option is set to 'e' or 'element'!");
+                                break;
+                        }
+                        resp_basis_str = 'c';
+                        break;
+
+                    default:
+                        resp_basis_str = 'v';
+                        /**
+                         * This indicates that at least one Restive.JS constructor has a Responsive Basis of 'viewport'
+                         * NOTE: It is ultimately used to prevent the viewport and callback manager from being activated if all Restive.JS constructors are determined to have a 'container' responsiveness basis
+                         */
+                        Restive.store("rstv_resp_basis_viewport_init", true);
+                }
+
+                return resp_basis_str;
+            }
+            catch(e){
+                alert(e);
+                console.log(e);/*RemoveLogging:skip*/
+            }
+        },
         _viewportMonitor: function($bp_arr, $this, $options, $rstv_core_info){
             //set event handler for resize
             var event_name_resize_str = "resize_viewport",
@@ -4367,23 +4880,58 @@ var Restive = (function(window, document, $) {
             //activate Viewport Monitor
             Restive.viewportMonitor();
         },
-        _onResizeViewport: function($bp_arr, $this, $options, $rstv_core_info){
-            return $this.each(function(){
-                var $_this = $(this);
-                methods.setBreakpoints($bp_arr, $_this, $options, $rstv_core_info, 'rv');
+        _containerMonitor: function($bp_arr, $this, $options, $rstv_core_info){
+            var event_name_resize_container_str = "resizecontainer"
+                ;
 
-                //call resize callbacks
-                methods._callbackManager($options, ['resize']);
+            //set event handler for container resize
+            $this.on(event_name_resize_container_str, function(){
+                methods._onResizeContainer($bp_arr, $this, $options, $rstv_core_info);
             });
         },
-        _onChangeOrientation: function($bp_arr, $this, $options, $rstv_core_info){
-            return $this.each(function(){
-                var $_this = $(this);
-                methods.setBreakpoints($bp_arr, $_this, $options, $rstv_core_info, 'co');
+        _onResizeViewport: function($bp_arr, $this, $options, $rstv_core_info){
+            try{
+                return $this.each(function(){
+                    var $_this = $(this)
+                        ;
+                    methods.setBreakpoints($bp_arr, $_this, $options, $rstv_core_info, 'rv');
 
-                //call orientation callbacks
-                methods._callbackManager($options, ['rotate']);
-            });
+                    //call resize callbacks
+                    methods._callbackManager($options, ['resize']);
+                });
+            }
+            catch(e){
+                alert(e);
+                console.log(e);/*RemoveLogging:skip*/
+            }
+        },
+        _onResizeContainer: function($bp_arr, $this, $options, $rstv_core_info){
+            try{
+                return $this.each(function(){
+                    var $_this = $(this)
+                        ;
+                    methods.setBreakpoints($bp_arr, $_this, $options, $rstv_core_info, 'rc');
+                });
+            }
+            catch(e){
+                alert(e);
+                console.log(e);/*RemoveLogging:skip*/
+            }
+        },
+        _onChangeOrientation: function($bp_arr, $this, $options, $rstv_core_info){
+            try{
+                return $this.each(function(){
+                    var $_this = $(this);
+                    methods.setBreakpoints($bp_arr, $_this, $options, $rstv_core_info, 'co');
+
+                    //call orientation callbacks
+                    methods._callbackManager($options, ['rotate']);
+                });
+            }
+            catch(e){
+                alert(e);
+                console.log(e);/*RemoveLogging:skip*/
+            }
         },
         getBreakpoints: function(bp_arr, bp_class_arr){
             return Restive.getBreakpoints(bp_arr, bp_class_arr);
@@ -4398,6 +4946,8 @@ var Restive = (function(window, document, $) {
                 rstv_event_info = myArgs[4],
                 is_ort_change_bool = false,
                 is_resize_viewport_bool = false,
+                is_resize_container_bool = false,
+                is_resp_basis_container_bool = rstv_core_info["is_resp_basis_container"],
                 is_multi_abort_1_bool = Restive.store("rstv_multi_abort_1")
             ;
 
@@ -4419,6 +4969,15 @@ var Restive = (function(window, document, $) {
                     break;
             }
 
+            //Capture resize container
+            switch(true)
+            {
+                case (rstv_event_info == 'rc'):
+                    //the selected container has been resized. manage accordingly
+                    is_resize_container_bool = true;
+                    break;
+            }
+
             //Abort Restive.JS if multiple constructor anomalies occur
             switch(true)
             {
@@ -4432,6 +4991,7 @@ var Restive = (function(window, document, $) {
              * When multiple Restive.JS Constructors are used, and a match is found, that match is saved
              * On successive attempts, the breakpoint conditions that previously failed are prevented from being executed further to improve overall performace
              * The following code manages this process
+             * NOTE: If the Responsive Basis is 'container', this functionality is ignored
              */
             var rstv_store_is_multi_bool = Restive.store("rstv_multi_start"),
                 rstv_store_multi_count_int = parseInt(Restive.store("rstv_multi_count")),
@@ -4441,18 +5001,27 @@ var Restive = (function(window, document, $) {
 
             switch(true)
             {
-                case (rstv_store_is_multi_bool && !is_ort_change_bool && rstv_store_bpm_lock_bool):
+                case (!is_resp_basis_container_bool):
+                    /**
+                     * Do only if Responsive Basis is Viewport
+                     */
                     switch(true)
                     {
-                        case (isNumber(rstv_store_multi_count_int) && isNumber(rstv_store_bpm_idx_int) && rstv_store_multi_count_int != rstv_store_bpm_idx_int):
-                            return false;
+                        case (rstv_store_is_multi_bool && !is_ort_change_bool && rstv_store_bpm_lock_bool):
+                            switch(true)
+                            {
+                                case (isNumber(rstv_store_multi_count_int) && isNumber(rstv_store_bpm_idx_int) && rstv_store_multi_count_int != rstv_store_bpm_idx_int):
+                                    return false;
+                                    break;
+                            }
                             break;
                     }
                     break;
             }
 
             //get Device and Orientation Options and Information
-            var options_platform_str = rstv_options.platform,
+            var restive_user_agent_str = Restive.getUserAgent(),
+                options_platform_str = rstv_options.platform,
                 options_formfactor_str = rstv_options.formfactor,
                 options_force_dip_str = rstv_options.force_dip,
                 restive_platform_str = rstv_core_info["platform"],
@@ -4464,9 +5033,16 @@ var Restive = (function(window, document, $) {
                 is_portrait_bool = Restive.isPortrait(),
                 is_landscape_bool = (is_portrait_bool === true) ? false : true;
 
+
             var dim_arr = [],
                 viewport_w_int,
+                viewport_h_int,
+                screen_w_int,
+                screen_h_int,
+                pixel_w_int,
+                pixel_h_int,
                 viewport_w_active_int,
+                bp_set_arr = [],
                 bp_class_arr = [],
                 is_class_def_bool = false,
                 bp_width_tok_str = bp_arr["bp_w"],
@@ -4481,6 +5057,11 @@ var Restive = (function(window, document, $) {
 
             viewport_w_int = Restive.viewportW();
             viewport_w_active_int = viewport_w_int;
+            viewport_h_int = Restive.viewportH();
+            screen_w_int = Restive.screenW();
+            screen_h_int = Restive.screenH();
+            pixel_w_int = Restive.pixelW();
+            pixel_h_int = Restive.pixelH();
 
             switch(true)
             {
@@ -4666,12 +5247,28 @@ var Restive = (function(window, document, $) {
                         bp_width_max_int = bp_width_int;
                 }
 
-                //Check for Matching Breakpoints
-                span_range_bool = Restive.vSpan(bp_width_min_int, bp_width_max_int);
+                /**
+                 * Check for Matching Breakpoints
+                 * 1. Do for Container Basis
+                 * 2. Do for Viewport Basis
+                 */
+                switch(true)
+                {
+                    case (is_resp_basis_container_bool):
+                        //1
+                        span_range_bool = Restive.eSpan(bp_width_min_int, bp_width_max_int, elem, rstv_options.anchor_e_df, rstv_options.force_dip);
+                        break;
 
+                    default:
+                        //2
+                        span_range_bool = Restive.vSpan(bp_width_min_int, bp_width_max_int);
+                }
 
                 /**
                  * Set Breakpoints
+                 * A. For Container Basis
+                 *
+                 * B. For Viewport Basis
                  * Status codes as follows:
                  * 1: Viewport matched breakpoint with clean hit on initialization i.e. viewport is virtually identical to breakpoint
                  * 2: Viewport matched breakpoint with clean hit after orientation change
@@ -4681,59 +5278,71 @@ var Restive = (function(window, document, $) {
                 switch(true)
                 {
                     case (span_range_bool && ort_range_bool):
-                        bp_width_diff_r_int = bp_width_max_int - viewport_w_active_int;
-                        bp_width_diff_r_abs_int = Math.abs(bp_width_diff_r_int);
-                        bp_width_diff_l_int = viewport_w_active_int - bp_width_min_int;
-
-                        bp_width_diff_r_comp_int = bp_width_max_int*0.1;
-                        bp_width_diff_r_comp_int = Math.round(bp_width_diff_r_comp_int);
 
                         switch(true)
                         {
-                            case (is_ort_change_bool):
-                                //capture some key metrics
-                                switch(true)
-                                {
-                                    case (bp_width_diff_r_int > bp_width_diff_r_comp_int):
-                                        ba_usage_log_status_code_str = "4";
-                                        break;
-
-                                    default:
-                                        ba_usage_log_status_code_str = "2";
-                                }
-                            break;
+                            case (is_resp_basis_container_bool):
+                                //A
+                                is_breakpoint_match_bool = true;
+                                break;
 
                             default:
-                                //capture some key metrics
+                                //B
+                                bp_width_diff_r_int = bp_width_max_int - viewport_w_active_int;
+                                bp_width_diff_r_abs_int = Math.abs(bp_width_diff_r_int);
+                                bp_width_diff_l_int = viewport_w_active_int - bp_width_min_int;
+
+                                bp_width_diff_r_comp_int = bp_width_max_int*0.1;
+                                bp_width_diff_r_comp_int = Math.round(bp_width_diff_r_comp_int);
+
                                 switch(true)
                                 {
-                                    case (bp_width_diff_r_int > bp_width_diff_r_comp_int):
-                                        ba_usage_log_status_code_str = "3";
+                                    case (is_ort_change_bool):
+                                        //capture some key metrics
+                                        switch(true)
+                                        {
+                                            case (bp_width_diff_r_int > bp_width_diff_r_comp_int):
+                                                ba_usage_log_status_code_str = "4";
+                                                break;
+
+                                            default:
+                                                ba_usage_log_status_code_str = "2";
+                                        }
                                         break;
 
                                     default:
-                                        ba_usage_log_status_code_str = "1";
+                                        //capture some key metrics
+                                        switch(true)
+                                        {
+                                            case (bp_width_diff_r_int > bp_width_diff_r_comp_int):
+                                                ba_usage_log_status_code_str = "3";
+                                                break;
+
+                                            default:
+                                                ba_usage_log_status_code_str = "1";
+                                        }
                                 }
-                        }
 
-                        is_breakpoint_match_bool = true;
+                                is_breakpoint_match_bool = true;
 
-                        //Capture class values of last hit
-                        switch(true)
-                        {
-                            case (is_breakpoint_match_bool):
-                                is_breakpoint_match_hit_bool = true;
-
-                                bp_class_last_sel_str = bp_class_str;
-
+                                //Capture class values of last hit
                                 switch(true)
                                 {
-                                    case (bp_ort_str != "x"):
-                                        bp_break_on_match_bool = true;
+                                    case (is_breakpoint_match_bool):
+                                        is_breakpoint_match_hit_bool = true;
+
+                                        bp_class_last_sel_str = bp_class_str;
+
+                                        switch(true)
+                                        {
+                                            case (bp_ort_str != "x"):
+                                                bp_break_on_match_bool = true;
+                                                break;
+                                        }
                                         break;
                                 }
-                                break;
                         }
+
                         break;
 
                     default:
@@ -4757,6 +5366,17 @@ var Restive = (function(window, document, $) {
             switch(true)
             {
                 case (!is_breakpoint_match_bool):
+
+                    //Do for Container Basis
+                    switch(true)
+                    {
+                        case (is_resp_basis_container_bool):
+                            methods.unsetElementDOM(elem, rstv_options);
+                            return;
+                            break;
+                    }
+
+                    //Do for Viewport Basis
                     bp_width_min_int = 0;
                     bp_width_max_int = 0;
 
@@ -4803,6 +5423,16 @@ var Restive = (function(window, document, $) {
                     /**
                      * Set class
                      */
+                    //Do for Container Basis
+                    switch(true)
+                    {
+                        case (is_resp_basis_container_bool):
+                            methods.setElementDOM(elem, elem_set_data_str, rstv_options);
+                            return;
+                            break;
+                    }
+
+                    //Do for Viewport Basis
                     switch(true)
                     {
                         case (Restive.store("rstv_multi_start")):
@@ -4889,7 +5519,7 @@ var Restive = (function(window, document, $) {
             {
                 case (is_breakpoint_match_bool):
                     return true;
-                break;
+                    break;
             }
 
             return false;
@@ -4949,7 +5579,11 @@ var Restive = (function(window, document, $) {
             return pc_final_str;
         },
         setElementDOM: function(elem, elem_set_str, options){
-            var ds_elem_set_str = (isString(Restive.store("rstv_bpm_class_name")) && Restive.store("rstv_bpm_class_name") != '') ? Restive.store("rstv_bpm_class_name"): '';
+            var data_key_str = md5(getSelector(elem)),
+                ds_elem_set_class_name_str = "rstv_bpm_class_"+data_key_str,
+                ds_elem_set_str;
+
+            ds_elem_set_str = (isString(Restive.store(ds_elem_set_class_name_str)) && Restive.store(ds_elem_set_class_name_str) != '') ? Restive.store(ds_elem_set_class_name_str): '';
             switch(true)
             {
                 case (ds_elem_set_str != ''):
@@ -4965,11 +5599,15 @@ var Restive = (function(window, document, $) {
                 default:
                     elem.addClass(elem_set_str);
             }
-            Restive.store("rstv_bpm_class_name", elem_set_str);
+            Restive.store(ds_elem_set_class_name_str, elem_set_str);
             methods._callbackManager(options, ['addclass', ''+elem_set_str+'']);
         },
         unsetElementDOM: function(elem, options){
-            var ds_elem_set_str = (isString(Restive.store("rstv_bpm_class_name")) && Restive.store("rstv_bpm_class_name") != '') ? Restive.store("rstv_bpm_class_name"): '';
+            var data_key_str = md5(getSelector(elem)),
+                ds_elem_set_class_name_str = "rstv_bpm_class_"+data_key_str,
+                ds_elem_set_str;
+
+            ds_elem_set_str = (isString(Restive.store(ds_elem_set_class_name_str)) && Restive.store(ds_elem_set_class_name_str) != '') ? Restive.store(ds_elem_set_class_name_str): '';
             elem.removeClass(ds_elem_set_str);
 
             methods._callbackManager(options, ['removeclass', ''+ds_elem_set_str+'']);
@@ -5010,17 +5648,18 @@ var Restive = (function(window, document, $) {
                 case (pattern_1.test(bpm_val_temp_str)):
                     //1
                     sel_constructor_pos = strrpos(bpm_val_temp_str, 'h');
-                break;
+                    break;
 
                 case (pattern_2.test(bpm_val_temp_str)):
                     //2
+                    Restive.store("rstv_cache_bpm_all_miss", true, '', {expires: 2000});
                     sel_constructor_pos = strrpos(bpm_val_temp_str, 'm');
-                break;
+                    break;
 
                 case(substr_count(bpm_val_temp_str, "h") > 1):
                     //3
                     sel_constructor_pos = bpm_idx_int - 1;
-                break;
+                    break;
             }
             sel_constructor_pos_1 = sel_constructor_pos + 1;
             Restive.store("rstv_multi_bpm_idx", sel_constructor_pos_1);
@@ -5036,9 +5675,16 @@ var Restive = (function(window, document, $) {
                 $breakpoints_arr = window.parent.rstv_store.main["rstv_breakpoints_"+$sel_pos_final_int],
                 $this = window.parent.rstv_store.main["rstv_this_"+$sel_pos_final_int],
                 $options = window.parent.rstv_store.main["rstv_options_"+$sel_pos_final_int],
-                $rstv_core_info_arr = window.parent.rstv_store.main["rstv_core_info_"+$sel_pos_final_int];
-            methods._viewportMonitor($breakpoints_arr, $this, $options, $rstv_core_info_arr);
-            methods._callbackManager($options, ['ready', 'init']);
+                $rstv_core_info_arr = window.parent.rstv_store.main["rstv_core_info_"+$sel_pos_final_int]
+                ;
+
+            switch(true)
+            {
+                case (Restive.store("rstv_resp_basis_viewport_init")):
+                    methods._viewportMonitor($breakpoints_arr, $this, $options, $rstv_core_info_arr);
+                    methods._callbackManager($options, ['ready', 'init']);
+                    break;
+            }
         },
         _multiConstructorFinalize: function(){
 
@@ -5098,9 +5744,9 @@ var Restive = (function(window, document, $) {
                     {
                         case (is_multi_start_bool === false):
                             Restive.store("rstv_multi_abort_1", true);
-                        break;
+                            break;
                     }
-                break;
+                    break;
             }
 
             /**
@@ -5240,6 +5886,8 @@ var Restive = (function(window, document, $) {
 	$.fn.restive.defaults = {
         breakpoints: [],                                    //the breakpoints
 		classes: [],                                        //the corresponding classes
+        anchor: 'window',                                   //the basis for responsiveness
+        anchor_e_df: 'w',                                   //the dimension format for element-value anchor operations
         platform: 'all',						            //all, ios, android, symbian, blackberry, windows
         formfactor: 'all',                                  //all, pc, tv, tablet, phone
         turbo_classes: '',                                  //special class-based functionality
@@ -5366,4 +6014,3 @@ var Restive = (function(window, document, $) {
     });
 
 }(window, document, jQuery));
-
