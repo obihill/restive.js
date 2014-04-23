@@ -3849,16 +3849,29 @@ var Restive = (function(window, document, $) {
                 //landscape
                 ort_final_str = 'landscape';
 
-                store("rstv_is_portrait", false);
-                store("rstv_is_landscape", true);
+                //do not alter cached orientation variables if bypass_cache_bool is true
+                switch(true)
+                {
+                    case (!bypass_cache_bool):
+                        store("rstv_is_portrait", false);
+                        store("rstv_is_landscape", true);
+                        break;
+                }
+
                 break;
 
             default:
                 //portrait
                 ort_final_str = 'portrait';
 
-                store("rstv_is_portrait", true);
-                store("rstv_is_landscape", false);
+                //do not alter cached orientation variables if bypass_cache_bool is true
+                switch(true)
+                {
+                    case (!bypass_cache_bool):
+                        store("rstv_is_portrait", true);
+                        store("rstv_is_landscape", false);
+                        break;
+                }
         }
 
         return ort_final_str;
@@ -4373,7 +4386,7 @@ var Restive = (function(window, document, $) {
             }
 
             /**
-             * Trigger events only if not soft keyboard is initialized
+             * Trigger events only if soft keyboard is not detected
              */
             switch(true)
             {
@@ -5113,7 +5126,8 @@ var Restive = (function(window, document, $) {
                 is_breakpoint_match_os_bool = true,
                 is_breakpoint_match_ff_bool = true,
                 ba_usage_log_status_str = '',
-                ba_usage_log_status_code_str = ''
+                ba_usage_log_status_code_str = '',
+                elem_set_data_str
                 ;
 
             var bp_width_arr_count_int = count(bp_width_arr);
@@ -5250,7 +5264,7 @@ var Restive = (function(window, document, $) {
                 /**
                  * Check for Matching Breakpoints
                  * 1. Do for Container Basis
-                 * 2. Do for Viewport Basis
+                 * 2. Do for Viewport Basis. Make sure to consider force_dip option
                  */
                 switch(true)
                 {
@@ -5261,7 +5275,7 @@ var Restive = (function(window, document, $) {
 
                     default:
                         //2
-                        span_range_bool = Restive.vSpan(bp_width_min_int, bp_width_max_int);
+                        span_range_bool = (options_force_dip_str == true) ? Restive.cSpan(bp_width_min_int, bp_width_max_int): Restive.vSpan(bp_width_min_int, bp_width_max_int);
                 }
 
                 /**
@@ -5413,12 +5427,17 @@ var Restive = (function(window, document, $) {
                             }
                     }
 
+                    //Add Turbo Classes if any
+                    elem_set_data_str = methods._addTurboClasses('', rstv_options.turbo_classes);
+                    methods.setElementDOM(elem, elem_set_data_str, rstv_options);
+
+                    //persist
                     Restive.store("rstv_breakpoint_match_curr", false);
 
                     break;
 
                 case (is_breakpoint_match_bool):
-                    var elem_set_data_str = methods._addTurboClasses(bp_class_str, rstv_options.turbo_classes);
+                    elem_set_data_str = methods._addTurboClasses(bp_class_str, rstv_options.turbo_classes);
 
                     /**
                      * Set class
@@ -5494,6 +5513,7 @@ var Restive = (function(window, document, $) {
                             methods.setElementDOM(elem, elem_set_data_str, rstv_options);
                     }
 
+                    //persist
                     Restive.store("rstv_breakpoint_match_curr", true);
                     break;
             }
@@ -5525,14 +5545,6 @@ var Restive = (function(window, document, $) {
             return false;
 		},
         _addTurboClasses: function(class_data_str, opt_turbo_classes){
-            //return if class name is invalid
-            switch(true)
-            {
-                case (!isString(class_data_str) || class_data_str == ''):
-                    return '';
-                    break;
-            }
-
             //return class name only if power classes info is invalid or empty
             switch(true)
             {

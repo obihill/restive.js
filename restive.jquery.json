@@ -1,7 +1,7 @@
 {
 	"name": "restive",
-	"version": "1.0.0",
-	"title": "Restive Plugin",
+	"version": "1.2.0",
+	"title": "Restive.JS",
 	"author": {
 		"name": "Obinwanne Hill",
 		"email": "ohill@restive.io",
@@ -9,8 +9,8 @@
 	},
 	"licenses": [
 	{
-		"type": "Custom",
-		"url": "http://plugin.restive.io/legal/license-basic.html"
+		"type": "MIT",
+		"url": "https://github.com/obihill/restive.js/blob/master/LICENSE.md"
 	}
 	],
 	"dependencies": {
@@ -32,11 +32,11 @@
 		"jquery",
 		"plugin"
 	],
-	"homepage": "https://github.com/obihill/restive-plugin",
-	"docs": "http://docs.restive.io/plugin",
-	"demo": "http://plugin.restive.io/demo.html",
-	"download": "http://plugin.restive.io",
-	"bugs": "https://github.com/obihill/restive-plugin/issues",
+	"homepage": "http://www.restivejs.com",
+	"docs": "http://docs.restivejs.com",
+	"demo": "http://www.restivejs.com/demo.html",
+	"download": "https://github.com/obihill/restive.js",
+	"bugs": "https://github.com/obihill/restive.js/issues",
 	"maintainers": [
 	{
 		"name": "Obinwanne Hill",
