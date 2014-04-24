@@ -3,7 +3,7 @@
  
 ## 1.2.0
 - Solve issue with `force_dip` option not working with `breakpoints`
-- Solve minor issue with some stored orientation variables being updated temporarily when soft-keyboard is initialized
+- Solve issue with orientation status updates when soft-keyboard is initialized on certain mobile devices
 - Solve issue with `turbo_classes` not being fired when `breakpoints` do not match 
 
 

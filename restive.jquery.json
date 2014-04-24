@@ -16,7 +16,7 @@
 	"dependencies": {
 		"jquery": ">=1.7.1"
 	},
-	"description": "jQuery plugin for helping Web Designers add Responsive + Adaptive Features to their Web Sites. * User-friendly - Set up advanced responsive and adaptive features easily and intuitively. * Versatile - Easily detect and target multiple form factors and platforms. *Powerful - Numerous advanced features and combinations available. ",
+	"description": "jQuery plugin for helping Web Designers easily add Responsive + Adaptive Features to their Web Sites. * User-friendly - Set up advanced responsive and adaptive features easily and intuitively. * Versatile - Easily detect and target multiple form factors and platforms. *Powerful - Numerous advanced features and combinations available. ",
 	"keywords": [
 		"restive",
 		"restive.js",

@@ -4331,8 +4331,8 @@ var Restive = (function(window, document, $) {
      */
     function viewportMonitor()
     {
-        var myArgs = Array.prototype.slice.call(arguments);
-        var trigger_suffix_str = (isNumber(myArgs[0])) ? "_"+myArgs[0]: "";
+        var myArgs = Array.prototype.slice.call(arguments),
+            trigger_suffix_str = (isNumber(myArgs[0])) ? "_"+myArgs[0]: "";
 
         var viewport_monit_fn = function(){
 
@@ -4350,8 +4350,10 @@ var Restive = (function(window, document, $) {
                 viewport_w_curr_int,
                 viewport_h_curr_int,
                 viewport_w_diff_int,
+                viewport_w_diff_abs_int,
                 viewport_w_diff_pc_int,
                 viewport_h_diff_int,
+                viewport_h_diff_abs_int,
                 viewport_h_diff_pc_int,
                 is_softkey_bool = false;
 
@@ -4368,25 +4370,42 @@ var Restive = (function(window, document, $) {
                 case (is_mobile_bool):
                     viewport_w_curr_int = store("rstv_viewportW");
                     viewport_h_curr_int = store("rstv_viewportH");
-                    viewport_w_diff_int = Math.abs(viewport_w_curr_int-viewport_w_prev_int);
-                    viewport_h_diff_int = Math.abs(viewport_h_curr_int-viewport_h_prev_int);
+                    viewport_w_diff_int = viewport_w_curr_int-viewport_w_prev_int;
+                    viewport_h_diff_int = viewport_h_curr_int-viewport_h_prev_int;
+                    viewport_w_diff_abs_int = Math.abs(viewport_w_diff_int);
+                    viewport_h_diff_abs_int = Math.abs(viewport_h_diff_int);
 
                     //get the percentage changes in viewport width and height
-                    viewport_w_diff_pc_int = (viewport_w_diff_int/viewport_w_prev_int)*100;
-                    viewport_h_diff_pc_int = (viewport_h_diff_int/viewport_h_prev_int)*100;
+                    viewport_w_diff_pc_int = (viewport_w_diff_abs_int/viewport_w_prev_int)*100;
+                    viewport_h_diff_pc_int = (viewport_h_diff_abs_int/viewport_h_prev_int)*100;
 
                     switch(true)
                     {
-                        case (viewport_w_diff_pc_int < 1 && viewport_h_diff_pc_int > 35):
-                            //Likely soft keyboard!!
-                            is_softkey_bool = true;
+                        case (viewport_w_diff_pc_int < 1):
+                            switch(true)
+                            {
+                                case (viewport_h_diff_pc_int > 35 && viewport_h_diff_int < 0):
+                                    //soft keyboard is opening
+                                    is_softkey_bool = true;
+                                    break;
+
+                                case (viewport_h_diff_pc_int > 35 && viewport_h_diff_int > 0):
+                                    //Soft keyboard closing - start
+                                    is_softkey_bool = true;
+                                    break;
+
+                                case (viewport_h_diff_pc_int > 12 && viewport_h_diff_pc_int <= 35 && viewport_h_diff_int > 0):
+                                    //Soft keyboard closing - end
+                                    is_softkey_bool = true;
+                                    break;
+                            }
                             break;
                     }
                     break;
             }
 
             /**
-             * Trigger events only if soft keyboard is not detected
+             * Trigger events only if soft keyboard action is not detected
              */
             switch(true)
             {

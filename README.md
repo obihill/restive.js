@@ -127,7 +127,6 @@ Please be mindful to disable the following Javascript libraries from your Web pa
 
 - [AmplifyJS Store](http://amplifyjs.com/api/store/)
 - [JSON2.js](https://github.com/douglascrockford/JSON-js)
-- [jquery-cookie](https://github.com/carhartl/jquery-cookie)
 - [iOS-Orientation-Fix](https://github.com/PeterWooster/iOS-Orientationchange-Fix)
 
 These libraries are already embedded within Restive.JS.
@@ -241,15 +240,15 @@ Anchor selection is automatic and functions according to the following condition
 
 #### anchor_e_df
 
-This is a special option that determines what method should be used to retrieve the width of the element container when `anchor` option is used, and its values is `element` i.e. when **Modularity** is in effect.
+This is a special option that determines what method should be used to retrieve the width of the element container when `anchor` option is used, and its value is `element` i.e. when **Modularity** is in effect. As Modularity focuses on the container, Restive.JS needs to determine the width of said container in order to know when to trigger `classes` in response to `breakpoints` at the container level.
 
-There are three possible values that you may use:
+Restive.JS uses JQuery's width methods. There are three possible values that you may use:
 
-- 'w' to use $().width(). This is the default value
-- 'i' to use $().innerWidth()
-- 'o' to use $().outerWidth()
+- `w` to use `$().width()`. This is the default value
+- `i` to use `$().innerWidth()`
+- `o` to use `$().outerWidth()`
 
-**NOTE**: This option is only used when `anchor` option is `e` or ``.
+**NOTE**: This option is only used when `anchor` option is `e` or `element`.
 
 
 #### platform
