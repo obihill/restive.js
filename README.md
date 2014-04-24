@@ -111,7 +111,7 @@ So if I have an `Apple iPad 4` and I visited a Website [while in Portrait Orient
 
 ## Quickstart Guide
 
-Please See the Blog Post titled **'[Getting Started with Restive.JS Plugin](http://blog.restive.io/posts/5852603/getting-started-with-restive-plugin)'** as a Quickstart Guide. It will help you get your head around Restive.JS and how it can work for you in a real-life Web Design scenario. You should also [Responsive Web Design with Less Code]()
+Please See the Blog Post titled **'[Getting Started with Restive.JS Plugin](http://blog.restive.io/posts/5852603/getting-started-with-restive-plugin)'** as a Quickstart Guide. It will help you get your head around Restive.JS and how it can work for you in a real-life Web Design scenario. You should also read **'[Responsive Web Design with Less Code](http://speckyboy.com/2014/03/17/responsive-web-design-less-code)'** for additional insights.
 
 
 
