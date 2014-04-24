@@ -282,7 +282,7 @@ For example, let's say you want to add a class `mobi` if the device is a mobile 
 
 Using `turbo_classes`, you can specify one or more conditions and a corresponding class [for each condition] that will be added to the DOM selector when said condition is met.
 
-You define your turbo-class (or classes) in the following format: `{condition}={class}`
+You define your turbo-class[es] in the following format: `{condition}={class}`
 
 Where `{condition}` is the specific circumstance that will trigger the `{class}` to be added. The following `{condition}` definitions are available for use:
 

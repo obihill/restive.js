@@ -4398,6 +4398,11 @@ var Restive = (function(window, document, $) {
                                     //Soft keyboard closing - end
                                     is_softkey_bool = true;
                                     break;
+
+                                case (viewport_h_diff_pc_int == 0):
+                                    //No movement - possible Soft keyboard action
+                                    is_softkey_bool = true;
+                                    break;
                             }
                             break;
                     }
