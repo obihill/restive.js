@@ -1834,73 +1834,76 @@ function getUrl()
     }
 }
 
-/**
- * Determines if a given element is a child or descendant of another
- * @param {String} $elem_sel_parent_str The selector of the parent object
- * @param {String} $elem_sel_child_str The selector of the suspected child object
- * @return {Boolean}
- */
-function elementIsChildOf($elem_sel_parent_str, $elem_sel_child_str)
-{
-    var result_bool = false,
-        elem_parent = $(''+$elem_sel_parent_str+''),
-        elem_child = $(''+$elem_sel_child_str+'');
+(function($){
 
-    switch(true)
-    {
-        case ($(elem_child).parents().index(elem_parent) != -1):
-            result_bool = true;
-            break;
-    }
+    /**
+     * Determines if a given element is a child or descendant of another
+     * @param {String} $elem_sel_parent_str The selector of the parent object
+     * @param {String} $elem_sel_child_str The selector of the suspected child object
+     * @return {Boolean}
+     */
+    window.elementIsChildOf = function($elem_sel_parent_str, $elem_sel_child_str){
+        var result_bool = false,
+            elem_parent = $(''+$elem_sel_parent_str+''),
+            elem_child = $(''+$elem_sel_child_str+'');
 
-    return result_bool;
-}
-
-/**
- * Retrieves the text value of a JQuery Selector
- * @param {Object} el the JQuery Object/Element
- * @return {String}
- */
-function getSelector(el)
-{
-    var $el = $(el);
-
-    var id = $el.attr("id");
-    if (id) { //"should" only be one of these if theres an ID
-        return "#"+ id;
-    }
-
-    var node = $el[0].nodeName.toLowerCase();
-    if(node == 'html' || node == 'body'){
-        return node;
-    }
-
-    var selector = $el.parents()
-        .map(function() { return this.tagName; })
-        .get().reverse().join(" ");
-
-    if (selector) {
-        selector += " "+ $el[0].nodeName;
-    }
-
-    var classNames = $el.attr("class");
-    if (classNames) {
-        selector += "." + $.trim(classNames).replace(/\s/gi, ".");
-    }
-
-    var name = $el.attr('name');
-    if (name) {
-        selector += "[name='" + name + "']";
-    }
-    if (!name){
-        var index = $el.index();
-        if (index) {
-            index = index + 1;
-            selector += ":nth-child(" + index + ")";
+        switch(true)
+        {
+            case ($(elem_child).parents().index(elem_parent) != -1):
+                result_bool = true;
+                break;
         }
-    }
-    return selector;
-}
+
+        return result_bool;
+    };
+
+    /**
+     * Retrieves the text value of a JQuery Selector
+     * @param {Object} el the JQuery Object/Element
+     * @return {String}
+     */
+    window.getSelector = function(el){
+        var $el = $(el);
+
+        var id = $el.attr("id");
+        if (id) { //"should" only be one of these if theres an ID
+            return "#"+ id;
+        }
+
+        var node = $el[0].nodeName.toLowerCase();
+        if(node == 'html' || node == 'body'){
+            return node;
+        }
+
+        var selector = $el.parents()
+            .map(function() { return this.tagName; })
+            .get().reverse().join(" ");
+
+        if (selector) {
+            selector += " "+ $el[0].nodeName;
+        }
+
+        var classNames = $el.attr("class");
+        if (classNames) {
+            selector += "." + $.trim(classNames).replace(/\s/gi, ".");
+        }
+
+        var name = $el.attr('name');
+        if (name) {
+            selector += "[name='" + name + "']";
+        }
+        if (!name){
+            var index = $el.index();
+            if (index) {
+                index = index + 1;
+                selector += ":nth-child(" + index + ")";
+            }
+        }
+        return selector;
+    };
+
+})(jQuery);
+
 
 /*! Restive.JS | @copyright 2013 Obinwanne Hill */
 var Restive = (function(window, document, $) {
@@ -4535,7 +4538,7 @@ var Restive = (function(window, document, $) {
 })(window, document, jQuery);
 
 /*
- * Restive.JS Plugin v1.1.0
+ * Restive.JS Plugin v1.3.0
  * http://restivejs.com
  *
  * Copyright 2013 Obinwanne Hill <https://about.me/obinwanne.hill>
@@ -4668,6 +4671,9 @@ var Restive = (function(window, document, $) {
                         }
                 }
 
+                //reset turbo_classes_reflow sessionStorage variable
+                Restive.store("rstv_turbo_classes_reflow_status_in", null);
+
                 /**
                  * Manage Breakpoints
                  */
@@ -4729,6 +4735,54 @@ var Restive = (function(window, document, $) {
                             $on_resize();
                             break;
                     }
+                    break;
+            }
+
+            //PC Force Reflow Callbacks
+            switch(true)
+            {
+                case (in_array('turboclassesreflow', callback_type_arr)):
+                    var $reflow_direction_str = callback_type_arr[1],
+                        $on_reflow = options.onTurboClassReflow,
+                        $on_reflow_body_count = options.onTurboClassReflow.getFuncBody().length;
+                    switch(true)
+                    {
+                        case ($.isFunction($on_reflow) && ($on_reflow_body_count > 0)):
+                            //Execute Callback
+                            $on_reflow();
+                            break;
+                    }
+
+                    var $on_reflow_in = options.onTurboClassReflowIn,
+                        $on_reflow_in_body_count = options.onTurboClassReflowIn.getFuncBody().length;
+                    switch(true)
+                    {
+                        case ($.isFunction($on_reflow_in) && ($on_reflow_in_body_count > 0)):
+                            //Execute Callback
+                            switch(true)
+                            {
+                                case ($reflow_direction_str == 'in'):
+                                    $on_reflow_in();
+                                    break;
+                            }
+                            break;
+                    }
+
+                    var $on_reflow_out = options.onTurboClassReflowOut,
+                        $on_reflow_out_body_count = options.onTurboClassReflowOut.getFuncBody().length;
+                    switch(true)
+                    {
+                        case ($.isFunction($on_reflow_out) && ($on_reflow_out_body_count > 0)):
+                            //Execute Callback
+                            switch(true)
+                            {
+                                case ($reflow_direction_str == 'out'):
+                                    $on_reflow_out();
+                                    break;
+                            }
+                            break;
+                    }
+
                     break;
             }
 
@@ -5453,6 +5507,10 @@ var Restive = (function(window, document, $) {
 
                     //Add Turbo Classes if any
                     elem_set_data_str = methods._addTurboClasses('', rstv_options.turbo_classes);
+
+                    //This if for turbo_classes_reflow option
+                    elem_set_data_str = methods._addTurboClassesReflow(elem_set_data_str, rstv_options);
+
                     methods.setElementDOM(elem, elem_set_data_str, rstv_options);
 
                     //persist
@@ -5462,6 +5520,9 @@ var Restive = (function(window, document, $) {
 
                 case (is_breakpoint_match_bool):
                     elem_set_data_str = methods._addTurboClasses(bp_class_str, rstv_options.turbo_classes);
+
+                    //This if for turbo_classes_reflow option
+                    elem_set_data_str = methods._addTurboClassesReflow(elem_set_data_str, rstv_options);
 
                     /**
                      * Set class
@@ -5568,6 +5629,123 @@ var Restive = (function(window, document, $) {
 
             return false;
 		},
+        _addTurboClassesReflow: function(class_data_str, options){
+            switch(true)
+            {
+                case (methods.isPC()):
+                    //only do for Personal Computer environments
+
+                    switch(true)
+                    {
+                        case (options.turbo_classes_reflow && isString(options.turbo_classes) && options.turbo_classes != ''):
+                            //only do if turbo_classes_reflow option is true and turbo_classes are populated
+
+                            var opt_isset_is_mobile_bool,
+                                fpr_span_range_tomobile_bool,
+                                fpr_span_range_tophone_bool,
+                                fpr_span_range_totablet_bool,
+                                fpr_limits_tablet_int,
+                                fpr_limits_phone_int,
+                                fpr_limits_bp_btw_phone_and_tablet_int,
+                                fpr_test_key_str,
+                                fpr_test_value_str,
+                                fpr_limits_arr = [],
+                                turbo_classes_arr = [],
+                                fpr_final_data_str = class_data_str,
+                                is_turbo_classes_reflow_match_bool = false,
+                                is_turbo_classes_reflow_status_bool = Restive.store('rstv_turbo_classes_reflow_status_in')
+                                ;
+
+                            //get the turbo_classes_reflow_limits values
+                            fpr_limits_arr = explode(',', options.turbo_classes_reflow_limits);
+                            fpr_limits_phone_int = parseInt(fpr_limits_arr[0]);
+                            fpr_limits_tablet_int = parseInt(fpr_limits_arr[1]);
+
+                            //ensure is_mobile turbo_classes parameter
+                            opt_isset_is_mobile_bool = /is_mobile=/i.test(options.turbo_classes);
+                            switch(true)
+                            {
+                                case (opt_isset_is_mobile_bool):
+                                    //iterate over all provided turbo_classes
+                                    turbo_classes_arr = explode(',', options.turbo_classes);
+                                    for(var j = 0; j < count(turbo_classes_arr); j++)
+                                    {
+                                        fpr_test_key_str = getValueAfterExplode(turbo_classes_arr[j], "=", 0);
+                                        fpr_test_value_str = getValueAfterExplode(turbo_classes_arr[j], "=", 1);
+
+                                        switch(true)
+                                        {
+                                            case (fpr_test_key_str == 'is_mobile'):
+                                                fpr_span_range_tomobile_bool = (options.force_dip == true) ? Restive.cSpan(0, fpr_limits_tablet_int): Restive.vSpan(0, fpr_limits_tablet_int);
+
+                                                switch(true)
+                                                {
+                                                    case (fpr_span_range_tomobile_bool):
+
+                                                        fpr_final_data_str += ' '+fpr_test_value_str;
+                                                        is_turbo_classes_reflow_match_bool = true;
+                                                        switch(true)
+                                                        {
+                                                            case (!is_turbo_classes_reflow_status_bool && is_turbo_classes_reflow_match_bool):
+                                                                Restive.store('rstv_turbo_classes_reflow_status_in', true);
+
+                                                                //add callback
+                                                                methods._callbackManager(options, ['turboclassesreflow', 'in']);
+
+                                                                break;
+                                                        }
+
+                                                        break;
+
+                                                    default:
+                                                        is_turbo_classes_reflow_match_bool = false;
+                                                        switch(true)
+                                                        {
+                                                            case (is_turbo_classes_reflow_status_bool && !is_turbo_classes_reflow_match_bool):
+                                                                Restive.store('rstv_turbo_classes_reflow_status_in', false);
+
+                                                                //add callback
+                                                                methods._callbackManager(options, ['turboclassesreflow', 'out']);
+
+                                                                break;
+                                                        }
+                                                }
+
+                                                break;
+                                        }
+
+                                        switch(true)
+                                        {
+                                            case (fpr_test_key_str == 'is_phone'):
+                                                fpr_span_range_tophone_bool = (options.force_dip == true) ? Restive.cSpan(0, fpr_limits_phone_int): Restive.vSpan(0, fpr_limits_phone_int);
+
+                                                fpr_final_data_str = (fpr_span_range_tophone_bool) ? fpr_final_data_str + ' ' + fpr_test_value_str: fpr_final_data_str;
+                                                break;
+                                        }
+
+                                        switch(true)
+                                        {
+                                            case (fpr_test_key_str == 'is_tablet'):
+                                                fpr_limits_bp_btw_phone_and_tablet_int = fpr_limits_phone_int + 1;
+                                                fpr_span_range_totablet_bool = (options.force_dip == true) ? Restive.cSpan(fpr_limits_bp_btw_phone_and_tablet_int, fpr_limits_tablet_int): Restive.vSpan(fpr_limits_bp_btw_phone_and_tablet_int, fpr_limits_tablet_int);
+                                                fpr_final_data_str = (fpr_span_range_totablet_bool) ? fpr_final_data_str + ' ' + fpr_test_value_str: fpr_final_data_str;
+
+                                                break;
+                                        }
+
+                                    }
+
+                                    return fpr_final_data_str;
+                                    break;
+                            }
+                            break;
+                    }
+                    break;
+            }
+
+            //Restive.store('rstv_turbo_classes_reflow_status_in', false);
+            return class_data_str;
+        },
         _addTurboClasses: function(class_data_str, opt_turbo_classes){
             //return class name only if power classes info is invalid or empty
             switch(true)
@@ -5920,14 +6098,16 @@ var Restive = (function(window, document, $) {
 	 * Plugin Defaults
 	 */
 	$.fn.restive.defaults = {
-        breakpoints: [],                                    //the breakpoints
-		classes: [],                                        //the corresponding classes
-        anchor: 'window',                                   //the basis for responsiveness
-        anchor_e_df: 'w',                                   //the dimension format for element-value anchor operations
-        platform: 'all',						            //all, ios, android, symbian, blackberry, windows
-        formfactor: 'all',                                  //all, pc, tv, tablet, phone
-        turbo_classes: '',                                  //special class-based functionality
-        force_dip: false,                                   //force breakpoints to use device-independent pixels
+        breakpoints: [],                                //the breakpoints
+		classes: [],                                    //the corresponding classes
+        anchor: 'window',                               //the basis for responsiveness
+        anchor_e_df: 'w',                               //the dimension format for element-value anchor operations
+        platform: 'all',						        //all, ios, android, symbian, blackberry, windows
+        formfactor: 'all',                              //all, pc, tv, tablet, phone
+        turbo_classes: '',                              //special class-based functionality
+        turbo_classes_reflow: false,                    //this will apply specific turbo_classes based on limit settings
+        turbo_classes_reflow_limits: '480,960',         //defines thresholds for turbo_classes_reflow option
+        force_dip: false,                               //force breakpoints to use device-independent pixels
         onReady: 		    function(){},
 		onResize: 		    function(){},
 		onRotate:		    function(){},
@@ -5948,6 +6128,9 @@ var Restive = (function(window, document, $) {
         onWindowsPhone:     function(){},
         onMobile:           function(){},
         onNonMobile:        function(){},
+        onTurboClassReflow:         function(){},
+        onTurboClassReflowIn:       function(){},
+        onTurboClassReflowOut:      function(){},
         onAddClass:         function(){},
         onRemoveClass:      function(){}
 	};

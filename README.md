@@ -318,6 +318,51 @@ So if an `iPhone 4` visits our website and happens to be in portrait orientation
 **Note**: You can use `turbo_classes` to add only one class per condition i.e. multiple class definitions per condition are not possible. So that means you can't do something like this: `turbo_classes: 'is_mobile=mobi,is_mobile=mobi_plus'`
 
 
+#### turbo_classes_reflow
+
+This option provides a way to make a layout *Responsive* to a resizing browser window when using `turbo_classes` functionality.
+
+Usually, when using `turbo_classes`, you define key-value items like `is_mobile=mobi` and `is_tablet=tablet` to enable the addition of classes to the DOM element [usually the `<body>` tag] when certain conditions are met. This approach would then enable you to create CSS rules that leverage these class selectors e.g. `.mobi #myid`, `.mobi.tablet #myid`, etc. to enable your layout to respond and adapt to different situations.
+
+As a result, it is very possible to bypass conventional breakpoints entirely to create a website that is Adaptive to only *Form-factor* and *Orientation* using the following code:
+
+```javascript
+$('body').restive({
+    breakpoints: ['10000'],
+    classes: ['nb'],
+    turbo_classes: 'is_mobile=mobi,is_phone=phone,is_tablet=tablet,is_portrait=portrait,is_landscape=landscape'
+});
+```
+
+However, since you have not defined an array of `breakpoints` and corresponding `classes`, your website will NOT be able to *reflow* your layout on Desktop devices when the browser window is resized.
+
+The `turbo_classes_reflow` option provides a way of using your existing `turbo_classes` configuration as pseudo-breakpoints to enable *reflow* functionality on devices of *PC* class e.g. desktops, laptops, etc. Setting the `turbo_classes_reflow` option to `true`, the following will happen:
+
+1. If the `turbo_classes` option is defined, and the `is_mobile` condition has a value, then that value will be applied to the DOM element defined in the Restive.JS selector [usually the `<html>` or `<body>` tag] provided the viewport width of the browser drops below 960 pixels (this threshold can be adjusted using the `turbo_classes_reflow_limits`)
+
+2. If `1.` above is true, and the `is_tablet` condition has a value, then that value will also be added to the class attribute of the target DOM element provided the viewport width of the browser drops below 960 pixels (this threshold can be adjusted using the `turbo_classes_reflow_limits`: it is the second value) 
+
+3. If `1.` above is true, and the `is_phone` condition has a value, then that value will also be added to the class attribute of the target DOM element provided the viewport width of the browser drops below 480 pixels (this threshold can be adjusted using the `turbo_classes_reflow_limits` option: it is the first value).
+
+In other words, if this option is set, two breakpoint ranges will be created: 0 to 480 pixels, and 481 to 960 pixels. Within the first range, `is_phone` turbo-class value will be applied if defined; within the second range, `is_mobile` and `is_tablet` turbo-classes will be applied if defined.
+
+**NOTE**: This option is PC-only [i.e. it works for `PC` class devices only] and will not affect Mobile usage in anyway.
+
+**NOTE**: It is advised that you use this feature only if you are relying heavily on `turbo_classes`. 
+
+
+#### turbo_classes_reflow_limits
+
+This option works with `turbo_classes_reflow` option. It enables you change the default values used for the `turbo_classes_reflow` option. 
+
+```javascript
+//example
+turbo_classes_reflow_limits: '480,960'
+```
+
+**NOTE**: If you must alter this option, make sure the first value provided is always less than the second value i.e. DO `480,960`, DON'T DO `960,480`.
+
+
 
 ### Event Callbacks
 
@@ -477,6 +522,39 @@ This callback is triggered if the Device is a Non-Mobile Device i.e. TV or PC.
 ```javascript
 $('body').restive({
 	onNonMobile: function(){alert("I AM NOT MOBILE!");}
+});
+```
+
+
+#### onTurboClassReflow
+
+This callback is triggered if `turbo_classes_reflow` option is `true`, the device is a `PC`, and the browser window is resized into or out of the *reflow* breakpoint range or the browser window is initialized at a viewport width within or outside said range.
+
+```javascript
+$('body').restive({
+	onTurboClassReflow: function(){alert("I AM EITHER IN OR OUT OF RANGE!");}
+});
+```
+
+
+#### onTurboClassReflowIn
+
+This callback is triggered if `turbo_classes_reflow` option is `true`, the device is a `PC`, and the browser window is resized into the *reflow* breakpoint range or the browser window is initialized at a viewport width within said range.
+
+```javascript
+$('body').restive({
+	onTurboClassReflowIn: function(){alert("I JUST GOT IN!");}
+});
+```
+
+
+#### onTurboClassReflowOut
+
+This callback is triggered if `turbo_classes_reflow` option is `true`, the device is a `PC`, and browser window is resized out of the *reflow* breakpoint range or the browser window is initialized at a viewport width within said range.
+
+```javascript
+$('body').restive({
+	onTurboClassReflowOut: function(){alert("I JUST STEPPED OUT!");}
 });
 ```
 
