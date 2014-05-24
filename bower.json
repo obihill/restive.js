@@ -21,6 +21,7 @@
   ],
   "license": "MIT",
   "ignore": [
+    "**/.*",
     "*.json",
     "*.md",
     "*.txt",
