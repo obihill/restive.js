@@ -22,10 +22,10 @@
   "license": "MIT",
   "ignore": [
     "**/.*",
-    "*.json",
-    "*.md",
-    "*.txt",
-	"Gruntfile.js",
-	".gitignore"
+    "./*.json",
+    "./*.md",
+    "./*.txt",
+	"./Gruntfile.js",
+	"./.gitignore"
   ]
 }
