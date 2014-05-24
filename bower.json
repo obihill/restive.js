@@ -19,13 +19,11 @@
     "mobile",
     "chess"
   ],
-  "license": "MIT",
   "ignore": [
     "**/.*",
-    "./*.json",
-    "./*.md",
-    "./*.txt",
-	"./Gruntfile.js",
-	"./.gitignore"
-  ]
+    "*.md",
+    "*.txt",
+	"Gruntfile.js"
+  ],
+  "license": "MIT"  
 }
