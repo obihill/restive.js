@@ -599,7 +599,6 @@ function microtime (get_as_float) {
     }
 })();
 
-
 /*! json2.js | @link https://github.com/douglascrockford/JSON-js | @copyright Douglas Crockford <douglas@crockford.com> */
 
 // Create a JSON object only if one does not already exist. We create the
@@ -4674,6 +4673,9 @@ var Restive = (function(window, document, $) {
                 //reset turbo_classes_reflow sessionStorage variable
                 Restive.store("rstv_turbo_classes_reflow_status_in", null);
 
+                //set initialization marker for addclass callback
+                Restive.store("rstv_bpm_addclass_init", false);
+
                 /**
                  * Manage Breakpoints
                  */
@@ -5795,26 +5797,32 @@ var Restive = (function(window, document, $) {
         setElementDOM: function(elem, elem_set_str, options){
             var data_key_str = md5(getSelector(elem)),
                 ds_elem_set_class_name_str = "rstv_bpm_class_"+data_key_str,
-                ds_elem_set_str;
+                ds_elem_set_str,
+                init_addclass_bool = Restive.store("rstv_bpm_addclass_init")
+            ;
 
             ds_elem_set_str = (isString(Restive.store(ds_elem_set_class_name_str)) && Restive.store(ds_elem_set_class_name_str) != '') ? Restive.store(ds_elem_set_class_name_str): '';
+
             switch(true)
             {
-                case (ds_elem_set_str != ''):
-                    elem.removeClass(ds_elem_set_str).addClass(elem_set_str);
+                case (ds_elem_set_str != elem_set_str || init_addclass_bool == false):
                     switch(true)
                     {
-                        case (ds_elem_set_str != elem_set_str):
+                        case (ds_elem_set_str != ''):
+                            elem.removeClass(ds_elem_set_str).addClass(elem_set_str);
                             methods._callbackManager(options, ['removeclass', ''+ds_elem_set_str+'']);
                             break;
-                    }
-                    break;
 
-                default:
-                    elem.addClass(elem_set_str);
+                        default:
+                            elem.addClass(elem_set_str);
+                    }
+
+                    Restive.store(ds_elem_set_class_name_str, elem_set_str);
+                    methods._callbackManager(options, ['addclass', ''+elem_set_str+'']);
+
+                    Restive.store("rstv_bpm_addclass_init", true);
+                    break;
             }
-            Restive.store(ds_elem_set_class_name_str, elem_set_str);
-            methods._callbackManager(options, ['addclass', ''+elem_set_str+'']);
         },
         unsetElementDOM: function(elem, options){
             var data_key_str = md5(getSelector(elem)),
@@ -5822,8 +5830,8 @@ var Restive = (function(window, document, $) {
                 ds_elem_set_str;
 
             ds_elem_set_str = (isString(Restive.store(ds_elem_set_class_name_str)) && Restive.store(ds_elem_set_class_name_str) != '') ? Restive.store(ds_elem_set_class_name_str): '';
-            elem.removeClass(ds_elem_set_str);
 
+            elem.removeClass(ds_elem_set_str);
             methods._callbackManager(options, ['removeclass', ''+ds_elem_set_str+'']);
         },
         _extVarTracker: function($track_name_str, $track_value_str)
