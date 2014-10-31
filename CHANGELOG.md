@@ -1,5 +1,13 @@
 # CHANGELOG
  
+## 1.3.2
+- Add additional viewport width test to better segment Windows Phones from Tablets
+- Update similar viewport width test for Android to fix device class switching error 
+
+ 
+## 1.3.1
+- Fix issue where onAddClass callback fires of each resize event 
+ 
  
 ## 1.3.0
 - Add two new options: `turbo_classes_reflow` and `turbo_classes_reflow_limits` for enabling layout reflow on PC devices when using `turbo_classes`

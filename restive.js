@@ -5805,7 +5805,11 @@ var Restive = (function(window, document, $) {
 
             switch(true)
             {
+<<<<<<< HEAD
                 case (ds_elem_set_str != elem_set_str || init_addclass_bool == false):
+=======
+                case (ds_elem_set_str != elem_set_str):
+>>>>>>> 22fed16413a350a98df035aac9840a23119d4d80
                     switch(true)
                     {
                         case (ds_elem_set_str != ''):
@@ -5819,8 +5823,11 @@ var Restive = (function(window, document, $) {
 
                     Restive.store(ds_elem_set_class_name_str, elem_set_str);
                     methods._callbackManager(options, ['addclass', ''+elem_set_str+'']);
+<<<<<<< HEAD
 
                     Restive.store("rstv_bpm_addclass_init", true);
+=======
+>>>>>>> 22fed16413a350a98df035aac9840a23119d4d80
                     break;
             }
         },
