@@ -3444,7 +3444,11 @@ var Restive = (function(window, document, $) {
         var regex_raw_str,
             regex,
             is_tablet_bool,
-            nav = getUserAgent();
+            nav = getUserAgent(),
+            pixel_w_int = parseInt(store("rstv_viewportW_dip")),
+            pixel_h_int = parseInt(store("rstv_viewportH_dip")),
+            pixel_dim_int = (store("rstv_is_portrait")) ? pixel_w_int : pixel_h_int
+            ;
 
         //if iPad or Blackberry Playbook, return true
         regex = new RegExp("ipad|playbook|rim +tablet", "i");
@@ -3463,8 +3467,20 @@ var Restive = (function(window, document, $) {
         switch(true)
         {
             case (is_tablet_bool):
-                if(!bypass_storage_bool){ store("rstv_is_tablet", true); }
-                return true;
+                switch(true)
+                {
+                    case (isNumber(pixel_dim_int) && (pixel_dim_int <= 520)):
+                        if(!bypass_storage_bool){
+                            store("rstv_is_tablet", false);
+                            if(store("rstv_is_phone") === false){ store("rstv_is_phone", true);}
+                        }
+                        return false;
+                        break;
+
+                    default:
+                        if(!bypass_storage_bool){ store("rstv_is_tablet", true); }
+                        return true;
+                }
                 break;
         }
 
@@ -3667,10 +3683,7 @@ var Restive = (function(window, document, $) {
 
         //Check Android Tablet
         var regex_1_bool = /android/i.test(nav),
-            regex_2_bool = !/mobile/i.test(nav),
-            pixel_w_int = parseInt(store("rstv_viewportW_dip")),
-            pixel_h_int = parseInt(store("rstv_viewportH_dip")),
-            pixel_dim_int = (store("rstv_is_portrait")) ? pixel_w_int : pixel_h_int
+            regex_2_bool = !/mobile/i.test(nav)
             ;
 
         switch(true)
@@ -3683,8 +3696,11 @@ var Restive = (function(window, document, $) {
                  */
                 switch(true)
                 {
-                    case (isNumber(pixel_dim_int) && (pixel_dim_int >= 520 && pixel_dim_int <= 800)):
-                        if(!bypass_storage_bool){ store("rstv_is_tablet", true); }
+                    case (isNumber(pixel_dim_int) && (pixel_dim_int >= 520 && pixel_dim_int <= 810)):
+                        if(!bypass_storage_bool){
+                            store("rstv_is_tablet", true);
+                            if(store("rstv_is_phone")){ store("rstv_is_phone", false);}
+                        }
                         return true;
                         break;
                 }
@@ -4672,9 +4688,6 @@ var Restive = (function(window, document, $) {
 
                 //reset turbo_classes_reflow sessionStorage variable
                 Restive.store("rstv_turbo_classes_reflow_status_in", null);
-
-                //set initialization marker for addclass callback
-                Restive.store("rstv_bpm_addclass_init", false);
 
                 /**
                  * Manage Breakpoints
@@ -5797,39 +5810,26 @@ var Restive = (function(window, document, $) {
         setElementDOM: function(elem, elem_set_str, options){
             var data_key_str = md5(getSelector(elem)),
                 ds_elem_set_class_name_str = "rstv_bpm_class_"+data_key_str,
-                ds_elem_set_str,
-                init_addclass_bool = Restive.store("rstv_bpm_addclass_init")
-            ;
+                ds_elem_set_str;
 
             ds_elem_set_str = (isString(Restive.store(ds_elem_set_class_name_str)) && Restive.store(ds_elem_set_class_name_str) != '') ? Restive.store(ds_elem_set_class_name_str): '';
-
             switch(true)
             {
-<<<<<<< HEAD
-                case (ds_elem_set_str != elem_set_str || init_addclass_bool == false):
-=======
-                case (ds_elem_set_str != elem_set_str):
->>>>>>> 22fed16413a350a98df035aac9840a23119d4d80
+                case (ds_elem_set_str != ''):
+                    elem.removeClass(ds_elem_set_str).addClass(elem_set_str);
                     switch(true)
                     {
-                        case (ds_elem_set_str != ''):
-                            elem.removeClass(ds_elem_set_str).addClass(elem_set_str);
+                        case (ds_elem_set_str != elem_set_str):
                             methods._callbackManager(options, ['removeclass', ''+ds_elem_set_str+'']);
                             break;
-
-                        default:
-                            elem.addClass(elem_set_str);
                     }
-
-                    Restive.store(ds_elem_set_class_name_str, elem_set_str);
-                    methods._callbackManager(options, ['addclass', ''+elem_set_str+'']);
-<<<<<<< HEAD
-
-                    Restive.store("rstv_bpm_addclass_init", true);
-=======
->>>>>>> 22fed16413a350a98df035aac9840a23119d4d80
                     break;
+
+                default:
+                    elem.addClass(elem_set_str);
             }
+            Restive.store(ds_elem_set_class_name_str, elem_set_str);
+            methods._callbackManager(options, ['addclass', ''+elem_set_str+'']);
         },
         unsetElementDOM: function(elem, options){
             var data_key_str = md5(getSelector(elem)),
@@ -5837,8 +5837,8 @@ var Restive = (function(window, document, $) {
                 ds_elem_set_str;
 
             ds_elem_set_str = (isString(Restive.store(ds_elem_set_class_name_str)) && Restive.store(ds_elem_set_class_name_str) != '') ? Restive.store(ds_elem_set_class_name_str): '';
-
             elem.removeClass(ds_elem_set_str);
+
             methods._callbackManager(options, ['removeclass', ''+ds_elem_set_str+'']);
         },
         _extVarTracker: function($track_name_str, $track_value_str)
