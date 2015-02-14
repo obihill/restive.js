@@ -1,5 +1,8 @@
 # CHANGELOG
  
+## 1.3.3
+- Fix issue with incomplete class additions when using multiple constructors
+
 ## 1.3.2
 - Add additional viewport width test to better segment Windows Phones from Tablets
 - Update similar viewport width test for Android to fix device class switching error 

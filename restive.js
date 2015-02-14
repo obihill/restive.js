@@ -4553,7 +4553,7 @@ var Restive = (function(window, document, $) {
 })(window, document, jQuery);
 
 /*
- * Restive.JS Plugin v1.3.0
+ * Restive.JS Plugin v1.3.3
  * http://restivejs.com
  *
  * Copyright 2013 Obinwanne Hill <https://about.me/obinwanne.hill>
@@ -5526,7 +5526,12 @@ var Restive = (function(window, document, $) {
                     //This if for turbo_classes_reflow option
                     elem_set_data_str = methods._addTurboClassesReflow(elem_set_data_str, rstv_options);
 
-                    methods.setElementDOM(elem, elem_set_data_str, rstv_options);
+                    switch(true)
+                    {
+                        case (!Restive.store("rstv_multi_start") || is_ort_change_bool):
+                            methods.setElementDOM(elem, elem_set_data_str, rstv_options);
+                            break;
+                    }
 
                     //persist
                     Restive.store("rstv_breakpoint_match_curr", false);
