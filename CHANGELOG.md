@@ -1,5 +1,8 @@
 # CHANGELOG
  
+## 1.3.4
+- Fix issue with turbo classes outputting function code with class names
+
 ## 1.3.3
 - Fix issue with incomplete class additions when using multiple constructors
 

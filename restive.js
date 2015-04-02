@@ -248,11 +248,14 @@ function implode (glue, pieces) {
     // +   improved by: Waldo Malqui Silva
     // +   improved by: Itsacon (http://www.itsacon.net/)
     // +   bugfixed by: Brett Zamir (http://brett-zamir.me)
+    // +   improved by: Obinwanne Hill (http://about.me/obinwanne.hill)
     // *     example 1: implode(' ', ['Kevin', 'van', 'Zonneveld']);
     // *     returns 1: 'Kevin van Zonneveld'
     // *     example 2: implode(' ', {first:'Kevin', last: 'van Zonneveld'});
     // *     returns 2: 'Kevin van Zonneveld'
-    var i = '',
+    var myArgs = Array.prototype.slice.call(arguments),
+        use_count_for_loop_bool = myArgs[2],
+        i = '',
         retVal = '',
         tGlue = '';
     if (arguments.length === 1) {
@@ -260,10 +263,21 @@ function implode (glue, pieces) {
         glue = '';
     }
     if (typeof(pieces) === 'object') {
-        for (i in pieces) {
-            retVal += tGlue + pieces[i];
-            tGlue = glue;
+        if(use_count_for_loop_bool)
+        {
+            for (i = 0; i < count(pieces); i++){
+                retVal += tGlue + pieces[i];
+                tGlue = glue;
+            }
         }
+        else
+        {
+            for (i in pieces) {
+                retVal += tGlue + pieces[i];
+                tGlue = glue;
+            }
+        }
+
         return retVal;
     }
     return pieces;
@@ -5808,7 +5822,7 @@ var Restive = (function(window, document, $) {
                 }
             }
 
-            pc_temp_str = implode(' ', pc_temp_arr);
+            pc_temp_str = implode(' ', pc_temp_arr, true);
             pc_final_str = (pc_temp_str != '') ? pc_temp_str+' '+class_data_str : class_data_str;
             return pc_final_str;
         },
