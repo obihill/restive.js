@@ -3151,7 +3151,7 @@ var Restive = (function(window, document, $) {
             is_proxy_bool;
 
         //Check if device user agent is being updated by proxy-based browser
-        is_proxy_bool = /mozilla.+x11/i.test(ua);
+        is_proxy_bool = /mozilla.+x11(?!.*?(ubuntu|firefox|chrome|safari|opera|opr|qupzilla))/i.test(ua);
 
         switch(true)
         {

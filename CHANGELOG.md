@@ -1,5 +1,8 @@
 # CHANGELOG
  
+## 1.3.5
+- Update user agent string regular expression in getUserAgent method of Restive class
+
 ## 1.3.4
 - Fix issue with turbo classes outputting function code with class names
 

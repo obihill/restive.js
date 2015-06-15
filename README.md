@@ -1,6 +1,6 @@
 # Restive.JS
 
-Restive.JS is a JQuery Plugin that helps you quickly and easily add features to your Web Site that enable it respond and adapt to virtually every Web-enabled Device. Using a combination of Device Detection, Advanced Breakpoints Management, and Orientation Management, the Plugin will give your Website an uncanny ability to stay robust in the face of a constantly changing device landscape.
+Restive.JS is a JQuery Plugin that helps you quickly and easily add features to your Web Site that enable it respond and adapt to virtually every Web-enabled Device. Using a combination of Device Detection, Advanced Breakpoints Management, and Orientation Management, the Plugin will give your Website an uncanny ability to quickly adapt in a constantly changing device landscape.
 
 
 
@@ -31,7 +31,7 @@ If you find that you fit one or more of the criteria below, then you might want 
 
 ## License
 
-[Click here to view the License Agreement](/LICENSE.md) for the Basic Version of Restive.JS.
+[Click here to view the License Agreement](/LICENSE.md) for Restive.JS.
 
 
 
@@ -49,6 +49,8 @@ Include script *after* the jQuery library:
 <script src="/path/to/jquery.min.js"></script>
 <script src="/path/to/restive.min.js"></script>
 ```    
+
+**NOTE**: Please ensure that you use the latest version of Restive.JS.
 
 
 
@@ -132,10 +134,14 @@ Please be mindful to disable the following Javascript libraries from your Web pa
 These libraries are already embedded within Restive.JS.
 
 
+## Acknowledgements
 
-## Credits
+A big thank you to [BrowserStack](http://www.browserstack.com) for sponsoring this project.
 
-Restive will like to thank the following third-parties for script usage (and some inspiration):
+![BrowserStack Logo](https://upload.wikimedia.org/wikipedia/en/thumb/6/6e/BrowserStack_logo.svg/320px-BrowserStack_logo.svg.png)
+
+
+Thanks also to the following for scripts (and some inspiration):
 
 - AppendTo - [AmplifyJS Store](http://amplifyjs.com/api/store/)
 - Douglas Crockford - [JSON2.js](https://github.com/douglascrockford/JSON-js)
