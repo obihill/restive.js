@@ -1,5 +1,8 @@
 # CHANGELOG
  
+## 1.3.6
+- Update private browsing detection
+
 ## 1.3.5
 - Update user agent string regular expression in getUserAgent method of Restive class
 

@@ -2132,7 +2132,10 @@ var Restive = (function(window, document, $) {
         }
         catch (e)
         {
-            if (/QUOTA_?EXCEEDED/i.test(e.name)) {
+            var is_local_storage_notset_bool = /localStorage.*?(undefined|denied|null)|setItem.*?(undefined|null)|security *error.*?dom +exception +18/i.test(e.message);
+            var is_quota_exceeded_bool = /quota.*?(exceeded|reached)/i.test(e.name);
+
+            if (is_local_storage_notset_bool || is_quota_exceeded_bool) {
                 return true;
             }
         }
@@ -2231,7 +2234,7 @@ var Restive = (function(window, document, $) {
         }
         catch(e){
             alert(e);
-            
+            console.log(e);
         }
     }
 
