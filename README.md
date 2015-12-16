@@ -138,8 +138,7 @@ These libraries are already embedded within Restive.JS.
 
 A big thank you to [BrowserStack](http://www.browserstack.com) for sponsoring this project.
 
-![BrowserStack Logo](https://upload.wikimedia.org/wikipedia/en/thumb/6/6e/BrowserStack_logo.svg/320px-BrowserStack_logo.svg.png)
-
+<img src="https://www.browserstack.com/images/layout/browserstack-logo-600x315.png" width="300">
 
 Thanks also to the following for scripts (and some inspiration):
 
@@ -970,7 +969,7 @@ Orientation is the way a rectangular viewing area e.g. a monitor, a mobile devic
 
 ### Breakpoints
 
-Breakpoints in Responsive Web Design are browser widths that have a declaration – media query or otherwise – to change the layout once the browser is within the declared range.
+Breakpoints in Responsive Web Design are browser widths that have a declaration ï¿½ media query or otherwise ï¿½ to change the layout once the browser is within the declared range.
 
 Restive.JS uses Breakpoints to find and match viewports of mobile devices. So if you define the following breakpoints: 240, 360, 480; the plugin will target the following viewports 0 to 240 pixels, 241 to 360 pixels, and 361 to 480 pixels.
 
