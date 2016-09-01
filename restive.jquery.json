@@ -1,7 +1,7 @@
 {
 	"name": "restive",
-	"version": "1.3.6",
-	"title": "Restive.JS",
+	"version": "1.3.7",
+	"title": "Restive.js",
 	"author": {
 		"name": "Obinwanne Hill",
 		"email": "ohill@restive.io",
@@ -16,7 +16,7 @@
 	"dependencies": {
 		"jquery": ">=1.7.1"
 	},
-	"description": "jQuery plugin for helping Web Designers easily add Responsive + Adaptive Features to their Web Sites. * User-friendly - Set up advanced responsive and adaptive features easily and intuitively. * Versatile - Easily detect and target multiple form factors and platforms. *Powerful - Numerous advanced features and combinations available. ",
+	"description": "a designer-friendly jQuery toolkit for responsive Web design. restive.js helps Web designers and developers build mobile-friendly and/or responsive Web pages. * Designer-friendly - Less JavaScript, more CSS. * Versatile - Easily detect and target multiple form factors and platforms. *Powerful - Numerous advanced features and combinations available. ",
 	"keywords": [
 		"restive",
 		"restive.js",
@@ -33,8 +33,8 @@
 		"plugin"
 	],
 	"homepage": "http://www.restivejs.com",
-	"docs": "http://docs.restivejs.com",
-	"demo": "http://www.restivejs.com/demo.html",
+	"docs": "http://www.restivejs.com/docs",
+	"demo": "http://www.restivejs.com",
 	"download": "https://github.com/obihill/restive.js",
 	"bugs": "https://github.com/obihill/restive.js/issues",
 	"maintainers": [

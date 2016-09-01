@@ -1,4 +1,8 @@
 # CHANGELOG
+
+## 1.3.7
+- Restive.js header text addition
+- Final script update before [rScript](http://www.rscript.io) migration
  
 ## 1.3.6
 - Update private browsing detection
@@ -14,13 +18,13 @@
 
 ## 1.3.2
 - Add additional viewport width test to better segment Windows Phones from Tablets
-- Update similar viewport width test for Android to fix device class switching error 
+- Update similar viewport width test for Android to fix device class switching error
 
- 
+
 ## 1.3.1
-- Fix issue where onAddClass callback fires of each resize event 
- 
- 
+- Fix issue where onAddClass callback fires of each resize event
+
+
 ## 1.3.0
 - Add two new options: `turbo_classes_reflow` and `turbo_classes_reflow_limits` for enabling layout reflow on PC devices when using `turbo_classes`
 - Add two new callback functions: `onTurboClassReflow`, `onTurboClassReflowIn`, and `onTurboClassReflowOut`
@@ -30,7 +34,7 @@
 ## 1.2.0
 - Solve issue with `force_dip` option not working with `breakpoints`
 - Solve issue with orientation status updates when soft-keyboard is initialized on certain mobile devices
-- Solve issue with `turbo_classes` not being fired when `breakpoints` do not match 
+- Solve issue with `turbo_classes` not being fired when `breakpoints` do not match
 
 
 ## 1.1.0
@@ -40,4 +44,4 @@
 
 
 ## 1.0.0
-- Initial Release 
+- Initial Release
