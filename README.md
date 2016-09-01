@@ -76,7 +76,7 @@ It's really quick and easy to get started with restive.js:
 
 where *options* are the setup parameters [in JSON object format] that you pass to restive.js.
 
-You can see some examples on the [restivejs.com](http://www.restivejs.com).
+You can see some examples on [restivejs.com](http://www.restivejs.com).
 
 
 ## Documentation
@@ -104,4 +104,5 @@ If you need professional help with a commercial project, we also offer [developm
 ## Acknowledgements
 
 A big thank you to [BrowserStack](http://www.browserstack.com) for sponsoring this project.
+
 <img src="https://www.browserstack.com/images/layout/browserstack-logo-600x315.png" width="300">
