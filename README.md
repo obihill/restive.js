@@ -37,12 +37,12 @@ Instead of this:
 }
 
 /* Smartphones (landscape) */
-@media only screen and (min-width : 321px) {
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : landscape) {
     #my-element-1 {color: #00ff00;}
 }
 
 /* Smartphones (portrait) */
-@media only screen and (max-width : 320px) {
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) {
     #my-element-1 {color: #0000ff;}
 }
 ```
