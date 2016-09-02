@@ -9,7 +9,7 @@
   "dependencies": {
     "jquery": ">=1.7"
   },
-  "main": "./restive.js",
+  "main": "dist/restive.min.js",
   "keywords": [
     "restive",
     "restive.js",
