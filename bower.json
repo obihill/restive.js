@@ -16,8 +16,7 @@
     "restivejs",
     "responsive",
     "adaptive",
-    "mobile",
-    "chess"
+    "mobile-friendly"
   ],
   "ignore": [
     "**/.*",

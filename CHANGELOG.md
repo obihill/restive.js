@@ -1,8 +1,11 @@
 # CHANGELOG
 
-## 1.3.7
+## 1.3.8
 - Restive.js header text addition
 - Final script update before [rScript](http://www.rscript.io) migration
+
+## 1.3.7
+- Restive.js header text addition
  
 ## 1.3.6
 - Update private browsing detection
