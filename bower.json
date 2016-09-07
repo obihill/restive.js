@@ -9,15 +9,14 @@
   "dependencies": {
     "jquery": ">=1.7"
   },
-  "main": "./restive.js",
+  "main": "dist/restive.min.js",
   "keywords": [
     "restive",
     "restive.js",
     "restivejs",
     "responsive",
     "adaptive",
-    "mobile",
-    "chess"
+    "mobile-friendly"
   ],
   "ignore": [
     "**/.*",
